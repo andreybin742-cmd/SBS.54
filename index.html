@@ -349,22 +349,6 @@
             pointer-events: none;
         }
 
-        /* Индикатор, что звук включён */
-        .hero-video-text .sound-indicator {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 3;
-            font-size: 20px;
-            opacity: 0;
-            transition: 0.4s ease;
-            pointer-events: none;
-        }
-
-        .hero-video-text.sound-on .sound-indicator {
-            opacity: 1;
-        }
-
         /* ===== СЕКЦИИ ===== */
         .section {
             padding: 50px 0;
@@ -676,11 +660,6 @@
             }
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(50px);
@@ -742,6 +721,7 @@
             }
         }
 
+        /* ===== ОСНОВНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ТЕЛЕФОНА ===== */
         @media (max-width: 600px) {
             .hero {
                 text-align: center;
@@ -768,31 +748,38 @@
             .photo-collage {
                 grid-template-columns: 1fr 1fr;
             }
+            
+            /* ВИДЕО-БЛОК — ШИРЕ И ВЫШЕ */
             .hero-video-text {
-                height: 260px;
+                height: 320px;
                 width: 100%;
                 max-width: 100%;
                 min-width: 0;
                 border-radius: 16px;
+                margin: 0 -12px;
+                width: calc(100% + 24px);
             }
             .hero-video-text .text-overlay {
-                font-size: clamp(40px, 14vw, 60px);
-                letter-spacing: 4px;
+                font-size: clamp(50px, 16vw, 80px);
+                letter-spacing: 6px;
             }
             .hero-video-text .play-hint {
-                font-size: 8px;
-                padding: 3px 14px;
-                bottom: 12px;
+                font-size: 10px;
+                padding: 4px 16px;
+                bottom: 16px;
             }
         }
 
+        /* Дополнительно для очень маленьких экранов */
         @media (max-width: 400px) {
             .hero-video-text {
-                height: 200px;
+                height: 260px;
+                margin: 0 -8px;
+                width: calc(100% + 16px);
             }
             .hero-video-text .text-overlay {
-                font-size: clamp(30px, 12vw, 40px);
-                letter-spacing: 3px;
+                font-size: clamp(36px, 14vw, 50px);
+                letter-spacing: 4px;
             }
         }
     </style>
@@ -843,7 +830,6 @@
                     SBS<span>54</span>
                 </div>
                 <div class="play-hint" id="playHint">▶ нажми для звука</div>
-                <div class="sound-indicator">🔊</div>
             </div>
         </div>
     </section>
@@ -1067,7 +1053,7 @@
             }
         });
 
-        // ===== ВКЛЮЧЕНИЕ ЗВУКА ПО НАЖАТИЮ НА КНОПКУ ИЛИ БЛОК =====
+        // ===== ВКЛЮЧЕНИЕ ЗВУКА ПО НАЖАТИЮ =====
         const videoBlock = document.getElementById('heroVideoText');
         const video = document.getElementById('heroVideoElement');
         const playHint = document.getElementById('playHint');
@@ -1087,15 +1073,14 @@
             enableSound();
         });
 
-        // Нажатие на сам блок (но не на кнопку)
+        // Нажатие на сам блок
         videoBlock.addEventListener('click', function(e) {
-            // Если кликнули не по кнопке
             if (!e.target.closest('.play-hint')) {
                 enableSound();
             }
         });
 
-        // ===== АВТОЗАПУСК ВИДЕО ПРИ ЗАГРУЗКЕ (без звука) =====
+        // ===== АВТОЗАПУСК ВИДЕО =====
         window.addEventListener('load', function() {
             if (video) {
                 video.muted = true;
@@ -1103,7 +1088,6 @@
             }
         });
 
-        // На всякий случай, если видео ещё не загрузилось
         document.addEventListener('DOMContentLoaded', function() {
             if (video) {
                 video.muted = true;
