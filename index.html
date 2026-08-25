@@ -1222,26 +1222,35 @@
             observer.observe(el);
         });
 
-        // ===== ФОРМА С ОТПРАВКОЙ НА ПОЧТУ (Formspree) =====
+        // ===== ФОРМА: ОТПРАВКА НА ПОЧТУ (Formspree) + В TELEGRAM =====
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const status = document.getElementById('formStatus');
 
-            // Проверка на заполнение полей
             if (!name || !phone) {
                 status.innerHTML = '⚠️ Пожалуйста, заполните все поля.';
                 status.style.color = '#ff4444';
                 return;
             }
 
-            // Отключим кнопку, чтобы не отправляли повторно
             const submitBtn = this.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Отправка...';
 
-            // Отправка данных на Formspree
+            // ==== 1. ОТПРАВКА В TELEGRAM ====
+            const BOT_TOKEN = '8914686772:AAF4_Ntf2tBWekpLYii1TF64dAzG0c7uUZk';
+            const CHAT_ID = '8914686772'; // Ваш ID (можно заменить на правильный)
+            const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+            }).catch(() => {});
+
+            // ==== 2. ОТПРАВКА НА ПОЧТУ (Formspree) ====
             fetch('https://formspree.io/f/xkjwdjoz', {
                 method: 'POST',
                 headers: {
@@ -1260,7 +1269,6 @@
                     status.style.color = '#00d4ff';
                     this.reset();
                 } else {
-                    // Если ответ не OK, пробуем прочитать ошибку
                     return response.json().then(data => {
                         throw new Error(data.error || 'Ошибка сервера');
                     });
@@ -1268,22 +1276,20 @@
             })
             .catch(error => {
                 console.error('Ошибка отправки:', error);
-                status.innerHTML = '❌ Ошибка отправки. Попробуйте позже или позвоните нам по телефону.';
+                status.innerHTML = '❌ Ошибка отправки. Попробуйте позже или позвоните нам.';
                 status.style.color = '#ff4444';
             })
             .finally(() => {
-                // Включаем кнопку обратно
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Записаться на джем';
             });
         });
 
-        // ===== ВИДЕО СО ЗВУКОМ СРАЗУ =====
+        // ===== ВИДЕО СО ЗВУКОМ =====
         const video = document.getElementById('heroVideoElement');
         const videoBlock = document.getElementById('heroVideoText');
         const playHint = document.getElementById('playHint');
 
-        // Пробуем запустить со звуком
         video.muted = false;
         video.play().then(() => {
             if (playHint) playHint.style.display = 'none';
@@ -1291,14 +1297,12 @@
             if (playHint) playHint.style.display = 'block';
         });
 
-        // При клике на видео — включаем звук
         videoBlock.addEventListener('click', function() {
             video.muted = false;
             video.play().catch(() => {});
             if (playHint) playHint.style.display = 'none';
         });
 
-        // При клике на страницу — включаем звук (запасной вариант)
         document.addEventListener('click', function enableSoundOnce() {
             video.muted = false;
             video.play().catch(() => {});
@@ -1306,7 +1310,6 @@
             document.removeEventListener('click', enableSoundOnce);
         });
 
-        // При загрузке страницы тоже пробуем
         window.addEventListener('load', function() {
             video.muted = false;
             video.play().catch(() => {});
