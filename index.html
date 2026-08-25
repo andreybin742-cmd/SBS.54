@@ -1222,21 +1222,60 @@
             observer.observe(el);
         });
 
-        // ===== ФОРМА =====
+        // ===== ФОРМА С ОТПРАВКОЙ НА ПОЧТУ (Formspree) =====
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const status = document.getElementById('formStatus');
 
-            if (name && phone) {
-                status.innerHTML = '✅ Заявка принята! Ждём тебя на тренировке.';
-                status.style.color = '#e30613';
-                this.reset();
-            } else {
+            // Проверка на заполнение полей
+            if (!name || !phone) {
                 status.innerHTML = '⚠️ Пожалуйста, заполните все поля.';
                 status.style.color = '#ff4444';
+                return;
             }
+
+            // Отключим кнопку, чтобы не отправляли повторно
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Отправка...';
+
+            // Отправка данных на Formspree
+            fetch('https://formspree.io/f/xkjwdjoz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    name: name, 
+                    phone: phone,
+                    _subject: 'Новая заявка с сайта SBS 54!' 
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    status.innerHTML = '✅ Заявка принята! Мы свяжемся с вами в ближайшее время.';
+                    status.style.color = '#00d4ff';
+                    this.reset();
+                } else {
+                    // Если ответ не OK, пробуем прочитать ошибку
+                    return response.json().then(data => {
+                        throw new Error(data.error || 'Ошибка сервера');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка отправки:', error);
+                status.innerHTML = '❌ Ошибка отправки. Попробуйте позже или позвоните нам по телефону.';
+                status.style.color = '#ff4444';
+            })
+            .finally(() => {
+                // Включаем кнопку обратно
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Записаться на джем';
+            });
         });
 
         // ===== ВИДЕО СО ЗВУКОМ СРАЗУ =====
@@ -1244,20 +1283,22 @@
         const videoBlock = document.getElementById('heroVideoText');
         const playHint = document.getElementById('playHint');
 
+        // Пробуем запустить со звуком
         video.muted = false;
-
         video.play().then(() => {
             if (playHint) playHint.style.display = 'none';
         }).catch(() => {
             if (playHint) playHint.style.display = 'block';
         });
 
+        // При клике на видео — включаем звук
         videoBlock.addEventListener('click', function() {
             video.muted = false;
             video.play().catch(() => {});
             if (playHint) playHint.style.display = 'none';
         });
 
+        // При клике на страницу — включаем звук (запасной вариант)
         document.addEventListener('click', function enableSoundOnce() {
             video.muted = false;
             video.play().catch(() => {});
@@ -1265,6 +1306,7 @@
             document.removeEventListener('click', enableSoundOnce);
         });
 
+        // При загрузке страницы тоже пробуем
         window.addEventListener('load', function() {
             video.muted = false;
             video.play().catch(() => {});
