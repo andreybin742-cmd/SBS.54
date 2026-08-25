@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step by Step 54 — Профессиональная школа брейкинга</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: #0a0a0a;
+            position: relative;
+        }
+
+        /* ===== ФОН: КАРТИНКА + КРАСНЫЙ ГРАДИЕНТ ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(227, 6, 19, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(200, 0, 0, 0.12) 0%, transparent 50%),
+                url('bg/main-bg.jpg') center/cover no-repeat;
+            pointer-events: none;
+        }
+
+        @media (min-width: 901px) {
+            body::before {
+                background-attachment: fixed;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        :root {
+            --red: #e30613;
+            --dark-red: #a80000;
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray: #b0b0b0;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        header {
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(227, 6, 19, 0.2);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .logo-text span {
+            color: var(--red);
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--red);
+            transition: 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--red), var(--dark-red));
+            border: none;
+            padding: 10px 26px;
+            border-radius: 100px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 20px rgba(227, 6, 19, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 40px rgba(227, 6, 19, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 10px 30px;
+            border-radius: 100px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            backdrop-filter: blur(4px);
+            transition: 0.4s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--red);
+            background: rgba(227, 6, 19, 0.12);
+            color: #fff;
+        }
+
+        /* ===== ГЕРОЙ ===== */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .hero-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            width: 100%;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 550px;
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(14px);
+            padding: 45px;
+            border-radius: 32px;
+            border: 1px solid rgba(227, 6, 19, 0.15);
+            animation: fadeSlideUp 1s ease-out;
+        }
+
+        .hero-content h1 {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: clamp(32px, 4.5vw, 52px);
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hero-content h1 .highlight {
+            color: var(--red);
+            text-shadow: 0 0 30px rgba(227, 6, 19, 0.3);
+        }
+
+        .hero-content h1 .number {
+            color: #fff;
+            background: var(--red);
+            padding: 0 14px;
+            border-radius: 8px;
+            display: inline-block;
+            text-shadow: none;
+            margin-left: 4px;
+        }
+
+        .hero-content .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .hero-content .subtitle span {
+            color: var(--red);
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 520px;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== БОЛЬШИЕ ПРОЗРАЧНЫЕ БУКВЫ SBS54 С ВИДЕО ===== */
+        .hero-video-text {
+            flex: 1;
+            min-width: 380px;
+            height: 480px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(10, 10, 10, 0.3);
+            border: 1px solid rgba(227, 6, 19, 0.08);
+            animation: fadeSlideUp 1.2s ease-out;
+        }
+
+        .hero-video-text video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .hero-video-text .text-overlay {
+            position: relative;
+            z-index: 2;
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: clamp(70px, 11vw, 140px);
+            color: rgba(255, 255, 255, 0.25);
+            text-shadow: 0 0 80px rgba(227, 6, 19, 0.12);
+            letter-spacing: 12px;
+            line-height: 1;
+            text-align: center;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .hero-video-text .text-overlay span {
+            color: rgba(227, 6, 19, 0.2);
+        }
+
+        .hero-video-text .play-hint {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.2);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: rgba(0,0,0,0.4);
+            padding: 4px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .hero-video-text .play-hint:hover {
+            color: rgba(255,255,255,0.4);
+            border-color: rgba(227,6,19,0.2);
+        }
+
+        /* ===== СЕКЦИИ ===== */
+        .section {
+            padding: 50px 0;
+            scroll-margin-top: 140px;
+        }
+
+        .section-glass {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(227, 6, 19, 0.08);
+            border-radius: 32px;
+            padding: 50px 40px;
+            transition: transform 0.4s ease;
+        }
+
+        .section-glass:hover {
+            border-color: rgba(227, 6, 19, 0.2);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            background: rgba(227, 6, 19, 0.12);
+            padding: 4px 18px;
+            border-radius: 100px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        .section-title .gradient {
+            color: var(--red);
+            text-shadow: 0 0 20px rgba(227, 6, 19, 0.2);
+        }
+
+        .section-sub {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 15px;
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 30px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-card:hover {
+            border-color: var(--red);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 60px rgba(227, 6, 19, 0.08);
+        }
+
+        .info-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 19px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .info-card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .highlight-text {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        /* ===== КАРТИНКИ ===== */
+        .img-wrap {
+            width: 100%;
+            height: 180px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .info-card:hover .card-img {
+            transform: scale(1.06);
+        }
+
+        .avatar-img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            border: 3px solid var(--red);
+            display: block;
+            background: #111;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 0 30px rgba(227, 6, 19, 0.1);
+        }
+
+        .avatar-img:hover {
+            transform: scale(1.06) rotate(-3deg);
+            border-color: #fff;
+            box-shadow: 0 0 50px rgba(227, 6, 19, 0.3);
+        }
+
+        .photo-collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .collage-img-wrap {
+            width: 100%;
+            height: 150px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+        }
+
+        .collage-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .collage-img-wrap:hover .collage-img {
+            transform: scale(1.08);
+        }
+
+        /* ===== ЛАЙТБОКС ===== */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 5, 0.92);
+            backdrop-filter: blur(14px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s ease;
+            cursor: zoom-out;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 16px;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
+            transform: scale(0.92);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(227, 6, 19, 0.2);
+        }
+
+        .lightbox-overlay.active .lightbox-img {
+            transform: scale(1);
+        }
+
+        /* ===== ФОРМА ===== */
+        .form-premium {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-premium h2 {
+            font-family: 'Orbitron', monospace;
+            text-align: center;
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
+
+        .form-premium .sub {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 6px 0 24px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            color: #fff;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--red);
+            box-shadow: 0 0 30px rgba(227, 6, 19, 0.08);
+        }
+
+        .form-premium .btn-primary {
+            width: 100%;
+            padding: 16px;
+            font-size: 15px;
+            margin-top: 8px;
+        }
+
+        #formStatus {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* ===== ФУТЕР ===== */
+        footer {
+            padding: 35px 0;
+            border-top: 1px solid rgba(227, 6, 19, 0.08);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--red);
+            text-shadow: 0 0 20px rgba(227, 6, 19, 0.2);
+        }
+
+        /* ===== АНИМАЦИИ ===== */
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 1024px) {
+            .hero-wrapper {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-video-text {
+                min-width: 0;
+                width: 100%;
+                max-width: 600px;
+                height: 360px;
+            }
+            .hero-video-text .text-overlay {
+                font-size: clamp(60px, 10vw, 100px);
+                letter-spacing: 8px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            header {
+                position: sticky;
+                padding: 12px 0;
+            }
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            nav {
+                gap: 12px;
+                justify-content: center;
+            }
+            .section {
+                scroll-margin-top: 180px;
+            }
+            .hero-video-text {
+                height: 280px;
+            }
+            .hero-video-text .text-overlay {
+                font-size: clamp(50px, 8vw, 70px);
+                letter-spacing: 6px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                text-align: center;
+                padding: 20px 0;
+                min-height: auto;
+            }
+            .hero-content {
+                padding: 25px 18px;
+                margin: 0 auto;
+            }
+            .hero-content h1 {
+                font-size: clamp(26px, 7vw, 34px);
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .section-glass {
+                padding: 30px 16px;
+            }
+            .section-title {
+                font-size: 24px;
+            }
+            .photo-collage {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-video-text {
+                height: 200px;
+                min-width: 0;
+                border-radius: 16px;
+            }
+            .hero-video-text .text-overlay {
+                font-size: clamp(36px, 12vw, 50px);
+                letter-spacing: 4px;
+            }
+            .hero-video-text .play-hint {
+                font-size: 8px;
+                padding: 2px 12px;
+                bottom: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Step by Step 54" onerror="this.style.display='none'; this.after('SBS 54');">
+                <span class="logo-text">Step by Step <span>54</span></span>
+            </a>
+            <nav>
+                <a href="#directions">Направления</a>
+                <a href="#schedule">График</a>
+                <a href="#life">Сборы и Лагеря</a>
+                <a href="#teachers">Преподаватели</a>
+                <a href="#about">Результаты</a>
+                <a href="#contact" class="btn-primary">Записаться</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРОЙ ===== -->
+    <section class="container hero">
+        <div class="hero-wrapper">
+            <!-- Левый блок с текстом -->
+            <div class="hero-content">
+                <h1>
+                    <span class="highlight">STEP BY STEP</span>
+                    <span class="number">54</span>
+                </h1>
+                <div class="subtitle">Профессиональная школа <span>брейкинга</span></div>
+                <p>Профессиональное обучение брейкингу в Новосибирске для детей от 5 лет. Развиваем силу, характер и волю к победе под руководством официальных лицензированных тренеров.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary">Первый урок бесплатно</a>
+                    <a href="#directions" class="btn-secondary">Смотреть программы</a>
+                </div>
+            </div>
+
+            <!-- Правый блок: большие буквы SBS54 с видео внутри -->
+            <div class="hero-video-text" id="heroVideoText">
+                <video autoplay muted loop playsinline id="heroVideoElement">
+                    <source src="videos/hero-bg.mp4" type="video/mp4">
+                </video>
+                <div class="text-overlay">
+                    SBS<span>54</span>
+                </div>
+                <div class="play-hint">▶ нажми для звука</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== НАПРАВЛЕНИЯ ===== -->
+    <section id="directions" class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Программы</span>
+                <h2 class="section-title">Чему мы <span class="gradient">Обучаем</span></h2>
+                <p class="section-sub">Проверенные методики для любого уровня подготовки</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="info-card">
+                    <div class="img-wrap">
+                        <img src="images/breaking.jpg" alt="Брейкинг" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Breaking'">
+                    </div>
+                    <h3>Брейкинг (С нуля)</h3>
+                    <p>Классическая база: топрок, футворк, фризы и пауэр-мув. Поэтапное погружение в танец без травм, от первых шагов до участия в баттлах.</p>
+                </div>
+                <div class="info-card">
+                    <div class="img-wrap">
+                        <img src="images/fizra.jpg" alt="Физическая подготовка" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Physical+Training'">
+                    </div>
+                    <h3>Спец. физ. подготовка</h3>
+                    <p>Развиваем взрывную силу, мышечный корсет, гибкость суставов и координацию. Необходимый фундамент для безопасного выполнения акробатических элементов.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ГРАФИК ===== -->
+    <section id="schedule" class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Время</span>
+                <h2 class="section-title">Гибкое <span class="gradient">Расписание</span></h2>
+                <p class="section-sub">Тренируемся регулярно и на результат</p>
+            </div>
+            <div class="info-card" style="text-align: center; max-width: 700px; margin: 0 auto;">
+                <h3>Занятия проводятся каждый день, кроме воскресенья</h3>
+                <p style="margin-top: 12px; font-size: 16px;">У нас открыто множество групп под разный возраст и уровень подготовки. Оставьте заявку, и мы персонально подберем любой для тебя удобный день и время тренировок, чтобы совмещать со школой или другими хобби!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== СБОРЫ И ЛАГЕРЯ STEP BY STEP 54 ===== -->
+    <section id="life" class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Интенсивы</span>
+                <h2 class="section-title">Сборы и <span class="gradient">Лагеря STEP BY STEP 54</span></h2>
+                <p class="section-sub">Объединяем тренировки, отдых и командный дух</p>
+            </div>
+
+            <div class="info-card" style="margin-bottom: 25px;">
+                <h3>Полное погружение в культуру брейкинга</h3>
+                <p>Наша школа организует масштабные выездные интенсивы в горах Алтая каждое лето, а также тренировочные лагеря на базе школы в Новосибирске во время учебных каникул. Это ежедневная прокачка физической формы, лекции, мастер-классы от топовых би-боев России и незабываемая атмосфера уличных джемов.</p>
+
+                <div class="photo-collage">
+                    <div class="collage-img-wrap"><img src="images/camp1.jpg" alt="Сборы Алтай 1" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Camp+1'"></div>
+                    <div class="collage-img-wrap"><img src="images/camp2.jpg" alt="Лагерь SBS 2" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Camp+2'"></div>
+                    <div class="collage-img-wrap"><img src="images/camp3.jpg" alt="Сборы Алтай 3" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Camp+3'"></div>
+                    <div class="collage-img-wrap"><img src="images/camp4.jpg" alt="Лагерь SBS 4" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Camp+4'"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ПРЕПОДАВАТЕЛИ ===== -->
+    <section id="teachers" class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Наставники</span>
+                <h2 class="section-title">Наши <span class="gradient">Преподаватели</span></h2>
+                <p class="section-sub">Действующие атлеты и лицензированные специалисты</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="info-card" style="text-align: center;">
+                    <img src="images/stepan.jpg" alt="Степан Чжан" class="avatar-img" onerror="this.src='https://via.placeholder.com/200x200/222/ff0000?text=Stepan'">
+                    <h3>СТЕПАН ЧЖАН</h3>
+                    <p class="highlight-text" style="margin-bottom: 10px;">Основатель Step by Step 54</p>
+                    <p>Отвечает за общую физическую подготовку, акробатические элементы и растяжку. Выстраивает безопасный тренировочный процесс по лицензированным стандартам.</p>
+                </div>
+                <div class="info-card" style="text-align: center;">
+                    <img src="images/alena.jpg" alt="Алена Кудрявцева" class="avatar-img" onerror="this.src='https://via.placeholder.com/200x200/222/ff0000?text=Alena'">
+                    <h3>АЛЕНА КУДРЯВЦЕВА</h3>
+                    <p class="highlight-text" style="margin-bottom: 10px;">Чемпионка СФО и НСО, призер всероссийских соревнований</p>
+                    <p>Отвечает за музыкальность, ритмику и хореографию. Помогает танцорам чувствовать бит, развивает пластику и артистизм, делая каждое движение осмысленным и стильным.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== РЕЗУЛЬТАТЫ ===== -->
+    <section id="about" class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Зал славы</span>
+                <h2 class="section-title">Результаты и <span class="gradient">Победы</span></h2>
+                <p class="section-sub">Наши ученики и команда на вершине уличного спорта</p>
+            </div>
+
+            <div class="content-grid" style="margin-bottom: 30px;">
+                <div class="info-card">
+                    <div class="img-wrap">
+                        <img src="images/champion.jpg" alt="Чемпионка России" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Champion'">
+                    </div>
+                    <h3>Чемпионка России 2024</h3>
+                    <p>В стенах школы Step by Step 54 тренируется официальная <span class="highlight-text">Чемпионка России 2024 года</span> по брейкингу. Мы воспитываем сильнейших атлетов с железной дисциплиной.</p>
+                </div>
+                <div class="info-card">
+                    <div class="img-wrap">
+                        <img src="images/winners.jpg" alt="Победители баттлов" class="card-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Winners'">
+                    </div>
+                    <h3>Победители и призеры</h3>
+                    <p>Наши ученики регулярно занимают <span class="highlight-text">призовые места на всероссийских соревнованиях</span> и региональных баттлах. Каждый ребенок получает опыт сцены и соревновательный драйв.</p>
+                </div>
+            </div>
+
+            <div class="info-card" style="margin-bottom: 30px;">
+                <h3>Международная премия «КАРДО»</h3>
+                <p>Команда <span class="highlight-text">SBS Step Crew</span> вошла в число официальных финалистов крупнейшей в мире международной конкурс-премии уличной культуры и спорта «КАРДО». Это подтверждает наш высочайший уровень мастерства на мировой арене.</p>
+                <div class="photo-collage" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="collage-img-wrap"><img src="images/kardo1.jpg" alt="Cargo 1" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Kardo+1'"></div>
+                    <div class="collage-img-wrap"><img src="images/kardo2.jpg" alt="Cargo 2" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Kardo+2'"></div>
+                    <div class="collage-img-wrap"><img src="images/kardo3.jpg" alt="Cargo 3" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Kardo+3'"></div>
+                </div>
+            </div>
+
+            <div class="info-card" style="border-color: var(--red); background: rgba(227, 6, 19, 0.03);">
+                <h3>Государственная образовательная лицензия</h3>
+                <p>Школа брейкинга Step by Step 54 осуществляет деятельность на основании официальной <span class="highlight-text">лицензии № ЛО35-01199-54/04491081</span>. Все тренировки проводятся строго в соответствии с утвержденными стандартами спортивной и хореографической подготовки, обеспечивая максимальную безопасность и профессиональное развитие детей.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ФОРМА ЗАПИСИ ===== -->
+    <section id="contact" class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="form-premium">
+                <h2>СТАТЬ ЧАСТЬЮ STEP BY STEP 54</h2>
+                <p class="sub">Оставь заявку на первый бесплатный урок — мы перезвоним и подберём идеальную группу по возрасту.</p>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Имя ребенка / Родителя</label>
+                        <input type="text" id="name" placeholder="Например, Анна" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Контактный телефон</label>
+                        <input type="text" id="phone" placeholder="+7 999 123-45-67" required />
+                    </div>
+                    <button type="submit" class="btn-primary">Записаться на джем</button>
+                </form>
+                <div id="formStatus"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ЛАЙТБОКС ===== -->
+    <div class="lightbox-overlay" id="lightbox">
+        <img src="" alt="Просмотр фото" class="lightbox-img" id="lightboxImg">
+    </div>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://vk.ru/sbstepcrew" target="_blank" rel="noopener noreferrer">VK Команда</a>
+                <a href="https://t.me/sbs54nsk" target="_blank" rel="noopener noreferrer">Telegram Канал</a>
+            </div>
+            <p style="color: rgba(255,255,255,0.25); font-size: 12px;">&copy; 2026 Step by Step 54. Профессиональная школа брейкинга. Лицензия № ЛО35-01199-54/04491081</p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== ЛАЙТБОКС =====
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+
+        document.querySelectorAll('.card-img, .collage-img, .avatar-img').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        // ===== АНИМАЦИЯ ПРИ СКРОЛЛЕ =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ===== ФОРМА =====
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const status = document.getElementById('formStatus');
+
+            if (name && phone) {
+                status.innerHTML = '✅ Заявка принята! Ждём тебя на тренировке.';
+                status.style.color = '#e30613';
+                this.reset();
+            } else {
+                status.innerHTML = '⚠️ Пожалуйста, заполните все поля.';
+                status.style.color = '#ff4444';
+            }
+        });
+
+        // ===== ВКЛЮЧЕНИЕ ЗВУКА ДЛЯ БОЛЬШИХ БУКВ =====
+        document.getElementById('heroVideoText').addEventListener('click', function() {
+            const video = document.getElementById('heroVideoElement');
+            if (video) {
+                video.muted = false;
+                video.play().catch(() => {});
+                document.querySelector('.hero-video-text .play-hint').style.opacity = '0';
+            }
+        });
+
+        // ===== АВТОЗАПУСК ЗВУКА ПРИ КЛИКЕ =====
+        document.addEventListener('click', function playVideo() {
+            const video = document.getElementById('heroVideoElement');
+            if (video) {
+                video.muted = false;
+                video.play().catch(() => {});
+                document.querySelector('.hero-video-text .play-hint').style.opacity = '0';
+            }
+            document.removeEventListener('click', playVideo);
+        });
+
+        window.addEventListener('load', function() {
+            const video = document.getElementById('heroVideoElement');
+            if (video) {
+                video.muted = false;
+                video.play().catch(() => {});
+            }
+        });
+    </script>
+</body>
+</html>

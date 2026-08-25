@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Медиа и Контакты — SBS 54</title>
+    <link href="https://googleapis.com" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Space Grotesk', 'Inter', sans-serif; color: #fff; overflow-x: hidden; min-height: 100vh; background: #0a0a0a; position: relative; }
+        
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            background: radial-gradient(ellipse at 30% 40%, rgba(255,85,0,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(0,212,255,0.08) 0%, transparent 50%), url('https://unsplash.com') center/cover no-repeat;
+            background-attachment: fixed; pointer-events: none;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+        :root { --neon-orange: #ff5500; --neon-blue: #00d4ff; }
+
+        header { padding: 18px 0; position: sticky; top: 0; z-index: 100; background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-text { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 22px; background: linear-gradient(135deg, #ff5500, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        nav { display: flex; gap: 28px; align-items: center; }
+        nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        nav a:hover { color: #fff; }
+        
+        .btn-primary { background: linear-gradient(135deg, #ff5500, #ff2d00); border: none; padding: 10px 28px; border-radius: 100px; color: #fff; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: 0.4s; }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 85, 0, 0.4); }
+
+        .section { padding: 60px 0; }
+        .section-glass { background: rgba(10,10,10,0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.06); border-radius: 32px; padding: 50px 40px; margin-bottom: 40px; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #ff5500; background: rgba(255,85,0,0.1); padding: 4px 16px; border-radius: 100px; margin-bottom: 12px; }
+        .section-title { font-family: 'Orbitron', monospace; font-size: 36px; font-weight: 900; }
+        .section-title .gradient { background: linear-gradient(135deg, #ff5500, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .gallery-item { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); aspect-ratio: 4/3; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item:hover img { transform: scale(1.08); }
+
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        .contacts-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .info-list { list-style: none; margin-top: 20px; }
+        .info-list li { margin-bottom: 24px; font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+        .info-list strong { color: var(--neon-orange); font-family: 'Orbitron', monospace; display: block; font-size: 14px; margin-bottom: 4px; letter-spacing: 1px; }
+        
+        .map-container { border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); height: 100%; min-height: 300px; }
+        .map-container iframe { width: 100%; height: 100%; border: none; min-height: 300px; }
+
+        footer { padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.04); text-align: center; color: rgba(255,255,255,0.3); font-size: 13px; }
+        @media (max-width: 768px) { .header-inner { flex-direction: column; gap: 12px; } nav { gap: 16px; } .contacts-layout { grid-template-columns: 1fr; gap: 30px; } .section-glass { padding: 30px 20px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-text">SBS 54</span>
+            </a>
+            <nav>
+                <a href="index.html">Главная</a>
+                <a href="directions.html">Направления</a>
+                <a href="life.html">Жизнь школы</a>
+                <a href="media.html" style="color: #fff; border-bottom: 2px solid #ff5500;">Медиа</a>
+                <a href="index.html#contact" class="btn-primary">Записаться</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container section">
+        
+        <!-- Секция Фотогалерея -->
+        <section class="section-glass">
+            <div class="section-header">
+                <span class="section-tag">Атмосфера</span>
+                <h2 class="section-title">Кадры с <span class="gradient">Тренировок</span></h2>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://unsplash.com" alt="Брейк-данс тренировка">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://unsplash.com" alt="Танцевальный джем">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://unsplash.com" alt="Выступление на сцене">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://unsplash.com" alt="Элемент брейкинга">
+                </div>
+            </div>
+        </section>
+        <!-- Секция Видео -->
+        <section class="section-glass">
+            <div class="section-header">
+                <span class="section-tag">Экшен</span>
+                <h2 class="section-title">Видео <span class="gradient">Презентации</span></h2>
+            </div>
+            
+            <div class="video-grid">
+                <div class="video-wrapper">
+                    <!-- Замените ссылку после получения видео-визитки тренеров -->
+                    <iframe src="https://youtube.com" title="SBS 54 Promo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper">
+                    <!-- Замените ссылку на отчетный ролик с фестиваля или лагеря -->
+                    <iframe src="https://youtube.com" title="SBS 54 Battle Report" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+        <!-- Секция Контакты и Карта -->
+        <section class="section-glass">
+            <div class="section-header">
+                <span class="section-tag">Локация</span>
+                <h2 class="section-title">Ждем тебя на <span class="gradient">Тренировках</span></h2>
+            </div>
+            
+            <div class="contacts-layout">
+                <div>
+                    <ul class="info-list">
+                        <li>
+                            <strong>АДРЕС ШКОЛЫ</strong>
+                            г. Новосибирск, Первомайский р-н, ул. Шукшина, 7/1<br>ТЦ «Берёзовый», офис 402, 4 этаж
+                        </li>
+                        <li>
+                            <strong>ТЕЛЕФОН ДЛЯ СВЯЗИ</strong>
+                            +7 960 790-06-00
+                        </li>
+                        <li>
+                            <strong>ВРЕМЯ РАБОТЫ</strong>
+                            Понедельник — Пятница: по записи (08:30 — 20:00)<br>Суббота — Воскресенье: занятия по расписанию
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="map-container">
+                    <!-- Интерактивная карта Новосибирска (ул. Шукшина, 7/1) -->
+                    <iframe src="https://yandex.ru" allowfullscreen="true"></iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SBS Step 54. Сделано с битом и душой.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

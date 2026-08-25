@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Направления и Расписание — SBS 54</title>
+    <link href="https://googleapis.com" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Space Grotesk', 'Inter', sans-serif; color: #fff; overflow-x: hidden; min-height: 100vh; background: #0a0a0a; position: relative; }
+        
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            background: radial-gradient(ellipse at 30% 40%, rgba(255,85,0,0.12) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(0,212,255,0.08) 0%, transparent 50%), url('https://unsplash.com') center/cover no-repeat;
+            background-attachment: fixed; pointer-events: none;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+        :root { --neon-orange: #ff5500; --neon-blue: #00d4ff; }
+
+        header { padding: 18px 0; position: sticky; top: 0; z-index: 100; background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-text { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 22px; background: linear-gradient(135deg, #ff5500, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        nav { display: flex; gap: 28px; align-items: center; }
+        nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        nav a:hover { color: #fff; }
+        
+        .btn-primary { background: linear-gradient(135deg, #ff5500, #ff2d00); border: none; padding: 10px 28px; border-radius: 100px; color: #fff; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: 0.4s; }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 85, 0, 0.4); }
+        .section { padding: 60px 0; }
+        .section-glass { background: rgba(10,10,10,0.4); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.06); border-radius: 32px; padding: 50px 40px; margin-bottom: 40px; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #ff5500; background: rgba(255,85,0,0.1); padding: 4px 16px; border-radius: 100px; margin-bottom: 12px; }
+        .section-title { font-family: 'Orbitron', monospace; font-size: 36px; font-weight: 900; }
+        .section-title .gradient { background: linear-gradient(135deg, #ff5500, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .directions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 20px; }
+        .dir-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 30px; transition: 0.4s; }
+        .dir-card:hover { border-color: var(--neon-orange); transform: translateY(-4px); }
+        .dir-card h3 { font-family: 'Orbitron', monospace; font-size: 20px; margin-bottom: 12px; color: #fff; }
+        .dir-card p { color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.6; }
+
+        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 600px; }
+        .schedule-table th { padding: 16px; font-family: 'Orbitron', monospace; font-size: 14px; color: var(--neon-blue); text-align: left; border-bottom: 2px solid rgba(0,212,255,0.2); }
+        .schedule-table td { padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.8); font-size: 14px; }
+        .schedule-table tr:hover td { background: rgba(255,85,0,0.04); }
+        .time { font-weight: 700; color: #fff; }
+        .empty { color: rgba(255,255,255,0.2); }
+
+        .teachers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+        .teacher-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 30px; text-align: center; transition: 0.4s; }
+        .teacher-card:hover { border-color: var(--neon-blue); transform: translateY(-4px); }
+        .avatar { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, #ff5500, #00d4ff); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', monospace; font-size: 32px; font-weight: 900; }
+        .teacher-card h4 { font-family: 'Orbitron', monospace; font-size: 18px; margin-bottom: 6px; }
+        .status { font-size: 13px; color: var(--neon-orange); font-weight: 600; margin-bottom: 12px; display: block; }
+        .teacher-card p { color: rgba(255,255,255,0.5); font-size: 14px; line-height: 1.5; }
+
+        footer { padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.04); text-align: center; color: rgba(255,255,255,0.3); font-size: 13px; }
+        @media (max-width: 768px) { header { position: static; } .header-inner { flex-direction: column; gap: 12px; } nav { gap: 16px; } .section-glass { padding: 30px 20px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <span class="logo-text">SBS 54</span>
+            </a>
+            <nav>
+                <a href="index.html">Главная</a>
+                <a href="directions.html" style="color: #fff; border-bottom: 2px solid #ff5500;">Направления</a>
+                <a href="life.html">Жизнь школы</a>
+                <a href="media.html">Медиа</a>
+                <a href="index.html#contact" class="btn-primary">Записаться</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container section">
+        
+        <!-- Секция танцевальных стилей -->
+        <section class="section-glass">
+            <div class="section-header">
+                <span class="section-tag">Обучение</span>
+                <h2 class="section-title">Наши <span class="gradient">Стили</span></h2>
+            </div>
+            
+            <div class="directions-grid">
+                <div class="dir-card">
+                    <h3>БРЕЙКИНГ</h3>
+                    <p>Основа уличного танца: динамичный топрок, техничный футворк, силовые фризы и зрелищные вращения. Группы разделены по возрастам и уровню подготовки.</p>
+                </div>
+
+                <div class="dir-card">
+                    <h3>CONTEMPORARY</h3>
+                    <p>Современное хореографическое направление. Помогает развить максимальную гибкость, координацию движений, пластику и эмоциональную выразительность тела.</p>
+                </div>
+
+                <div class="dir-card">
+                    <h3>ФИЗ. ПОДГОТОВКА</h3>
+                    <p>Специализированный комплекс упражнений для будущих би-боев. Прокачиваем силу, выносливость и взрывные мышцы для безопасного выполнения акробатики.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Секция Расписание -->
+        <section class="section-glass">
+            <div class="section-header">
+                <span class="section-tag">График</span>
+                <h2 class="section-title">Приходи в <span class="gradient">удобное время</span></h2>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>День недели</th>
+                            <th>Начинающие</th>
+                            <th>Средний уровень</th>
+                            <th>Продвинутые</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Понедельник</td>
+                            <td class="time">18:00</td>
+                            <td class="time">19:30</td>
+                            <td class="time">21:00</td>
+                        </tr>
+                        <tr>
+                            <td>Вторник</td>
+                            <td class="empty">—</td>
+                            <td class="time">19:00</td>
+                            <td class="time">20:30</td>
+                        </tr>
+                        <tr>
+                            <td>Среда</td>
+                            <td class="time">18:00</td>
+                            <td class="time">19:30</td>
+                            <td class="time">21:00</td>
+                        </tr>
+                        <tr>
+                            <td>Четверг</td>
+                            <td class="time">17:30</td>
+                            <td class="empty">—</td>
+                            <td class="time">20:00</td>
+                        </tr>
+                        <tr>
+                            <td>Пятница</td>
+                            <td class="time">18:00</td>
+                            <td class="time">19:30</td>
+                            <td class="time">21:00</td>
+                        </tr>
+                        <tr>
+                            <td>Суббота</td>
+                            <td class="time">12:00</td>
+                            <td class="time">14:00</td>
+                            <td class="time">16:00</td>
+                        </tr>
+                        <tr>
+                            <td>Воскресенье</td>
+                            <td class="empty">—</td>
+                            <td class="time">13:00</td>
+                            <td class="empty">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Секция Тренеры -->
+        <section class="section-glass">
+            <div class="section-header">
+                <span class="section-tag">Профи</span>
+                <h2 class="section-title">Наши <span class="gradient">Преподаватели</span></h2>
+            </div>
+            
+            <div class="teachers-grid">
+                <div class="teacher-card">
+                    <div class="avatar">С</div>
+                    <h4>СТЕПАН</h4>
+                    <span class="status">Основатель SBS</span>
+                    <p>12 лет в би-боинге. Мощный, взрывной стиль. Эксперт по сложным силовым элементам и круткам.</p>
+                </div>
+
+                <div class="teacher-card">
+                    <div class="avatar">К</div>
+                    <h4>КОНСТАНТИН</h4>
+                    <span class="status">Мастер спорта</span>
+                    <p>Отвечает за пауэр-мув, общую физическую подготовку, растяжку и безопасную акробатику.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SBS Step 54. Сделано с битом и душой.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
