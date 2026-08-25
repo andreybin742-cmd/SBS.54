@@ -348,6 +348,11 @@
             pointer-events: none;
         }
 
+        /* ===== СТИКИ-ВИДЕО (ТОЛЬКО ДЛЯ ТЕЛЕФОНА) ===== */
+        .sticky-video-wrapper {
+            display: none;
+        }
+
         /* ===== СЕКЦИИ ===== */
         .section {
             padding: 50px 0;
@@ -616,7 +621,7 @@
             font-size: 14px;
         }
 
-        /* ===== ФУТЕР ===== */
+        /* ===== ФУТЕР (ЧЁРНЫЙ) ===== */
         footer {
             padding: 30px 0;
             border-top: 1px solid rgba(227, 6, 19, 0.08);
@@ -740,7 +745,7 @@
             }
         }
 
-        /* ===== ТЕЛЕФОН — ШАПКА УЗКАЯ, РОЛИК ВЫСОКИЙ, ЕДИНЫЙ БЛОК ===== */
+        /* ===== ТЕЛЕФОН — ШАПКА УЗКАЯ, РОЛИК ВЫСОКИЙ, ПРИЛИПАЕТ ПОВЕРХ ВСЕХ БЛОКОВ ===== */
         @media (max-width: 600px) {
             /* ===== ШАПКА УЗКАЯ ===== */
             header {
@@ -776,6 +781,79 @@
                 gap: 6px;
             }
 
+            /* ===== СКРЫВАЕМ ОБЫЧНОЕ ВИДЕО ===== */
+            .hero-video-text {
+                display: none !important;
+            }
+
+            /* ===== ПОКАЗЫВАЕМ СТИКИ-ВИДЕО ===== */
+            .sticky-video-wrapper {
+                display: block;
+                position: sticky;
+                top: 68px;
+                z-index: 50;
+                height: 400px;
+                width: 100vw;
+                max-width: 100vw;
+                overflow: hidden;
+                background: rgba(10, 10, 10, 0.5);
+                flex-shrink: 0;
+            }
+
+            .sticky-video-wrapper video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.6;
+            }
+
+            .sticky-video-wrapper .text-overlay {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                font-family: 'Orbitron', monospace;
+                font-weight: 900;
+                font-size: clamp(60px, 18vw, 100px);
+                color: rgba(255, 255, 255, 0.2);
+                text-shadow: 0 0 80px rgba(227, 6, 19, 0.12);
+                letter-spacing: 8px;
+                line-height: 1;
+                text-align: center;
+                pointer-events: none;
+                user-select: none;
+            }
+
+            .sticky-video-wrapper .text-overlay span {
+                color: rgba(227, 6, 19, 0.15);
+            }
+
+            .sticky-video-wrapper .play-hint {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 3;
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.3);
+                font-family: 'Inter', sans-serif;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                background: rgba(0,0,0,0.5);
+                padding: 6px 20px;
+                border-radius: 20px;
+                backdrop-filter: blur(4px);
+                border: 1px solid rgba(255,255,255,0.08);
+                cursor: pointer;
+                pointer-events: auto;
+            }
+
+            .sticky-video-wrapper .play-hint:hover {
+                color: rgba(255,255,255,0.6);
+                border-color: rgba(227,6,19,0.3);
+            }
+
             /* ===== ГЕРОЙ ===== */
             .hero {
                 padding: 0;
@@ -784,38 +862,6 @@
             .hero-wrapper {
                 gap: 0;
                 flex-direction: column;
-            }
-
-            /* ===== РОЛИК — ВЫСОКИЙ, ПРИЛИПАЕТ ===== */
-            .hero-video-text {
-                position: sticky;
-                top: 68px;
-                z-index: 50;
-                height: 480px;
-                width: 100vw;
-                max-width: 100vw;
-                min-width: 0;
-                border-radius: 0;
-                margin: 0;
-                border-left: none;
-                border-right: none;
-                border-top: none;
-                border-radius: 0;
-                animation: none;
-                flex-shrink: 0;
-                background: rgba(10, 10, 10, 0.5);
-            }
-            .hero-video-text .text-overlay {
-                font-size: clamp(70px, 20vw, 120px);
-                letter-spacing: 10px;
-            }
-            .hero-video-text .play-hint {
-                font-size: 12px;
-                padding: 6px 20px;
-                bottom: 20px;
-            }
-            .hero-video-text video {
-                opacity: 0.6;
             }
 
             /* ===== ТЕКСТ ПОСЛЕ ВИДЕО ===== */
@@ -931,13 +977,13 @@
 
         /* Очень маленькие экраны */
         @media (max-width: 400px) {
-            .hero-video-text {
-                height: 380px;
-                top: 62px;
+            .sticky-video-wrapper {
+                height: 320px;
+                top: 60px;
             }
-            .hero-video-text .text-overlay {
-                font-size: clamp(50px, 18vw, 70px);
-                letter-spacing: 6px;
+            .sticky-video-wrapper .text-overlay {
+                font-size: clamp(40px, 16vw, 60px);
+                letter-spacing: 5px;
             }
             nav a {
                 font-size: 8px;
@@ -985,10 +1031,21 @@
         </div>
     </header>
 
+    <!-- ===== СТИКИ-ВИДЕО (ТОЛЬКО ДЛЯ ТЕЛЕФОНА) ===== -->
+    <div class="sticky-video-wrapper" id="stickyVideo">
+        <video autoplay loop playsinline id="stickyVideoElement">
+            <source src="videos/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="text-overlay">
+            SBS<span>54</span>
+        </div>
+        <div class="play-hint" id="stickyPlayHint" style="display:none;">▶ нажми для звука</div>
+    </div>
+
     <!-- ===== ГЕРОЙ ===== -->
     <section class="container hero">
         <div class="hero-wrapper">
-            <!-- ВИДЕО-БЛОК (сначала на телефоне) -->
+            <!-- ОБЫЧНОЕ ВИДЕО (скрывается на телефоне) -->
             <div class="hero-video-text" id="heroVideoText">
                 <video autoplay loop playsinline id="heroVideoElement">
                     <source src="videos/hero-bg.mp4" type="video/mp4">
@@ -999,7 +1056,7 @@
                 <div class="play-hint" id="playHint" style="display:none;">▶ нажми для звука</div>
             </div>
 
-            <!-- ТЕКСТОВЫЙ БЛОК (после видео на телефоне) -->
+            <!-- ТЕКСТОВЫЙ БЛОК -->
             <div class="hero-content">
                 <h1>
                     <span class="highlight">STEP BY STEP</span>
@@ -1234,38 +1291,51 @@
             }
         });
 
-        // ===== ВИДЕО СО ЗВУКОМ СРАЗУ =====
-        const video = document.getElementById('heroVideoElement');
-        const videoBlock = document.getElementById('heroVideoText');
+        // ===== ВИДЕО СО ЗВУКОМ СРАЗУ (для обоих видео) =====
+        const videos = document.querySelectorAll('video');
+        const hints = document.querySelectorAll('.play-hint');
 
-        video.muted = false;
+        function enableSoundForAll() {
+            videos.forEach(v => {
+                v.muted = false;
+                v.play().catch(() => {});
+            });
+            hints.forEach(h => {
+                if (h) h.style.display = 'none';
+            });
+        }
 
-        video.play().then(() => {
-            const hint = document.getElementById('playHint');
-            if (hint) hint.style.display = 'none';
-        }).catch(() => {
-            const hint = document.getElementById('playHint');
-            if (hint) hint.style.display = 'block';
+        // Пробуем включить звук сразу
+        videos.forEach(v => {
+            v.muted = false;
+            v.play().then(() => {
+                hints.forEach(h => { if (h) h.style.display = 'none'; });
+            }).catch(() => {
+                hints.forEach(h => { if (h) h.style.display = 'block'; });
+            });
         });
 
-        videoBlock.addEventListener('click', function() {
-            video.muted = false;
-            video.play().catch(() => {});
-            const hint = document.getElementById('playHint');
-            if (hint) hint.style.display = 'none';
+        // При клике на любой блок с видео включаем звук
+        document.querySelectorAll('.hero-video-text, .sticky-video-wrapper').forEach(block => {
+            block.addEventListener('click', function() {
+                const video = this.querySelector('video');
+                const hint = this.querySelector('.play-hint');
+                if (video) {
+                    video.muted = false;
+                    video.play().catch(() => {});
+                }
+                if (hint) hint.style.display = 'none';
+            });
         });
 
+        // Запасной вариант — клик по странице
         document.addEventListener('click', function enableSoundOnce() {
-            video.muted = false;
-            video.play().catch(() => {});
-            const hint = document.getElementById('playHint');
-            if (hint) hint.style.display = 'none';
+            enableSoundForAll();
             document.removeEventListener('click', enableSoundOnce);
         });
 
         window.addEventListener('load', function() {
-            video.muted = false;
-            video.play().catch(() => {});
+            enableSoundForAll();
         });
     </script>
 </body>
