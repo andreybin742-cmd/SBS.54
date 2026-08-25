@@ -1222,7 +1222,7 @@
             observer.observe(el);
         });
 
-        // ===== ФОРМА: ОТПРАВКА НА ПОЧТУ (Formspree) + В TELEGRAM =====
+        // ===== ФОРМА: ОТПРАВКА НА ПОЧТУ (Formspree) + В TELEGRAM (через Cloudflare Worker) =====
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
@@ -1239,16 +1239,26 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Отправка...';
 
-            // ==== 1. ОТПРАВКА В TELEGRAM ====
+            // ==== 1. ОТПРАВКА В TELEGRAM (через Cloudflare Worker) ====
             const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
-            const CHAT_ID = '8157246500'; // ВАШ ПРАВИЛЬНЫЙ CHAT_ID со скриншота
+            const CHAT_ID = '8157246500';
+            const WORKER_URL = 'https://sbs-54.andreybin742.workers.dev';
             const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
 
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-            }).catch(() => {});
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    console.log('✅ Telegram: заявка отправлена');
+                } else {
+                    console.error('❌ Telegram ошибка:', data);
+                }
+            })
+            .catch(err => console.error('❌ Telegram сеть:', err));
 
             // ==== 2. ОТПРАВКА НА ПОЧТУ (Formspree) ====
             fetch('https://formspree.io/f/xkjwdjoz', {
@@ -1275,7 +1285,7 @@
                 }
             })
             .catch(error => {
-                console.error('Ошибка отправки:', error);
+                console.error('❌ Formspree ошибка:', error);
                 status.innerHTML = '❌ Ошибка отправки. Попробуйте позже или позвоните нам.';
                 status.style.color = '#ff4444';
             })
