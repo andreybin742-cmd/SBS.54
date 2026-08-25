@@ -278,8 +278,6 @@
             border: 1px solid rgba(227, 6, 19, 0.08);
             animation: fadeSlideUp 1.2s ease-out;
             cursor: pointer;
-            /* НЕ sticky на ПК */
-            position: relative;
         }
 
         .hero-video-text video {
@@ -736,7 +734,7 @@
             }
         }
 
-        /* ===== ТЕЛЕФОН — ВИДЕО ПРИЛИПАЕТ К ШАПКЕ ===== */
+        /* ===== ТЕЛЕФОН — ВИДЕО ПРИЛИПАЕТ К ШАПКЕ, КНОПКИ ПО ЦЕНТРУ ===== */
         @media (max-width: 600px) {
             /* ===== ШАПКА УЗКАЯ ===== */
             header {
@@ -797,9 +795,21 @@
                 margin-bottom: 20px;
                 text-align: center;
             }
+            
+            /* ===== КНОПКИ ПО ЦЕНТРУ ===== */
             .hero-actions {
                 justify-content: center;
                 gap: 10px;
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            .hero-actions .btn-primary,
+            .hero-actions .btn-secondary {
+                display: inline-block;
+                text-align: center;
+                flex: 0 1 auto;
+                min-width: 140px;
             }
             .btn-secondary {
                 font-size: 11px;
@@ -813,7 +823,7 @@
             }
             .hero-video-text {
                 position: sticky;
-                top: 70px;
+                top: 68px;
                 z-index: 50;
                 height: 340px;
                 width: 100vw;
@@ -934,6 +944,12 @@
             }
             .hero-video-text {
                 top: 56px;
+            }
+            .hero-actions .btn-primary,
+            .hero-actions .btn-secondary {
+                min-width: 120px;
+                font-size: 10px;
+                padding: 5px 14px;
             }
         }
     </style>
