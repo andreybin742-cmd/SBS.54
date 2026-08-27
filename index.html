@@ -1242,7 +1242,7 @@
             // ==== 1. ОТПРАВКА В TELEGRAM (через Cloudflare Worker) ====
             const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
             const CHAT_ID = '8157246500';
-            const WORKER_URL = 'https://sbs-54.andreybin742.workers.dev';
+            const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
             const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
 
             fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
