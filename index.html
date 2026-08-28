@@ -1338,27 +1338,27 @@
             submitBtn.textContent = 'Отправка...';
 
             // ==== 1. ОТПРАВКА В TELEGRAM (через Cloudflare Worker) ====
-            const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
-            const CHAT_IDS = ['8157246500']; // ← СЮДА ДОБАВЛЯЙТЕ ID ЧЕРЕЗ ЗАПЯТУЮ, например: ['8157246500', '123456789']
-            const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
-            const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
+const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
+const CHAT_IDS = ['8157246500', '1265008981']; // ← ДОБАВЛЕН ID СТЕПАНА
+const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
+const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
 
-            CHAT_IDS.forEach(id => {
-                fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: id, text: message })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        console.log(`✅ Telegram: заявка отправлена для chat_id ${id}`);
-                    } else {
-                        console.error(`❌ Telegram ошибка для chat_id ${id}:`, data);
-                    }
-                })
-                .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
-            });
+CHAT_IDS.forEach(id => {
+    fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: id, text: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            console.log(`✅ Telegram: заявка отправлена для chat_id ${id}`);
+        } else {
+            console.error(`❌ Telegram ошибка для chat_id ${id}:`, data);
+        }
+    })
+    .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
+});
 
             // ==== 2. ОТПРАВКА НА ПОЧТУ (Formspree) ====
             fetch('https://formspree.io/f/xkjwdjoz', {
