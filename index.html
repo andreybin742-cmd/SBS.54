@@ -519,7 +519,7 @@
             transform: scale(1.05);
         }
 
-        /* ===== СПЕЦИАЛЬНЫЙ КЛАСС ДЛЯ КАРДО И ЭКЗЕРСИС (БОЛЬШЕ ОБЛАСТЬ) ===== */
+        /* ===== СПЕЦИАЛЬНЫЙ КЛАСС ДЛЯ КАРДО И ЭКЗЕРСИС ===== */
         .collage-big {
             height: 180px !important;
         }
@@ -576,6 +576,7 @@
             text-align: center;
             font-size: 26px;
             letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         .form-premium .sub {
@@ -1027,7 +1028,7 @@
                 <div class="subtitle">Профессиональная школа <span>брейкинга</span></div>
                 <p>Профессиональное обучение брейкингу в Новосибирске для детей от 5 лет. Развиваем силу, характер и волю к победе под руководством команды опытных тренеров и действующих профессионалов с многолетним стажем.</p>
                 <div class="hero-actions">
-                    <a href="#contact" class="btn-primary">Первый урок бесплатно</a>
+                    <a href="#contact" class="btn-primary">Записаться</a>
                     <a href="#directions" class="btn-secondary">Смотреть программы</a>
                 </div>
             </div>
@@ -1077,12 +1078,12 @@
         </div>
     </section>
 
-    <!-- ===== СБОРЫ И ЛАГЕРЯ STEP BY STEP 54 ===== -->
+    <!-- ===== СБОРЫ И ЛАГЕРЯ ===== -->
     <section id="life" class="container section">
         <div class="section-glass animate-on-scroll">
             <div class="section-header">
                 <span class="section-tag">Интенсивы</span>
-                <h2 class="section-title">Сборы и Лагеря <span class="gradient">STEP BY STEP 54</span></h2>
+                <h2 class="section-title">Сборы и Лагеря<br><span class="gradient">STEP BY STEP 54</span></h2>
                 <p class="section-sub">Объединяем тренировки, отдых и командный дух</p>
             </div>
 
@@ -1152,10 +1153,10 @@
                 </div>
             </div>
 
-            <!-- БЛОК КАРДО (увеличенная область фото) -->
+            <!-- БЛОК КАРДО -->
             <div class="info-card" style="margin-bottom: 30px;">
                 <h3>Международная премия «КАРДО»</h3>
-                <p>Команда <span class="highlight-text">Step by Step 54 Crew</span> вошла в число финалистов крупнейшей в мире международной конкурс-премии уличной культуры и спорта «КАРДО». Это подтверждает наш высочайший уровень мастерства.</p>
+                <p>Команда <span class="highlight-text">Step by Step 54</span> вошла в число финалистов крупнейшей в мире международной конкурс-премии уличной культуры и спорта «КАРДО». Это подтверждает наш высочайший уровень мастерства.</p>
                 <div class="photo-collage" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
                     <div class="collage-img-wrap collage-big"><img src="images/kardo1.jpg" alt="Kardo 1" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Kardo+1'"></div>
                     <div class="collage-img-wrap collage-big"><img src="images/kardo2.jpg" alt="Kardo 2" class="collage-img" onerror="this.src='https://via.placeholder.com/400x200/222/ff0000?text=Kardo+2'"></div>
@@ -1163,7 +1164,7 @@
                 </div>
             </div>
 
-            <!-- БЛОК ЭКЗЕРСИС (увеличенная область фото) -->
+            <!-- БЛОК ЭКЗЕРСИС -->
             <div class="info-card" style="margin-bottom: 30px; border-color: #FFD700; background: rgba(255, 215, 0, 0.03);">
                 <h3>Национальная премия «Экзерсис»</h3>
                 <p>В декабре 2024 года тренер школы «Step by Step 54» <span class="highlight-text">Степан Чжан</span> одержал победу в номинации <span class="highlight-text">«Лучший детский тренер»</span> на престижной национальной премии «Экзерсис». Торжественная церемония прошла в Москве, на сцене театра «Одион».</p>
@@ -1254,8 +1255,8 @@
     <section id="contact" class="container section">
         <div class="section-glass animate-on-scroll">
             <div class="form-premium">
-                <h2>СТАТЬ ЧАСТЬЮ STEP BY STEP 54</h2>
-                <p class="sub">Оставь заявку на первый бесплатный урок — мы перезвоним и подберём идеальную группу по возрасту.</p>
+                <h2>Стать частью<br><span class="gradient">STEP BY STEP 54</span></h2>
+                <p class="sub">Оставь заявку, и мы подберём идеальную группу по возрасту и уровню.</p>
                 <form id="contactForm">
                     <div class="form-group">
                         <label for="name">Имя ребенка / Родителя</label>
@@ -1265,7 +1266,7 @@
                         <label for="phone">Контактный телефон</label>
                         <input type="text" id="phone" placeholder="+7 999 123-45-67" required />
                     </div>
-                    <button type="submit" class="btn-primary">Записаться на занятие</button>
+                    <button type="submit" class="btn-primary">Отправить заявку</button>
                 </form>
                 <div id="formStatus"></div>
             </div>
@@ -1338,24 +1339,26 @@
 
             // ==== 1. ОТПРАВКА В TELEGRAM (через Cloudflare Worker) ====
             const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
-            const CHAT_ID = '8157246500';
+            const CHAT_IDS = ['8157246500']; // ← СЮДА ДОБАВЛЯЙТЕ ID ЧЕРЕЗ ЗАПЯТУЮ, например: ['8157246500', '123456789']
             const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
             const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
 
-            fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    console.log('✅ Telegram: заявка отправлена');
-                } else {
-                    console.error('❌ Telegram ошибка:', data);
-                }
-            })
-            .catch(err => console.error('❌ Telegram сеть:', err));
+            CHAT_IDS.forEach(id => {
+                fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: id, text: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log(`✅ Telegram: заявка отправлена для chat_id ${id}`);
+                    } else {
+                        console.error(`❌ Telegram ошибка для chat_id ${id}:`, data);
+                    }
+                })
+                .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
+            });
 
             // ==== 2. ОТПРАВКА НА ПОЧТУ (Formspree) ====
             fetch('https://formspree.io/f/xkjwdjoz', {
@@ -1372,7 +1375,7 @@
             })
             .then(response => {
                 if (response.ok) {
-                    status.innerHTML = '✅ Заявка принята! Мы свяжемся с вами в ближайшее время.';
+                    status.innerHTML = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
                     status.style.color = '#00d4ff';
                     this.reset();
                 } else {
@@ -1388,7 +1391,7 @@
             })
             .finally(() => {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Записаться на занятие';
+                submitBtn.textContent = 'Отправить заявку';
             });
         });
 
