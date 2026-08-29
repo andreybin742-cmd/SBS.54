@@ -565,6 +565,63 @@
             transform: scale(1);
         }
 
+        /* ===== КОНТАКТЫ ===== */
+        .contacts-section {
+            padding: 50px 0;
+        }
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: stretch;
+        }
+        .contacts-info {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            justify-content: center;
+        }
+        .contacts-info .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .contacts-info .contact-item .label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .contacts-info .contact-item .value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.4;
+        }
+        .contacts-info .contact-item .value a {
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .contacts-info .contact-item .value a:hover {
+            color: var(--red);
+        }
+        .contacts-map {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            min-height: 320px;
+            background: #111;
+        }
+        .contacts-map iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 320px;
+            border: none;
+            display: block;
+        }
+
         /* ===== ФОРМА ===== */
         .form-premium {
             max-width: 500px;
@@ -710,6 +767,13 @@
             .hero-video-text .text-overlay {
                 font-size: clamp(60px, 10vw, 100px);
                 letter-spacing: 8px;
+            }
+            .contacts-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .contacts-info .contact-item .value {
+                font-size: 18px;
             }
         }
 
@@ -909,6 +973,24 @@
                 font-size: 14px;
             }
 
+            /* ===== КОНТАКТЫ ===== */
+            .contacts-section {
+                padding: 30px 0;
+            }
+            .contacts-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .contacts-info .contact-item .value {
+                font-size: 16px;
+            }
+            .contacts-map {
+                min-height: 220px;
+            }
+            .contacts-map iframe {
+                min-height: 220px;
+            }
+
             /* ===== ФОРМА ===== */
             .form-premium h2 {
                 font-size: 24px;
@@ -981,6 +1063,15 @@
                 min-width: 140px;
                 font-size: 13px;
                 padding: 10px 18px;
+            }
+            .contacts-info .contact-item .value {
+                font-size: 14px;
+            }
+            .contacts-map {
+                min-height: 180px;
+            }
+            .contacts-map iframe {
+                min-height: 180px;
             }
         }
     </style>
@@ -1177,6 +1268,36 @@
         </div>
     </section>
 
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="container contacts-section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Контакты</span>
+                <h2 class="section-title">Свяжитесь с <span class="gradient">нами</span></h2>
+                <p class="section-sub">Приходите на пробное занятие или задайте вопрос</p>
+            </div>
+
+            <div class="contacts-grid">
+                <!-- Информация -->
+                <div class="contacts-info">
+                    <div class="contact-item">
+                        <span class="label">📍 Адрес</span>
+                        <span class="value">г. Новосибирск, Первомайский р-н "КСМ"<br>ул. Шукшина 7/1 "ТЦ Березовый"<br>4 этаж (402 зал)</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="label">📞 Телефон</span>
+                        <span class="value"><a href="tel:+89607900600">8 (960) 790-06-00</a></span>
+                    </div>
+                </div>
+
+                <!-- Карта -->
+                <div class="contacts-map">
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8c4f2b5f8a7e8b3d0f1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z&source=constructor" allowfullscreen="true" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== ОТЗЫВЫ 2ГИС ===== -->
     <section class="container section">
         <div class="section-glass animate-on-scroll">
@@ -1338,27 +1459,27 @@
             submitBtn.textContent = 'Отправка...';
 
             // ==== 1. ОТПРАВКА В TELEGRAM (через Cloudflare Worker) ====
-const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
-const CHAT_IDS = ['8157246500', '1265008981']; // ← ДОБАВЛЕН ID СТЕПАНА
-const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
-const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
+            const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
+            const CHAT_IDS = ['8157246500', '1265008981'];
+            const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
+            const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
 
-CHAT_IDS.forEach(id => {
-    fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: id, text: message })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.ok) {
-            console.log(`✅ Telegram: заявка отправлена для chat_id ${id}`);
-        } else {
-            console.error(`❌ Telegram ошибка для chat_id ${id}:`, data);
-        }
-    })
-    .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
-});
+            CHAT_IDS.forEach(id => {
+                fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: id, text: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log(`✅ Telegram: заявка отправлена для chat_id ${id}`);
+                    } else {
+                        console.error(`❌ Telegram ошибка для chat_id ${id}:`, data);
+                    }
+                })
+                .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
+            });
 
             // ==== 2. ОТПРАВКА НА ПОЧТУ (Formspree) ====
             fetch('https://formspree.io/f/xkjwdjoz', {
