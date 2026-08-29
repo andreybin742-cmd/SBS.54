@@ -607,6 +607,11 @@
         .contacts-info .contact-item .value a:hover {
             color: var(--red);
         }
+        .contacts-info .contact-item .phone-large {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+        }
         .contacts-map {
             border-radius: 16px;
             overflow: hidden;
@@ -774,6 +779,9 @@
             }
             .contacts-info .contact-item .value {
                 font-size: 18px;
+            }
+            .contacts-info .contact-item .phone-large {
+                font-size: 24px;
             }
         }
 
@@ -984,6 +992,9 @@
             .contacts-info .contact-item .value {
                 font-size: 16px;
             }
+            .contacts-info .contact-item .phone-large {
+                font-size: 22px;
+            }
             .contacts-map {
                 min-height: 220px;
             }
@@ -1066,6 +1077,9 @@
             }
             .contacts-info .contact-item .value {
                 font-size: 14px;
+            }
+            .contacts-info .contact-item .phone-large {
+                font-size: 18px;
             }
             .contacts-map {
                 min-height: 180px;
@@ -1268,32 +1282,24 @@
         </div>
     </section>
 
-    <!-- ===== КОНТАКТЫ ===== -->
-    <section class="container contacts-section">
-        <div class="section-glass animate-on-scroll">
+    <!-- ===== ФИЛЬМ О ШКОЛЕ ===== -->
+    <section class="container section">
+        <div class="section-glass animate-on-scroll" style="text-align: center;">
             <div class="section-header">
-                <span class="section-tag">Контакты</span>
-                <h2 class="section-title">Свяжитесь с <span class="gradient">нами</span></h2>
-                <p class="section-sub">Приходите на пробное занятие или задайте вопрос</p>
+                <span class="section-tag">Кино</span>
+                <h2 class="section-title">Фильм о <span class="gradient">Step by Step 54</span></h2>
+                <p class="section-sub">История создания нашей брейк-команды</p>
             </div>
 
-            <div class="contacts-grid">
-                <!-- Информация -->
-                <div class="contacts-info">
-                    <div class="contact-item">
-                        <span class="label">📍 Адрес</span>
-                        <span class="value">г. Новосибирск, Первомайский р-н "КСМ"<br>ул. Шукшина 7/1 "ТЦ Березовый"<br>4 этаж (402 зал)</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="label">📞 Телефон</span>
-                        <span class="value"><a href="tel:+89607900600">8 (960) 790-06-00</a></span>
-                    </div>
-                </div>
+            <div style="max-width: 600px; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+                <img src="images/film-poster.jpg" alt="Фильм о Step by Step 54" style="width: 100%; display: block;" onerror="this.style.display='none';">
+            </div>
 
-                <!-- Карта -->
-                <div class="contacts-map">
-                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8c4f2b5f8a7e8b3d0f1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z&source=constructor" allowfullscreen="true" loading="lazy"></iframe>
-                </div>
+            <div style="margin-top: 24px;">
+                <p style="font-size: 16px; color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto 20px; line-height: 1.7;">
+                    Фильм Ильи Дурапова — это история о том, как создавалась наша брейк-команда. О семье, любви, поддержке, развитии и вере в близких. О пути к цели, трудностях и победах.
+                </p>
+                <a href="https://vk.ru/wall-166732422_907" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, #e30613, #a80000); border-radius: 100px; color: #fff; text-decoration: none; font-weight: 700; font-size: 16px; transition: 0.3s; box-shadow: 0 0 30px rgba(227,6,19,0.3);">▶ Смотреть фильм</a>
             </div>
         </div>
     </section>
@@ -1340,28 +1346,6 @@
         </div>
     </section>
 
-    <!-- ===== ФИЛЬМ О ШКОЛЕ ===== -->
-    <section class="container section">
-        <div class="section-glass animate-on-scroll" style="text-align: center;">
-            <div class="section-header">
-                <span class="section-tag">Кино</span>
-                <h2 class="section-title">Фильм о <span class="gradient">Step by Step 54</span></h2>
-                <p class="section-sub">История создания нашей брейк-команды</p>
-            </div>
-
-            <div style="max-width: 600px; margin: 0 auto; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
-                <img src="images/film-poster.jpg" alt="Фильм о Step by Step 54" style="width: 100%; display: block;" onerror="this.style.display='none';">
-            </div>
-
-            <div style="margin-top: 24px;">
-                <p style="font-size: 16px; color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto 20px; line-height: 1.7;">
-                    Фильм Ильи Дурапова — это история о том, как создавалась наша брейк-команда. О семье, любви, поддержке, развитии и вере в близких. О пути к цели, трудностях и победах.
-                </p>
-                <a href="https://vk.ru/wall-166732422_907" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, #e30613, #a80000); border-radius: 100px; color: #fff; text-decoration: none; font-weight: 700; font-size: 16px; transition: 0.3s; box-shadow: 0 0 30px rgba(227,6,19,0.3);">▶ Смотреть фильм</a>
-            </div>
-        </div>
-    </section>
-
     <!-- ===== ГОСУДАРСТВЕННАЯ ЛИЦЕНЗИЯ ===== -->
     <section class="container section">
         <div class="section-glass animate-on-scroll">
@@ -1390,6 +1374,35 @@
                     <button type="submit" class="btn-primary">Отправить заявку</button>
                 </form>
                 <div id="formStatus"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="container contacts-section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Контакты</span>
+                <h2 class="section-title"><span class="gradient">Контакты</span></h2>
+            </div>
+
+            <div class="contacts-grid">
+                <!-- Информация -->
+                <div class="contacts-info">
+                    <div class="contact-item">
+                        <span class="label">📍 Адрес</span>
+                        <span class="value">г. Новосибирск, Первомайский р-н "КСМ"<br>ул. Шукшина 7/1 "ТЦ Березовый"<br>4 этаж (402 зал)</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="label">📞 Телефон</span>
+                        <span class="value phone-large"><a href="tel:+89607900600">8 (960) 790-06-00</a></span>
+                    </div>
+                </div>
+
+                <!-- Карта 2ГИС с конкретным адресом -->
+                <div class="contacts-map">
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Abfc3099f97b00316b14ca0f574589c2ab5e6095457bb0504fcf6bf9e0af0dc2d&source=constructor" allowfullscreen="true" loading="lazy"></iframe>
+                </div>
             </div>
         </div>
     </section>
