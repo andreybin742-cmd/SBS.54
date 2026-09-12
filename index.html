@@ -679,6 +679,42 @@
             box-shadow: 0 0 30px rgba(227, 6, 19, 0.08);
         }
 
+        /* ===== ЧЕКБОКС СОГЛАСИЯ ===== */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-top: 2px;
+            accent-color: var(--red);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .checkbox-group label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+        .checkbox-group label a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: underline;
+            transition: 0.3s;
+        }
+        .checkbox-group label a:hover {
+            color: var(--red);
+        }
+
         .form-premium .btn-primary {
             width: 100%;
             padding: 16px;
@@ -1371,6 +1407,10 @@
                         <label for="phone">Контактный телефон</label>
                         <input type="text" id="phone" placeholder="+7 999 123-45-67" required />
                     </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="consent" required />
+                        <label for="consent">Согласен на обработку персональных данных<br><a href="#" onclick="alert('Политика обработки персональных данных:\n\n1. Ваши данные используются исключительно для связи с вами и организации тренировочного процесса.\n2. Мы не передаём ваши данные третьим лицам.\n3. Вы можете отозвать согласие, написав нам.\n\nДля получения полного текста политики свяжитесь с нами.'); return false;">Политика обработки персональных данных</a></label>
+                    </div>
                     <button type="submit" class="btn-primary">Отправить заявку</button>
                 </form>
                 <div id="formStatus"></div>
@@ -1378,49 +1418,48 @@
         </div>
     </section>
 
-       <!-- ===== КОНТАКТЫ ===== -->
     <!-- ===== КОНТАКТЫ ===== -->
-<section class="container contacts-section">
-    <div class="section-glass animate-on-scroll">
-        <div class="section-header" style="margin-bottom: 20px;">
-            <h2 class="section-title" style="font-size: 38px; font-weight: 900;">КОНТАКТЫ</h2>
-        </div>
+    <section class="container contacts-section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h2 class="section-title" style="font-size: 38px; font-weight: 900;">КОНТАКТЫ</h2>
+            </div>
 
-        <!-- Первый адрес (существующий) -->
-        <div class="contacts-grid" style="margin-bottom: 40px;">
-            <div class="contacts-info">
-                <div class="contact-item">
-                    <span class="label">📍 Адрес 1</span>
-                    <span class="value">г. Новосибирск, Первомайский р-н "КСМ"<br>ул. Шукшина 7/1 "ТЦ Березовый"<br>4 этаж (402 зал)</span>
+            <!-- Первый адрес -->
+            <div class="contacts-grid" style="margin-bottom: 40px;">
+                <div class="contacts-info">
+                    <div class="contact-item">
+                        <span class="label">📍 Адрес 1</span>
+                        <span class="value">г. Новосибирск, Первомайский р-н "КСМ"<br>ул. Шукшина 7/1 "ТЦ Березовый"<br>4 этаж (402 зал)</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="label">📞 Телефон</span>
+                        <span class="value phone-large"><a href="tel:+89607900600">8 (960) 790-06-00</a></span>
+                    </div>
                 </div>
-                <div class="contact-item">
-                    <span class="label">📞 Телефон</span>
-                    <span class="value phone-large"><a href="tel:+89607900600">8 (960) 790-06-00</a></span>
+                <div class="contacts-map">
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Abfc3099f97b00316b14ca0f574589c2ab5e6095457bb0504fcf6bf9e0af0dc2d&amp;source=constructor&amp;mode=search&amp;text=г.Новосибирск%2C%20ул.Шукшина%207%2F1%20%22ТЦ%20Березовый%22&amp;ll=82.905350%2C54.997630&amp;z=18" allowfullscreen="true" loading="lazy"></iframe>
                 </div>
             </div>
-            <div class="contacts-map">
-                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Abfc3099f97b00316b14ca0f574589c2ab5e6095457bb0504fcf6bf9e0af0dc2d&amp;source=constructor&amp;mode=search&amp;text=г.Новосибирск%2C%20ул.Шукшина%207%2F1%20%22ТЦ%20Березовый%22&amp;ll=82.905350%2C54.997630&amp;z=18" allowfullscreen="true" loading="lazy"></iframe>
-            </div>
-        </div>
 
-        <!-- Второй адрес (новый) -->
-        <div class="contacts-grid">
-            <div class="contacts-info">
-                <div class="contact-item">
-                    <span class="label">📍 Адрес 2</span>
-                    <span class="value">г. Новосибирск, мкр Весенний<br>ул. Заречная, 4<br>Фитнес-клуб «5 элементов»</span>
+            <!-- Второй адрес -->
+            <div class="contacts-grid">
+                <div class="contacts-info">
+                    <div class="contact-item">
+                        <span class="label">📍 Адрес 2</span>
+                        <span class="value">г. Новосибирск, мкр Весенний<br>ул. Заречная, 4<br>Фитнес-клуб «5 элементов»</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="label">📞 Телефон</span>
+                        <span class="value phone-large"><a href="tel:+89607900600">8 (960) 790-06-00</a></span>
+                    </div>
                 </div>
-                <div class="contact-item">
-                    <span class="label">📞 Телефон</span>
-                    <span class="value phone-large"><a href="tel:+89607900600">8 (960) 790-06-00</a></span>
+                <div class="contacts-map">
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8c4f2b5f8a7e8b3d0f1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z&amp;source=constructor&amp;mode=search&amp;text=г.Новосибирск%2C%20ул.Заречная%204%20%225%20элементов%22&amp;ll=82.905350%2C54.997630&amp;z=18" allowfullscreen="true" loading="lazy"></iframe>
                 </div>
-            </div>
-            <div class="contacts-map">
-                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A8c4f2b5f8a7e8b3d0f1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z&amp;source=constructor&amp;mode=search&amp;text=г.Новосибирск%2C%20ул.Заречная%204%20%225%20элементов%22&amp;ll=82.905350%2C54.997630&amp;z=18" allowfullscreen="true" loading="lazy"></iframe>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- ===== ЛАЙТБОКС ===== -->
     <div class="lightbox-overlay" id="lightbox">
@@ -1474,10 +1513,17 @@
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
+            const consent = document.getElementById('consent').checked;
             const status = document.getElementById('formStatus');
 
             if (!name || !phone) {
                 status.innerHTML = '⚠️ Пожалуйста, заполните все поля.';
+                status.style.color = '#ff4444';
+                return;
+            }
+
+            if (!consent) {
+                status.innerHTML = '⚠️ Необходимо согласие на обработку персональных данных.';
                 status.style.color = '#ff4444';
                 return;
             }
@@ -1488,7 +1534,7 @@
 
             // ==== 1. ОТПРАВКА В TELEGRAM (через Cloudflare Worker) ====
             const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
-            const CHAT_IDS = ['8157246500', '1265008981', '1328240270'];
+            const CHAT_IDS = ['8157246500', '1265008981'];
             const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
             const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
 
