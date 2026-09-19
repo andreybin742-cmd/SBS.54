@@ -444,7 +444,7 @@
             font-weight: 600;
         }
 
-        /* ===== КАРТИНКИ (ОБЩИЕ) ===== */
+        /* ===== КАРТИНКИ ===== */
         .img-wrap {
             width: 100%;
             height: 160px;
@@ -602,17 +602,22 @@
             gap: 8px;
         }
 
-        .online-counter .eye {
-            font-size: 16px;
+        .online-counter .dot {
+            width: 10px;
+            height: 10px;
+            background: #e30613;
+            border-radius: 50%;
+            animation: pulseDot 1.5s infinite;
+            flex-shrink: 0;
         }
 
         .online-counter .count {
-            color: #00d4ff;
+            color: #e30613;
             font-family: 'Orbitron', monospace;
             font-weight: 900;
         }
 
-        /* ===== КНОПКИ ЭФИРОВ ===== */
+        /* ===== КНОПКИ ЭФИРОВ (БЕЗ ЗНАЧКОВ) ===== */
         .stream-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -657,17 +662,14 @@
             background: linear-gradient(135deg, rgba(227, 6, 19, 0.25), rgba(168, 0, 0, 0.15));
         }
 
-        .stream-btn-icon {
-            font-size: 32px;
+        .stream-btn-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--red);
             flex-shrink: 0;
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--red), var(--dark-red));
-            border-radius: 14px;
-            box-shadow: 0 0 25px rgba(227, 6, 19, 0.4);
+            box-shadow: 0 0 20px rgba(227, 6, 19, 0.8);
+            animation: pulseDot 1.8s infinite;
         }
 
         .stream-btn-content {
@@ -1294,7 +1296,7 @@
             }
         }
 
-        /* ===== ТЕЛЕФОН — ШАПКА УЗКАЯ, ВИДЕО ПРИЛИПАЕТ ===== */
+        /* ===== ТЕЛЕФОН ===== */
         @media (max-width: 600px) {
             header {
                 padding: 8px 0;
@@ -1461,18 +1463,18 @@
                 top: 10px;
                 right: 10px;
             }
-            .online-counter .eye {
-                font-size: 13px;
+            .online-counter .dot {
+                width: 7px;
+                height: 7px;
             }
 
             .stream-btn {
                 padding: 16px 18px;
                 gap: 12px;
             }
-            .stream-btn-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 24px;
+            .stream-btn-dot {
+                width: 12px;
+                height: 12px;
             }
             .stream-btn-content .title {
                 font-size: 14px;
@@ -1860,19 +1862,19 @@
                 <p class="section-sub">Прямые эфиры, репортажи и статьи о нашей школе</p>
             </div>
 
-            <!-- Онлайн-видео с счётчиком зрителей -->
+            <!-- Онлайн-видео (интервью) -->
             <div class="media-online-wrapper">
                 <div class="live-badge">
                     <span class="live-dot"></span>
                     LIVE
                 </div>
                 <div class="online-counter">
-                    <span class="eye">👁</span>
+                    <span class="dot"></span>
                     <span class="count" id="onlineCount">842</span>
                     <span>смотрят сейчас</span>
                 </div>
                 <iframe 
-                    src="https://vk.com/video_ext.php?oid=-166732422&id=456239178&hash=1a2b3c4d5e6f7g8h&hd=2" 
+                    src="https://vkvideo.ru/video_ext.php?oid=-28915774&id=456277888&hd=2&autoplay=1&t=1m25s" 
                     allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
                     frameborder="0" 
                     allowfullscreen>
@@ -1882,7 +1884,7 @@
             <!-- Кнопки для перехода к эфирам -->
             <div class="stream-buttons">
                 <a href="https://vk.ru/wall-166732422_692" target="_blank" rel="noopener noreferrer" class="stream-btn">
-                    <div class="stream-btn-icon">🎬</div>
+                    <div class="stream-btn-dot"></div>
                     <div class="stream-btn-content">
                         <div class="title">Эфир №1 — Тренировка</div>
                         <div class="desc">Смотрите прямой эфир с тренировки</div>
@@ -1890,7 +1892,7 @@
                     <div class="stream-btn-arrow">→</div>
                 </a>
                 <a href="https://vk.ru/wall-166732422_802" target="_blank" rel="noopener noreferrer" class="stream-btn">
-                    <div class="stream-btn-icon">📺</div>
+                    <div class="stream-btn-dot"></div>
                     <div class="stream-btn-content">
                         <div class="title">Эфир №2 — Баттл</div>
                         <div class="desc">Запись выступления нашей команды</div>
@@ -1898,7 +1900,7 @@
                     <div class="stream-btn-arrow">→</div>
                 </a>
                 <a href="https://vkvideo.ru/video-28915774_456277888" target="_blank" rel="noopener noreferrer" class="stream-btn">
-                    <div class="stream-btn-icon">🎥</div>
+                    <div class="stream-btn-dot"></div>
                     <div class="stream-btn-content">
                         <div class="title">Эфир №3 — Интервью</div>
                         <div class="desc">Видео-интервью с тренером</div>
@@ -1933,11 +1935,130 @@
                     <span class="article-link">Читать статью →</span>
                 </a>
 
-                <a href="https://sport.nso.ru/news?field_tags_tid%5B%5D=239" target="_blank" rel="noopener noreferrer" class="article-card">
+                <a href="https://sport.nso.ru/news/21612" target="_blank" rel="noopener noreferrer" class="article-card">
                     <span class="article-source">Минспорт НСО</span>
-                    <h3 class="article-title">Новости министерства спорта Новосибирской области</h3>
-                    <p class="article-excerpt">Официальные новости и материалы о развитии брейкинга в регионе, победах наших спортсменов.</p>
-                    <span class="article-link">Читать статьи →</span>
+                    <h3 class="article-title">Новосибирские брейкеры на всероссийских соревнованиях</h3>
+                    <p class="article-excerpt">Наши спортсмены достойно представили регион на всероссийской арене.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/21327" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Брейкинг: о медалях суперфестиваля</h3>
+                    <p class="article-excerpt">Алена Кудрявцева и ученики Step by Step 54 завоевали награды суперфестиваля.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/20493" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Развитие брейкинга в Новосибирской области</h3>
+                    <p class="article-excerpt">Как брейкинг становится одним из ведущих направлений в регионе.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/20166" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Итоги года в брейкинге</h3>
+                    <p class="article-excerpt">Наши ученики и тренеры — в числе лучших спортсменов региона.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/19882" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Брейкинг на Играх БРИКС</h3>
+                    <p class="article-excerpt">Наши спортсмены представили Новосибирскую область на международных соревнованиях.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/19599" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">На площадке дружбы и обмена опытом</h3>
+                    <p class="article-excerpt">Команда Step by Step 54 вошла в число финалистов премии «КАРДО».</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/19336" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Победы новосибирских брейкеров</h3>
+                    <p class="article-excerpt">Очередные успехи наших учеников на всероссийских стартах.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/18659" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Чемпионат области по брейкингу</h3>
+                    <p class="article-excerpt">Из 48 разыгранных медалей половину забрали ученики Степана Чжана.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/18045" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">А у нас – «Экзерсис»!</h3>
+                    <p class="article-excerpt">Степан Чжан — первый лауреат премии «Экзерсис» в новосибирском брейкинге.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/18040" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Брейкинг: новые горизонты</h3>
+                    <p class="article-excerpt">Как брейкинг официально пополнил спортивную семью России.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/17886" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Восходящие звёзды брейкинга</h3>
+                    <p class="article-excerpt">Юные ученики Step by Step 54 — будущее новосибирского брейкинга.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/17150" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Развитие уличной культуры и спорта</h3>
+                    <p class="article-excerpt">Поддержка брейкинга на государственном уровне в Новосибирской области.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/16712" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Брейкинг для детей</h3>
+                    <p class="article-excerpt">Почему брейкинг — это не только танец, но и спорт, дисциплина и характер.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/16078" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Первые шаги в брейкинге</h3>
+                    <p class="article-excerpt">Как начать заниматься брейкингом в Новосибирске: советы от тренеров Step by Step 54.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/15669" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Новосибирский брейкинг на карте России</h3>
+                    <p class="article-excerpt">Наши спортсмены достойно представляют регион на всероссийских соревнованиях.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/12847" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Спортивные достижения юных новосибирцев</h3>
+                    <p class="article-excerpt">Ученики Step by Step 54 — гордость Новосибирской области.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/12328" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Брейкинг: путь к вершинам</h3>
+                    <p class="article-excerpt">Как воспитать чемпионов: опыт школы Step by Step 54.</p>
+                    <span class="article-link">Читать →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news/10225" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">История новосибирского брейкинга</h3>
+                    <p class="article-excerpt">От первых уличных джемов до официальных соревнований.</p>
+                    <span class="article-link">Читать →</span>
                 </a>
 
                 <a href="https://4s-info.ru/2024/12/25/natsionalnuyu-premiyu-ekzersis-poluchil-luchshij-detskij-trener-iz-novosibirska/?ysclid=mtxrtuxx95723077937" target="_blank" rel="noopener noreferrer" class="article-card">
@@ -2280,14 +2401,12 @@
         let currentCount = 842;
 
         setInterval(() => {
-            // Меняем число в диапазоне от 700 до 1420
-            const change = Math.floor(Math.random() * 21) - 10; // от -10 до +10
+            const change = Math.floor(Math.random() * 21) - 10;
             currentCount += change;
 
             if (currentCount < 700) currentCount = 700;
             if (currentCount > 1420) currentCount = 1420;
 
-            // Плавно анимируем счётчик
             animateCounter(currentCount);
         }, 2500);
 
@@ -2341,7 +2460,6 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Отправка...';
 
-            // ==== 1. ОТПРАВКА В TELEGRAM ====
             const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
             const CHAT_IDS = ['8157246500', '1265008981'];
             const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
@@ -2364,7 +2482,6 @@
                 .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
             });
 
-            // ==== 2. ОТПРАВКА НА ПОЧТУ (Formspree) ====
             fetch('https://formspree.io/f/xkjwdjoz', {
                 method: 'POST',
                 headers: {
