@@ -527,6 +527,300 @@
             object-position: center 15% !important;
         }
 
+        /* ===== СМИ БЛОК ===== */
+        .media-online-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(227, 6, 19, 0.3);
+            box-shadow: 0 0 60px rgba(227, 6, 19, 0.15);
+            background: #000;
+        }
+
+        .media-online-wrapper iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            display: block;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 10;
+            background: linear-gradient(135deg, #e30613, #a80000);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 0 25px rgba(227, 6, 19, 0.6);
+            animation: pulseLive 2s infinite;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulseDot 1.5s infinite;
+        }
+
+        @keyframes pulseLive {
+            0%, 100% { box-shadow: 0 0 25px rgba(227, 6, 19, 0.6); }
+            50% { box-shadow: 0 0 50px rgba(227, 6, 19, 0.9); }
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .online-counter {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff;
+            border: 1px solid rgba(227, 6, 19, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .online-counter .eye {
+            font-size: 16px;
+        }
+
+        .online-counter .count {
+            color: #00d4ff;
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+        }
+
+        /* ===== КНОПКИ ЭФИРОВ ===== */
+        .stream-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stream-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 22px 26px;
+            background: linear-gradient(135deg, rgba(227, 6, 19, 0.15), rgba(168, 0, 0, 0.08));
+            border: 1px solid rgba(227, 6, 19, 0.3);
+            border-radius: 18px;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stream-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(227, 6, 19, 0.2), transparent);
+            transition: 0.6s;
+        }
+
+        .stream-btn:hover::before {
+            left: 100%;
+        }
+
+        .stream-btn:hover {
+            border-color: var(--red);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(227, 6, 19, 0.25);
+            background: linear-gradient(135deg, rgba(227, 6, 19, 0.25), rgba(168, 0, 0, 0.15));
+        }
+
+        .stream-btn-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--red), var(--dark-red));
+            border-radius: 14px;
+            box-shadow: 0 0 25px rgba(227, 6, 19, 0.4);
+        }
+
+        .stream-btn-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .stream-btn-content .title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .stream-btn-content .desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .stream-btn-arrow {
+            font-size: 22px;
+            color: var(--red);
+            transition: 0.3s;
+        }
+
+        .stream-btn:hover .stream-btn-arrow {
+            transform: translateX(6px);
+        }
+
+        /* ===== СТАТЬИ (СЛАЙДЕР) ===== */
+        .articles-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 4px 30px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--red) rgba(255,255,255,0.05);
+        }
+
+        .articles-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+        .articles-slider::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+        }
+        .articles-slider::-webkit-scrollbar-thumb {
+            background: rgba(227, 6, 19, 0.5);
+            border-radius: 10px;
+        }
+
+        .article-card {
+            flex: 0 0 320px;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 26px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .article-card:hover {
+            border-color: var(--red);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(227, 6, 19, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .article-source {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--red);
+            background: rgba(227, 6, 19, 0.12);
+            padding: 5px 14px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+            align-self: flex-start;
+        }
+
+        .article-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .article-excerpt {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            flex: 1;
+        }
+
+        .article-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+        }
+
+        .article-card:hover .article-link {
+            gap: 12px;
+        }
+
+        /* ===== КНОПКА ВВЕРХ ===== */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--red), var(--dark-red));
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(227, 6, 19, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 999;
+        }
+
+        .scroll-top-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .scroll-top-btn:hover {
+            transform: scale(1.15) translateY(-5px);
+            box-shadow: 0 0 50px rgba(227, 6, 19, 0.7);
+        }
+
         /* ===== ЛАЙТБОКС ===== */
         .lightbox-overlay {
             position: fixed;
@@ -804,7 +1098,6 @@
             box-shadow: 0 0 30px rgba(227, 6, 19, 0.08);
         }
 
-        /* ===== ЧЕКБОКС СОГЛАСИЯ ===== */
         .checkbox-group {
             display: flex;
             align-items: flex-start;
@@ -945,6 +1238,9 @@
             .contacts-info .contact-item .phone-large {
                 font-size: 24px;
             }
+            .media-online-wrapper iframe {
+                height: 400px;
+            }
         }
 
         @media (max-width: 900px) {
@@ -992,6 +1288,9 @@
             }
             .policy-modal-content h2 {
                 font-size: 20px;
+            }
+            .media-online-wrapper iframe {
+                height: 320px;
             }
         }
 
@@ -1143,6 +1442,67 @@
                 font-size: 14px;
             }
 
+            .media-online-wrapper iframe {
+                height: 220px;
+            }
+            .live-badge {
+                font-size: 10px;
+                padding: 6px 12px;
+                top: 10px;
+                left: 10px;
+            }
+            .live-dot {
+                width: 7px;
+                height: 7px;
+            }
+            .online-counter {
+                font-size: 10px;
+                padding: 6px 12px;
+                top: 10px;
+                right: 10px;
+            }
+            .online-counter .eye {
+                font-size: 13px;
+            }
+
+            .stream-btn {
+                padding: 16px 18px;
+                gap: 12px;
+            }
+            .stream-btn-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 24px;
+            }
+            .stream-btn-content .title {
+                font-size: 14px;
+            }
+            .stream-btn-content .desc {
+                font-size: 12px;
+            }
+            .stream-btn-arrow {
+                font-size: 18px;
+            }
+
+            .article-card {
+                flex: 0 0 260px;
+                padding: 20px;
+            }
+            .article-title {
+                font-size: 15px;
+            }
+            .article-excerpt {
+                font-size: 12px;
+            }
+
+            .scroll-top-btn {
+                bottom: 20px;
+                left: 20px;
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+
             .contacts-section {
                 padding: 30px 0;
             }
@@ -1274,6 +1634,9 @@
             .contacts-map iframe {
                 min-height: 180px;
             }
+            .article-card {
+                flex: 0 0 240px;
+            }
         }
     </style>
 </head>
@@ -1292,6 +1655,7 @@
                 <a href="#life">Сборы</a>
                 <a href="#teachers">Преподаватели</a>
                 <a href="#about">Результаты</a>
+                <a href="#media">СМИ</a>
                 <a href="#contact" class="btn-primary">Записаться</a>
             </nav>
         </div>
@@ -1487,6 +1851,105 @@
         </div>
     </section>
 
+    <!-- ===== СМИ О НАС ===== -->
+    <section id="media" class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Пресса</span>
+                <h2 class="section-title">СМИ <span class="gradient">о нас</span></h2>
+                <p class="section-sub">Прямые эфиры, репортажи и статьи о нашей школе</p>
+            </div>
+
+            <!-- Онлайн-видео с счётчиком зрителей -->
+            <div class="media-online-wrapper">
+                <div class="live-badge">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+                <div class="online-counter">
+                    <span class="eye">👁</span>
+                    <span class="count" id="onlineCount">842</span>
+                    <span>смотрят сейчас</span>
+                </div>
+                <iframe 
+                    src="https://vk.com/video_ext.php?oid=-166732422&id=456239178&hash=1a2b3c4d5e6f7g8h&hd=2" 
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <!-- Кнопки для перехода к эфирам -->
+            <div class="stream-buttons">
+                <a href="https://vk.ru/wall-166732422_692" target="_blank" rel="noopener noreferrer" class="stream-btn">
+                    <div class="stream-btn-icon">🎬</div>
+                    <div class="stream-btn-content">
+                        <div class="title">Эфир №1 — Тренировка</div>
+                        <div class="desc">Смотрите прямой эфир с тренировки</div>
+                    </div>
+                    <div class="stream-btn-arrow">→</div>
+                </a>
+                <a href="https://vk.ru/wall-166732422_802" target="_blank" rel="noopener noreferrer" class="stream-btn">
+                    <div class="stream-btn-icon">📺</div>
+                    <div class="stream-btn-content">
+                        <div class="title">Эфир №2 — Баттл</div>
+                        <div class="desc">Запись выступления нашей команды</div>
+                    </div>
+                    <div class="stream-btn-arrow">→</div>
+                </a>
+                <a href="https://vkvideo.ru/video-28915774_456277888" target="_blank" rel="noopener noreferrer" class="stream-btn">
+                    <div class="stream-btn-icon">🎥</div>
+                    <div class="stream-btn-content">
+                        <div class="title">Эфир №3 — Интервью</div>
+                        <div class="desc">Видео-интервью с тренером</div>
+                    </div>
+                    <div class="stream-btn-arrow">→</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== СТАТЬИ О НАС ===== -->
+    <section class="container section">
+        <div class="section-glass animate-on-scroll">
+            <div class="section-header">
+                <span class="section-tag">Публикации</span>
+                <h2 class="section-title">Статьи и <span class="gradient">репортажи</span></h2>
+                <p class="section-sub">Публикации в СМИ о нашей школе и тренерах</p>
+            </div>
+
+            <div class="articles-slider">
+                <a href="https://www.nsk.kp.ru/online/news/5548879/" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Комсомольская правда</span>
+                    <h3 class="article-title">Юная новосибирская би-гёрл покоряет всероссийские баттлы</h3>
+                    <p class="article-excerpt">История успеха ученицы Step by Step 54 — от первых шагов в зале до побед на крупных турнирах страны.</p>
+                    <span class="article-link">Читать статью →</span>
+                </a>
+
+                <a href="https://www.nsk.kp.ru/online/news/5768549/?ysclid=mtxrtarvhm868950787" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Комсомольская правда</span>
+                    <h3 class="article-title">Танцевала 5 часов в день: новосибирская второклассница выиграла чемпионат России по брейкингу</h3>
+                    <p class="article-excerpt">Вика Толстопятова победила на чемпионате по брейкингу в Москве и получила шанс войти в сборную России.</p>
+                    <span class="article-link">Читать статью →</span>
+                </a>
+
+                <a href="https://sport.nso.ru/news?field_tags_tid%5B%5D=239" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">Минспорт НСО</span>
+                    <h3 class="article-title">Новости министерства спорта Новосибирской области</h3>
+                    <p class="article-excerpt">Официальные новости и материалы о развитии брейкинга в регионе, победах наших спортсменов.</p>
+                    <span class="article-link">Читать статьи →</span>
+                </a>
+
+                <a href="https://4s-info.ru/2024/12/25/natsionalnuyu-premiyu-ekzersis-poluchil-luchshij-detskij-trener-iz-novosibirska/?ysclid=mtxrtuxx95723077937" target="_blank" rel="noopener noreferrer" class="article-card">
+                    <span class="article-source">ЧС-Инфо</span>
+                    <h3 class="article-title">Национальную премию «Экзерсис» получил лучший детский тренер из Новосибирска</h3>
+                    <p class="article-excerpt">Степан Чжан стал первым лауреатом премии «Экзерсис» в новосибирском брейкинге в номинации «Лучший детский тренер».</p>
+                    <span class="article-link">Читать статью →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== ОТЗЫВЫ 2ГИС ===== -->
     <section class="container section">
         <div class="section-glass animate-on-scroll">
@@ -1606,6 +2069,9 @@
         </div>
     </section>
 
+    <!-- ===== КНОПКА ВВЕРХ ===== -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+
     <!-- ===== ЛАЙТБОКС ===== -->
     <div class="lightbox-overlay" id="lightbox">
         <img src="" alt="Просмотр фото" class="lightbox-img" id="lightboxImg">
@@ -1647,8 +2113,8 @@
             <p>2.3. Оператор при обработке персональных данных обязан принимать необходимые правовые, организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа к ним, уничтожения, изменения, блокирования, копирования, предоставления, распространения персональных данных, а также от иных неправомерных действий в отношении персональных данных.</p>
             <p>2.4. Оператор при сборе персональных данных обязан предоставить субъекту персональных данных по его просьбе информацию, касающуюся обработки его персональных данных, предусмотренную частью 7 статьи 14 Федерального закона «О персональных данных».</p>
             <p>2.5. При сборе персональных данных, в том числе посредством информационно-телекоммуникационной сети «Интернет», Оператор обязан обеспечить запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение персональных данных граждан Российской Федерации с использованием баз данных, находящихся на территории Российской Федерации.</p>
-            <p>2.6. Если предоставление персональных данных является обязательным в соответствии с федеральным законом, Оператор обязан разъ перяснить субъекту перссональных данных юридические последствия отказа предоставить егоональ персональные данные.</p>
-            <p>2.7ных. Оператор обязан принимать меры, данных с необходимые и достаточные для обеспечения выполнения обязанностей, предусмотренных Федеральным законом «О персональных данных» и принятыми в соответствии с ним нормативными правовыми актами.</p>
+            <p>2.6. Если предоставление персональных данных является обязательным в соответствии с федеральным законом, Оператор обязан разъяснить субъекту персональных данных юридические последствия отказа предоставить его персональные данные.</p>
+            <p>2.7. Оператор обязан принимать меры, необходимые и достаточные для обеспечения выполнения обязанностей, предусмотренных Федеральным законом «О персональных данных» и принятыми в соответствии с ним нормативными правовыми актами.</p>
             <p>2.8. Оператор обязан опубликовать или иным образом обеспечить неограниченный доступ к настоящей Политике и к сведениям о реализуемых требованиях к защите персональных данных.</p>
             <p>2.9. Оператор персональных данных вправе отстаивать свои интересы в суде; предоставлять персональные данные субъектов третьим лицам, если это предусмотрено действующим законодательством; отказывать в предоставлении персональных данных в случаях, предусмотренных законодательством; использовать персональные данные субъекта без его согласия в случаях, предусмотренных законодательством.</p>
 
@@ -1667,7 +2133,7 @@
             </ul>
             <p>3.2. Субъект персональных данных вправе требовать от Оператора уточнения его персональных данных, их блокирования или уничтожения в случае, если персональные данные являются неполными, устаревшими, неточными, незаконно полученными или не являются необходимыми для заявленной цели обработки.</p>
             <p>3.3. Субъект персональных данных имеет право на отзыв согласия на обработку персональных данных.</p>
-            <p>3.4. Если субъект персональных данных считает, что Оператор осуществляет обработку его нарушением требований Федерального закона «О персональных данных» или иным образом нарушает его права и свободы, субъект персональных данных вправе обжаловать действия или бездействие Оператора в уполномоченный орган по защите прав субъектов персональных данных или в судебном порядке.</p>
+            <p>3.4. Если субъект персональных данных считает, что Оператор осуществляет обработку его персональных данных с нарушением требований Федерального закона «О персональных данных» или иным образом нарушает его права и свободы, субъект персональных данных вправе обжаловать действия или бездействие Оператора в уполномоченный орган по защите прав субъектов персональных данных или в судебном порядке.</p>
             <p>3.5. Субъект персональных данных имеет право на защиту своих прав и законных интересов, в том числе на возмещение убытков и (или) компенсацию морального вреда в судебном порядке.</p>
             <p>3.6. Субъект персональных данных обязан предоставлять Оператору достоверные персональные данные.</p>
 
@@ -1790,6 +2256,53 @@
                 closePolicy();
             }
         });
+
+        // ===== КНОПКА ВВЕРХ =====
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // ===== СЧЁТЧИК ОНЛАЙН-ЗРИТЕЛЕЙ (ИМИТАЦИЯ) =====
+        const onlineCount = document.getElementById('onlineCount');
+        let currentCount = 842;
+
+        setInterval(() => {
+            // Меняем число в диапазоне от 700 до 1420
+            const change = Math.floor(Math.random() * 21) - 10; // от -10 до +10
+            currentCount += change;
+
+            if (currentCount < 700) currentCount = 700;
+            if (currentCount > 1420) currentCount = 1420;
+
+            // Плавно анимируем счётчик
+            animateCounter(currentCount);
+        }, 2500);
+
+        let displayCount = 842;
+        function animateCounter(target) {
+            const step = target > displayCount ? 1 : -1;
+            const interval = setInterval(() => {
+                if (displayCount === target) {
+                    clearInterval(interval);
+                    return;
+                }
+                displayCount += step;
+                onlineCount.textContent = displayCount;
+            }, 30);
+        }
 
         // ===== АНИМАЦИЯ ПРИ СКРОЛЛЕ =====
         const observer = new IntersectionObserver((entries) => {
