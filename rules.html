@@ -23,10 +23,10 @@
         .btn-back:hover { border-color: var(--red); background: rgba(227, 6, 19, 0.1); }
 
         /* КОНТЕНТ */
-        .page-content { padding: 60px 0 80px; }
+        .page-content { padding: 40px 0 80px; }
         .document-wrapper { background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 50px; box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5); }
         
-        .doc-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
+        .doc-header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
         .doc-title { font-family: 'Orbitron', monospace; font-size: 28px; font-weight: 900; color: #fff; line-height: 1.3; margin-bottom: 10px; text-transform: uppercase; }
         .doc-subtitle { font-size: 16px; color: rgba(255,255,255,0.6); font-weight: 400; }
         
@@ -47,10 +47,10 @@
         .signature { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.8); }
         .signature strong { display: block; margin-bottom: 10px; font-size: 16px; }
 
-        /* Стили для кнопки скачивания PDF */
-        .pdf-download-wrapper { text-align: center; margin-top: 50px; margin-bottom: 20px; }
-        .btn-pdf { display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, var(--red), var(--dark-red)); border-radius: 100px; color: #fff; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 0 30px rgba(227,6,19,0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .btn-pdf:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(227,6,19,0.6); }
+        /* СТИЛИ КНОПКИ PDF */
+        .pdf-download-wrapper { text-align: center; margin: 30px 0; }
+        .btn-pdf { display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, var(--red), var(--dark-red)); border-radius: 100px; color: #fff !important; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 0 30px rgba(227,6,19,0.4); transition: 0.4s; border: 2px solid rgba(255,255,255,0.2); }
+        .btn-pdf:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(227,6,19,0.8); background: linear-gradient(135deg, #ff1a2b, #c40000); }
 
         /* АДАПТИВ */
         @media (max-width: 768px) {
@@ -59,12 +59,12 @@
             h2 { font-size: 18px; }
             p, li { font-size: 14px; }
             .header-inner { flex-direction: column; gap: 16px; text-align: center; }
-            .page-content { padding: 30px 0 50px; }
         }
         @media (max-width: 480px) {
             .document-wrapper { padding: 24px 16px; border-radius: 16px; }
             .doc-title { font-size: 18px; }
             h2 { font-size: 16px; }
+            .btn-pdf { padding: 14px 20px; font-size: 14px; width: 100%; }
         }
     </style>
 </head>
@@ -88,12 +88,18 @@
                 <p class="doc-subtitle">Официальный документ Исполнителя по договору возмездного оказания услуг</p>
             </div>
 
+            <!-- КНОПКА СКАЧИВАНИЯ (СВЕРХУ) -->
+            <div class="pdf-download-wrapper">
+                <a href="rules.pdf" download target="_blank" class="btn-pdf">
+                    📄 Скачать оригинал приказа (PDF)
+                </a>
+            </div>
+
             <!-- МЕТА-ИНФОРМАЦИЯ -->
             <div class="doc-meta">
                 <strong>УТВЕРЖДАЮ:</strong><br>
                 ИП Чжан Степан Дмитриевич<br>
                 Приказ от 01.09.2026 г.<br>
-                <!-- Сюда можно вставить картинку подписи, если нужно -->
                 Подпись _________________
             </div>
 
@@ -173,6 +179,7 @@
             <div class="attention-box">
                 <p>Родитель (законный представитель) обязуется разъяснить вышеуказанные правила посещения, техники безопасности и пожарной безопасности ребенку и осведомлен, что несет ответственность за то, что ребенок ознакомлен и полностью понимает их.</p>
             </div>
+
             <!-- ПОДПИСЬ И ПРИКАЗ -->
             <div class="signature">
                 <strong>Индивидуальный предприниматель Чжан Степан Дмитриевич</strong>
@@ -195,13 +202,11 @@
                 
                 ИП Чжан С.Д.<br>
                 Дата _________________<br>
-                <!-- Если хочешь, чтобы на сайте сразу отображалась подпись, раскомментируй код ниже и закинь картинку signature.png в папку с сайтом -->
-                <!-- <img src="signature.png" alt="Подпись ИП Чжан" style="height: 60px; margin-top: 10px; display: block;"> -->
                 Подпись _________________
             </div>
 
-            <!-- КНОПКА СКАЧИВАНИЯ PDF -->
-            <div class="pdf-download-wrapper">
+            <!-- КНОПКА СКАЧИВАНИЯ (СНИЗУ) -->
+            <div class="pdf-download-wrapper" style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);">
                 <a href="rules.pdf" download target="_blank" class="btn-pdf">
                     📄 Скачать подписанный приказ (PDF)
                 </a>
