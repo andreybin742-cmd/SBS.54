@@ -7,1797 +7,317 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
     <style>
         /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
-            background: #0a0a0a;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background: 
-                radial-gradient(ellipse at 30% 40%, rgba(227, 6, 19, 0.25) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 60%, rgba(200, 0, 0, 0.12) 0%, transparent 50%),
-                url('bg/main-bg.jpg') center/cover no-repeat;
-            pointer-events: none;
-        }
-
-        @media (min-width: 901px) {
-            body::before {
-                background-attachment: fixed;
-            }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 2;
-        }
-
-        :root {
-            --red: #e30613;
-            --dark-red: #a80000;
-            --black: #0a0a0a;
-            --white: #ffffff;
-            --gray: #b0b0b0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #fff; overflow-x: hidden; min-height: 100vh; background: #0a0a0a; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: radial-gradient(ellipse at 30% 40%, rgba(227, 6, 19, 0.25) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(200, 0, 0, 0.12) 0%, transparent 50%), url('bg/main-bg.jpg') center/cover no-repeat; pointer-events: none; }
+        @media (min-width: 901px) { body::before { background-attachment: fixed; } }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+        :root { --red: #e30613; --dark-red: #a80000; --black: #0a0a0a; --white: #ffffff; --gray: #b0b0b0; }
 
         /* ===== ХЕДЕР ===== */
-        header {
-            padding: 12px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(227, 6, 19, 0.2);
-        }
-
-        .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            gap: 12px;
-        }
-
-        .logo img {
-            height: 56px;
-            width: 56px;
-            object-fit: cover;
-            display: block;
-            border-radius: 50%;
-            border: 2px solid rgba(227, 6, 19, 0.3);
-            transition: 0.3s;
-        }
-
-        .logo img:hover {
-            border-color: var(--red);
-            transform: scale(1.05);
-        }
-
-        .logo-text {
-            font-family: 'Orbitron', monospace;
-            font-weight: 900;
-            font-size: 22px;
-            color: #fff;
-            letter-spacing: 1px;
-        }
-        .logo-text span {
-            color: var(--red);
-        }
-
-        nav {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: var(--red);
-            transition: 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #fff;
-        }
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--red), var(--dark-red));
-            border: none;
-            padding: 8px 18px;
-            border-radius: 100px;
-            color: #fff;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 20px rgba(227, 6, 19, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.06);
-            box-shadow: 0 0 40px rgba(227, 6, 19, 0.6);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 8px 22px;
-            border-radius: 100px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 13px;
-            text-decoration: none;
-            backdrop-filter: blur(4px);
-            transition: 0.4s;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--red);
-            background: rgba(227, 6, 19, 0.12);
-            color: #fff;
-        }
+        header { padding: 12px 0; position: sticky; top: 0; z-index: 100; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(227, 6, 19, 0.2); }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; gap: 12px; }
+        .logo img { height: 56px; width: 56px; object-fit: cover; display: block; border-radius: 50%; border: 2px solid rgba(227, 6, 19, 0.3); transition: 0.3s; }
+        .logo img:hover { border-color: var(--red); transform: scale(1.05); }
+        .logo-text { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 22px; color: #fff; letter-spacing: 1px; }
+        .logo-text span { color: var(--red); }
+        nav { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        nav a { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; text-transform: uppercase; letter-spacing: 0.5px; position: relative; }
+        nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0%; height: 2px; background: var(--red); transition: 0.3s ease; }
+        nav a:hover { color: #fff; }
+        nav a:hover::after { width: 100%; }
+        .btn-primary { background: linear-gradient(135deg, var(--red), var(--dark-red)); border: none; padding: 8px 18px; border-radius: 100px; color: #fff; font-weight: 700; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 0 20px rgba(227, 6, 19, 0.3); }
+        .btn-primary:hover { transform: scale(1.06); box-shadow: 0 0 40px rgba(227, 6, 19, 0.6); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); padding: 8px 22px; border-radius: 100px; color: #fff; font-weight: 600; font-size: 13px; text-decoration: none; backdrop-filter: blur(4px); transition: 0.4s; }
+        .btn-secondary:hover { border-color: var(--red); background: rgba(227, 6, 19, 0.12); color: #fff; }
 
         /* ===== ГЕРОЙ ===== */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            padding: 40px 0;
-        }
-
-        .hero-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            width: 100%;
-        }
-
-        .hero-content {
-            flex: 1;
-            max-width: 550px;
-            background: rgba(10, 10, 10, 0.5);
-            backdrop-filter: blur(14px);
-            padding: 45px;
-            border-radius: 32px;
-            border: 1px solid rgba(227, 6, 19, 0.15);
-            animation: fadeSlideUp 1s ease-out;
-        }
-
-        .hero-content h1 {
-            font-family: 'Orbitron', monospace;
-            font-weight: 900;
-            font-size: clamp(32px, 4.5vw, 52px);
-            line-height: 1.1;
-            margin-bottom: 12px;
-        }
-
-        .hero-content h1 .highlight {
-            color: var(--red);
-            text-shadow: 0 0 30px rgba(227, 6, 19, 0.3);
-        }
-
-        .hero-content h1 .number {
-            color: #fff;
-            background: var(--red);
-            padding: 0 14px;
-            border-radius: 8px;
-            display: inline-block;
-            text-shadow: none;
-            margin-left: 4px;
-        }
-
-        .hero-content .subtitle {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 16px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .hero-content .subtitle span {
-            color: var(--red);
-        }
-
-        .hero-content p {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 520px;
-            margin-bottom: 32px;
-            line-height: 1.7;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
+        .hero { min-height: 85vh; display: flex; align-items: center; padding: 40px 0; }
+        .hero-wrapper { display: flex; align-items: center; gap: 60px; width: 100%; }
+        .hero-content { flex: 1; max-width: 550px; background: rgba(10, 10, 10, 0.5); backdrop-filter: blur(14px); padding: 45px; border-radius: 32px; border: 1px solid rgba(227, 6, 19, 0.15); animation: fadeSlideUp 1s ease-out; }
+        .hero-content h1 { font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(32px, 4.5vw, 52px); line-height: 1.1; margin-bottom: 12px; }
+        .hero-content h1 .highlight { color: var(--red); text-shadow: 0 0 30px rgba(227, 6, 19, 0.3); }
+        .hero-content h1 .number { color: #fff; background: var(--red); padding: 0 14px; border-radius: 8px; display: inline-block; text-shadow: none; margin-left: 4px; }
+        .hero-content .subtitle { font-size: 18px; color: rgba(255, 255, 255, 0.8); margin-bottom: 16px; font-weight: 600; letter-spacing: 1px; }
+        .hero-content .subtitle span { color: var(--red); }
+        .hero-content p { font-size: 16px; color: rgba(255, 255, 255, 0.7); max-width: 520px; margin-bottom: 32px; line-height: 1.7; }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 
         /* ===== БОЛЬШИЕ ПРОЗРАЧНЫЕ БУКВЫ SBS54 С ВИДЕО ===== */
-        .hero-video-text {
-            flex: 1;
-            min-width: 380px;
-            height: 480px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 24px;
-            overflow: hidden;
-            background: rgba(10, 10, 10, 0.3);
-            border: 1px solid rgba(227, 6, 19, 0.08);
-            animation: fadeSlideUp 1.2s ease-out;
-            cursor: pointer;
-        }
-
-        .hero-video-text video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.5;
-            z-index: 1;
-        }
-
-        .hero-video-text.sound-on video {
-            opacity: 0.7;
-        }
-
-        .hero-video-text .text-overlay {
-            position: relative;
-            z-index: 2;
-            font-family: 'Orbitron', monospace;
-            font-weight: 900;
-            font-size: clamp(70px, 11vw, 140px);
-            color: rgba(255, 255, 255, 0.25);
-            text-shadow: 0 0 80px rgba(227, 6, 19, 0.12);
-            letter-spacing: 12px;
-            line-height: 1;
-            text-align: center;
-            pointer-events: none;
-            user-select: none;
-            transition: 0.3s;
-        }
-
-        .hero-video-text .text-overlay span {
-            color: rgba(227, 6, 19, 0.2);
-        }
-
-        .hero-video-text .play-hint {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: rgba(0,0,0,0.5);
-            padding: 6px 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            pointer-events: auto;
-        }
-
-        .hero-video-text .play-hint:hover {
-            color: rgba(255,255,255,0.6);
-            border-color: rgba(227,6,19,0.3);
-            background: rgba(227,6,19,0.1);
-        }
-
-        .hero-video-text .play-hint.hidden {
-            opacity: 0;
-            transform: translateX(-50%) translateY(10px);
-            pointer-events: none;
-        }
+        .hero-video-text { flex: 1; min-width: 380px; height: 480px; position: relative; display: flex; align-items: center; justify-content: center; border-radius: 24px; overflow: hidden; background: rgba(10, 10, 10, 0.3); border: 1px solid rgba(227, 6, 19, 0.08); animation: fadeSlideUp 1.2s ease-out; cursor: pointer; }
+        .hero-video-text video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; z-index: 1; }
+        .hero-video-text.sound-on video { opacity: 0.7; }
+        .hero-video-text .text-overlay { position: relative; z-index: 2; font-family: 'Orbitron', monospace; font-weight: 900; font-size: clamp(70px, 11vw, 140px); color: rgba(255, 255, 255, 0.25); text-shadow: 0 0 80px rgba(227, 6, 19, 0.12); letter-spacing: 12px; line-height: 1; text-align: center; pointer-events: none; user-select: none; transition: 0.3s; }
+        .hero-video-text .text-overlay span { color: rgba(227, 6, 19, 0.2); }
+        .hero-video-text .play-hint { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 3; font-size: 11px; color: rgba(255, 255, 255, 0.3); font-family: 'Inter', sans-serif; letter-spacing: 2px; text-transform: uppercase; background: rgba(0,0,0,0.5); padding: 6px 20px; border-radius: 20px; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.4s ease; cursor: pointer; pointer-events: auto; }
+        .hero-video-text .play-hint:hover { color: rgba(255,255,255,0.6); border-color: rgba(227,6,19,0.3); background: rgba(227,6,19,0.1); }
+        .hero-video-text .play-hint.hidden { opacity: 0; transform: translateX(-50%) translateY(10px); pointer-events: none; }
 
         /* ===== СЕКЦИИ ===== */
-        .section {
-            padding: 50px 0;
-            scroll-margin-top: 140px;
-        }
-
-        .section-glass {
-            background: rgba(10, 10, 10, 0.5);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(227, 6, 19, 0.08);
-            border-radius: 32px;
-            padding: 50px 40px;
-            transition: transform 0.4s ease;
-        }
-
-        .section-glass:hover {
-            border-color: rgba(227, 6, 19, 0.2);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--red);
-            background: rgba(227, 6, 19, 0.12);
-            padding: 4px 18px;
-            border-radius: 100px;
-            margin-bottom: 12px;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 32px;
-            font-weight: 900;
-        }
-
-        .section-title .gradient {
-            color: var(--red);
-            text-shadow: 0 0 20px rgba(227, 6, 19, 0.2);
-        }
-
-        .section-sub {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 15px;
-            margin-top: 8px;
-            font-weight: 300;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .info-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            padding: 30px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .info-card:hover {
-            border-color: var(--red);
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 20px 60px rgba(227, 6, 19, 0.08);
-        }
-
-        .info-card h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 19px;
-            margin-bottom: 12px;
-            color: #fff;
-        }
-
-        .info-card p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-            line-height: 1.7;
-        }
-
-        .highlight-text {
-            color: var(--red);
-            font-weight: 600;
-        }
+        .section { padding: 50px 0; scroll-margin-top: 140px; }
+        .section-glass { background: rgba(10, 10, 10, 0.5); backdrop-filter: blur(14px); border: 1px solid rgba(227, 6, 19, 0.08); border-radius: 32px; padding: 50px 40px; transition: transform 0.4s ease; }
+        .section-glass:hover { border-color: rgba(227, 6, 19, 0.2); }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); background: rgba(227, 6, 19, 0.12); padding: 4px 18px; border-radius: 100px; margin-bottom: 12px; }
+        .section-title { font-family: 'Orbitron', monospace; font-size: 32px; font-weight: 900; }
+        .section-title .gradient { color: var(--red); text-shadow: 0 0 20px rgba(227, 6, 19, 0.2); }
+        .section-sub { color: rgba(255, 255, 255, 0.5); font-size: 15px; margin-top: 8px; font-weight: 300; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .info-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 30px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; display: flex; flex-direction: column; }
+        .info-card:hover { border-color: var(--red); transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 60px rgba(227, 6, 19, 0.08); }
+        .info-card h3 { font-family: 'Orbitron', monospace; font-size: 19px; margin-bottom: 12px; color: #fff; }
+        .info-card p { color: rgba(255, 255, 255, 0.6); font-size: 14px; line-height: 1.7; }
+        .highlight-text { color: var(--red); font-weight: 600; }
 
         /* ===== КАРТИНКИ ===== */
-        .img-wrap {
-            width: 100%;
-            height: 160px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            cursor: pointer;
-            background: transparent;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center center;
-            transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: block;
-        }
-
-        .info-card:hover .card-img {
-            transform: scale(1.05);
-        }
-
-        .avatar-img {
-            width: 110px;
-            height: 110px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin: 0 auto 16px;
-            border: 3px solid var(--red);
-            display: block;
-            background: #111;
-            cursor: pointer;
-            transition: 0.4s;
-            box-shadow: 0 0 30px rgba(227, 6, 19, 0.1);
-        }
-
-        .avatar-img:hover {
-            transform: scale(1.06) rotate(-3deg);
-            border-color: #fff;
-            box-shadow: 0 0 50px rgba(227, 6, 19, 0.3);
-        }
-
-        .photo-collage {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .collage-img-wrap {
-            width: 100%;
-            height: 150px;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            cursor: pointer;
-            background: transparent;
-        }
-
-        .collage-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center center;
-            transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: block;
-        }
-
-        .collage-img-wrap:hover .collage-img {
-            transform: scale(1.05);
-        }
-
-        .collage-big {
-            height: 180px !important;
-        }
-        .collage-big .collage-img {
-            object-position: center 15% !important;
-        }
+        .img-wrap { width: 100%; height: 160px; border-radius: 16px; margin-bottom: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.06); cursor: pointer; background: transparent; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; object-position: center center; transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); display: block; }
+        .info-card:hover .card-img { transform: scale(1.05); }
+        .avatar-img { width: 110px; height: 110px; object-fit: cover; border-radius: 50%; margin: 0 auto 16px; border: 3px solid var(--red); display: block; background: #111; cursor: pointer; transition: 0.4s; box-shadow: 0 0 30px rgba(227, 6, 19, 0.1); }
+        .avatar-img:hover { transform: scale(1.06) rotate(-3deg); border-color: #fff; box-shadow: 0 0 50px rgba(227, 6, 19, 0.3); }
+        .photo-collage { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+        .collage-img-wrap { width: 100%; height: 150px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.06); cursor: pointer; background: transparent; }
+        .collage-img { width: 100%; height: 100%; object-fit: cover; object-position: center center; transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); display: block; }
+        .collage-img-wrap:hover .collage-img { transform: scale(1.05); }
+        .collage-big { height: 180px !important; }
+        .collage-big .collage-img { object-position: center 15% !important; }
 
         /* ===== СМИ БЛОК ===== */
-        .media-online-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto 30px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(227, 6, 19, 0.3);
-            box-shadow: 0 0 60px rgba(227, 6, 19, 0.15);
-            background: #000;
-        }
-
-        .media-online-wrapper iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
-            display: block;
-        }
-
-        .live-badge {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            z-index: 10;
-            background: linear-gradient(135deg, #e30613, #a80000);
-            padding: 8px 18px;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            box-shadow: 0 0 25px rgba(227, 6, 19, 0.6);
-            animation: pulseLive 2s infinite;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .live-dot {
-            width: 10px;
-            height: 10px;
-            background: #fff;
-            border-radius: 50%;
-            animation: pulseDot 1.5s infinite;
-        }
-
-        @keyframes pulseLive {
-            0%, 100% { box-shadow: 0 0 25px rgba(227, 6, 19, 0.6); }
-            50% { box-shadow: 0 0 50px rgba(227, 6, 19, 0.9); }
-        }
-
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
-        }
-
-        .online-counter {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            z-index: 10;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
-            padding: 8px 18px;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 13px;
-            color: #fff;
-            border: 1px solid rgba(227, 6, 19, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .online-counter .dot {
-            width: 10px;
-            height: 10px;
-            background: #e30613;
-            border-radius: 50%;
-            animation: pulseDot 1.5s infinite;
-            flex-shrink: 0;
-        }
-
-        .online-counter .count {
-            color: #e30613;
-            font-family: 'Orbitron', monospace;
-            font-weight: 900;
-        }
+        .media-online-wrapper { position: relative; width: 100%; max-width: 900px; margin: 0 auto 30px; border-radius: 20px; overflow: hidden; border: 2px solid rgba(227, 6, 19, 0.3); box-shadow: 0 0 60px rgba(227, 6, 19, 0.15); background: #000; }
+        .media-online-wrapper iframe { width: 100%; height: 500px; border: none; display: block; }
+        .live-badge { position: absolute; top: 16px; left: 16px; z-index: 10; background: linear-gradient(135deg, #e30613, #a80000); padding: 8px 18px; border-radius: 100px; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 0 25px rgba(227, 6, 19, 0.6); animation: pulseLive 2s infinite; display: flex; align-items: center; gap: 8px; }
+        .live-dot { width: 10px; height: 10px; background: #fff; border-radius: 50%; animation: pulseDot 1.5s infinite; }
+        @keyframes pulseLive { 0%, 100% { box-shadow: 0 0 25px rgba(227, 6, 19, 0.6); } 50% { box-shadow: 0 0 50px rgba(227, 6, 19, 0.9); } }
+        @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+        .online-counter { position: absolute; top: 16px; right: 16px; z-index: 10; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(10px); padding: 8px 18px; border-radius: 100px; font-weight: 700; font-size: 13px; color: #fff; border: 1px solid rgba(227, 6, 19, 0.3); display: flex; align-items: center; gap: 8px; }
+        .online-counter .dot { width: 10px; height: 10px; background: #e30613; border-radius: 50%; animation: pulseDot 1.5s infinite; flex-shrink: 0; }
+        .online-counter .count { color: #e30613; font-family: 'Orbitron', monospace; font-weight: 900; }
 
         /* ===== КНОПКИ ЭФИРОВ ===== */
-        .stream-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .stream-btn {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 22px 26px;
-            background: linear-gradient(135deg, rgba(227, 6, 19, 0.15), rgba(168, 0, 0, 0.08));
-            border: 1px solid rgba(227, 6, 19, 0.3);
-            border-radius: 18px;
-            text-decoration: none;
-            color: #fff;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stream-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(227, 6, 19, 0.2), transparent);
-            transition: 0.6s;
-        }
-
-        .stream-btn:hover::before {
-            left: 100%;
-        }
-
-        .stream-btn:hover {
-            border-color: var(--red);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(227, 6, 19, 0.25);
-            background: linear-gradient(135deg, rgba(227, 6, 19, 0.25), rgba(168, 0, 0, 0.15));
-        }
-
-        .stream-btn-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--red);
-            flex-shrink: 0;
-            box-shadow: 0 0 20px rgba(227, 6, 19, 0.8);
-            animation: pulseDot 1.8s infinite;
-        }
-
-        .stream-btn-content {
-            flex: 1;
-            text-align: left;
-        }
-
-        .stream-btn-content .title {
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 15px;
-            margin-bottom: 4px;
-            color: #fff;
-            line-height: 1.4;
-        }
-
-        .stream-btn-content .desc {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .stream-btn-arrow {
-            font-size: 22px;
-            color: var(--red);
-            transition: 0.3s;
-        }
-
-        .stream-btn:hover .stream-btn-arrow {
-            transform: translateX(6px);
-        }
-
+        .stream-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .stream-btn { display: flex; align-items: center; gap: 16px; padding: 22px 26px; background: linear-gradient(135deg, rgba(227, 6, 19, 0.15), rgba(168, 0, 0, 0.08)); border: 1px solid rgba(227, 6, 19, 0.3); border-radius: 18px; text-decoration: none; color: #fff; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+        .stream-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(227, 6, 19, 0.2), transparent); transition: 0.6s; }
+        .stream-btn:hover::before { left: 100%; }
+        .stream-btn:hover { border-color: var(--red); transform: translateY(-5px); box-shadow: 0 15px 50px rgba(227, 6, 19, 0.25); background: linear-gradient(135deg, rgba(227, 6, 19, 0.25), rgba(168, 0, 0, 0.15)); }
+        .stream-btn-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--red); flex-shrink: 0; box-shadow: 0 0 20px rgba(227, 6, 19, 0.8); animation: pulseDot 1.8s infinite; }
+        .stream-btn-content { flex: 1; text-align: left; }
+        .stream-btn-content .title { font-family: 'Orbitron', monospace; font-weight: 700; font-size: 15px; margin-bottom: 4px; color: #fff; line-height: 1.4; }
+        .stream-btn-content .desc { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
+        .stream-btn-arrow { font-size: 22px; color: var(--red); transition: 0.3s; }
+        .stream-btn:hover .stream-btn-arrow { transform: translateX(6px); }
+    </style>
+</head>
+<body>
         /* ===== СТАТЬИ (СЛАЙДЕР) ===== */
-        .articles-slider {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 20px 4px 30px;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            scrollbar-color: var(--red) rgba(255,255,255,0.05);
-        }
-
-        .articles-slider::-webkit-scrollbar {
-            height: 6px;
-        }
-        .articles-slider::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.03);
-            border-radius: 10px;
-        }
-        .articles-slider::-webkit-scrollbar-thumb {
-            background: rgba(227, 6, 19, 0.5);
-            border-radius: 10px;
-        }
-
-        .article-card {
-            flex: 0 0 320px;
-            scroll-snap-align: start;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 26px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .article-card:hover {
-            border-color: var(--red);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(227, 6, 19, 0.15);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .article-source {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--red);
-            background: rgba(227, 6, 19, 0.12);
-            padding: 5px 14px;
-            border-radius: 100px;
-            margin-bottom: 16px;
-            align-self: flex-start;
-        }
-
-        .article-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 17px;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 12px;
-            color: #fff;
-        }
-
-        .article-excerpt {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.55);
-            line-height: 1.6;
-            margin-bottom: 18px;
-            flex: 1;
-        }
-
-        .article-link {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--red);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.3s;
-        }
-
-        .article-card:hover .article-link {
-            gap: 12px;
-        }
+        .articles-slider { display: flex; overflow-x: auto; gap: 20px; padding: 20px 4px 30px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--red) rgba(255,255,255,0.05); }
+        .articles-slider::-webkit-scrollbar { height: 6px; }
+        .articles-slider::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .articles-slider::-webkit-scrollbar-thumb { background: rgba(227, 6, 19, 0.5); border-radius: 10px; }
+        .article-card { flex: 0 0 320px; scroll-snap-align: start; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 26px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; text-decoration: none; color: #fff; }
+        .article-card:hover { border-color: var(--red); transform: translateY(-8px); box-shadow: 0 20px 60px rgba(227, 6, 19, 0.15); background: rgba(255, 255, 255, 0.05); }
+        .article-source { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); background: rgba(227, 6, 19, 0.12); padding: 5px 14px; border-radius: 100px; margin-bottom: 16px; align-self: flex-start; }
+        .article-title { font-family: 'Orbitron', monospace; font-size: 17px; font-weight: 700; line-height: 1.4; margin-bottom: 12px; color: #fff; }
+        .article-excerpt { font-size: 13px; color: rgba(255, 255, 255, 0.55); line-height: 1.6; margin-bottom: 18px; flex: 1; }
+        .article-link { font-size: 13px; font-weight: 600; color: var(--red); display: flex; align-items: center; gap: 6px; transition: 0.3s; }
+        .article-card:hover .article-link { gap: 12px; }
 
         /* ===== РАСКРЫВАЮЩИЙСЯ БЛОК МИНСПОРТА ===== */
-        .accordion-wrapper {
-            margin-top: 20px;
-            max-width: 100%;
-        }
-
-        .accordion-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: 0.4s ease;
-        }
-
-        .accordion-item:hover {
-            border-color: rgba(227, 6, 19, 0.3);
-        }
-
-        .accordion-item.open {
-            border-color: var(--red);
-            box-shadow: 0 15px 50px rgba(227, 6, 19, 0.1);
-        }
-
-        .accordion-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 24px 28px;
-            cursor: pointer;
-            transition: 0.3s;
-            gap: 16px;
-            user-select: none;
-        }
-
-        .accordion-header:hover {
-            background: rgba(227, 6, 19, 0.05);
-        }
-
-        .accordion-header-left {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            flex: 1;
-        }
-
-        .accordion-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--red), var(--dark-red));
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: 900;
-            flex-shrink: 0;
-            box-shadow: 0 0 25px rgba(227, 6, 19, 0.3);
-            font-family: 'Orbitron', monospace;
-        }
-
-        .accordion-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        .accordion-subtitle {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .accordion-arrow {
-            font-size: 24px;
-            color: var(--red);
-            transition: transform 0.4s ease;
-            flex-shrink: 0;
-        }
-
-        .accordion-item.open .accordion-arrow {
-            transform: rotate(180deg);
-        }
-
-        .accordion-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .accordion-item.open .accordion-body {
-            max-height: 3000px;
-        }
-
-        .accordion-body-inner {
-            padding: 0 28px 28px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 14px;
-        }
-
-        .accordion-link {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 16px 18px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            line-height: 1.5;
-            transition: 0.3s;
-        }
-
-        .accordion-link:hover {
-            background: rgba(227, 6, 19, 0.08);
-            border-color: var(--red);
-            color: #fff;
-            transform: translateX(4px);
-        }
-
-        .accordion-link-num {
-            color: var(--red);
-            font-weight: 700;
-            font-family: 'Orbitron', monospace;
-            font-size: 13px;
-            flex-shrink: 0;
-            min-width: 24px;
-        }
+        .accordion-wrapper { margin-top: 20px; max-width: 100%; }
+        .accordion-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; overflow: hidden; transition: 0.4s ease; }
+        .accordion-item:hover { border-color: rgba(227, 6, 19, 0.3); }
+        .accordion-item.open { border-color: var(--red); box-shadow: 0 15px 50px rgba(227, 6, 19, 0.1); }
+        .accordion-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; cursor: pointer; transition: 0.3s; gap: 16px; user-select: none; }
+        .accordion-header:hover { background: rgba(227, 6, 19, 0.05); }
+        .accordion-header-left { display: flex; align-items: center; gap: 18px; flex: 1; }
+        .accordion-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--red), var(--dark-red)); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; flex-shrink: 0; box-shadow: 0 0 25px rgba(227, 6, 19, 0.3); font-family: 'Orbitron', monospace; }
+        .accordion-title { font-family: 'Orbitron', monospace; font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .accordion-subtitle { font-size: 13px; color: rgba(255, 255, 255, 0.5); }
+        .accordion-arrow { font-size: 24px; color: var(--red); transition: transform 0.4s ease; flex-shrink: 0; }
+        .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+        .accordion-item.open .accordion-body { max-height: 3000px; }
+        .accordion-body-inner { padding: 0 28px 28px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+        .accordion-link { display: flex; align-items: flex-start; gap: 12px; padding: 16px 18px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 14px; text-decoration: none; color: rgba(255, 255, 255, 0.8); font-size: 14px; line-height: 1.5; transition: 0.3s; }
+        .accordion-link:hover { background: rgba(227, 6, 19, 0.08); border-color: var(--red); color: #fff; transform: translateX(4px); }
+        .accordion-link-num { color: var(--red); font-weight: 700; font-family: 'Orbitron', monospace; font-size: 13px; flex-shrink: 0; min-width: 24px; }
 
         /* ===== КНОПКА ВВЕРХ ===== */
-        .scroll-top-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--red), var(--dark-red));
-            border: none;
-            border-radius: 50%;
-            color: #fff;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 30px rgba(227, 6, 19, 0.4);
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 999;
-        }
-
-        .scroll-top-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .scroll-top-btn:hover {
-            transform: scale(1.15) translateY(-5px);
-            box-shadow: 0 0 50px rgba(227, 6, 19, 0.7);
-        }
+        .scroll-top-btn { position: fixed; bottom: 30px; left: 30px; width: 56px; height: 56px; background: linear-gradient(135deg, var(--red), var(--dark-red)); border: none; border-radius: 50%; color: #fff; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(227, 6, 19, 0.4); opacity: 0; pointer-events: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 999; }
+        .scroll-top-btn.visible { opacity: 1; pointer-events: auto; }
+        .scroll-top-btn:hover { transform: scale(1.15) translateY(-5px); box-shadow: 0 0 50px rgba(227, 6, 19, 0.7); }
 
         /* ===== ЛАЙТБОКС ===== */
-        .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 5, 0.92);
-            backdrop-filter: blur(14px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.4s ease;
-            cursor: zoom-out;
-        }
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.92); backdrop-filter: blur(14px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.4s ease; cursor: zoom-out; }
+        .lightbox-overlay.active { opacity: 1; pointer-events: auto; }
+        .lightbox-img { max-width: 90%; max-height: 85vh; border-radius: 16px; box-shadow: 0 0 80px rgba(0, 0, 0, 0.9); transform: scale(0.92); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid rgba(227, 6, 19, 0.2); }
+        .lightbox-overlay.active .lightbox-img { transform: scale(1); }
 
-        .lightbox-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        /* ===== МОДАЛЬНЫЕ ОКНА ===== */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(14px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.4s ease; padding: 20px; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content { background: rgba(20, 20, 20, 0.98); border: 1px solid rgba(227, 6, 19, 0.3); border-radius: 24px; max-width: 800px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 40px; position: relative; box-shadow: 0 0 80px rgba(227, 6, 19, 0.15); }
+        .modal-content::-webkit-scrollbar { width: 8px; }
+        .modal-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .modal-content::-webkit-scrollbar-thumb { background: rgba(227, 6, 19, 0.4); border-radius: 10px; }
+        .modal-close { position: sticky; top: 0; float: right; background: rgba(227, 6, 19, 0.15); border: 1px solid rgba(227, 6, 19, 0.3); color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 10; }
+        .modal-close:hover { background: var(--red); transform: rotate(90deg); }
+        .modal-content h2 { font-family: 'Orbitron', monospace; font-size: 24px; font-weight: 900; color: var(--red); margin-bottom: 20px; line-height: 1.3; text-align: center; }
+        .modal-content h3 { font-family: 'Orbitron', monospace; font-size: 16px; font-weight: 700; color: #fff; margin: 24px 0 12px; line-height: 1.4; }
+        .modal-content p { color: rgba(255, 255, 255, 0.7); font-size: 14px; line-height: 1.7; margin-bottom: 12px; }
+        .modal-content ul { list-style: none; padding-left: 0; margin-bottom: 12px; }
+        .modal-content ul li { color: rgba(255, 255, 255, 0.7); font-size: 14px; line-height: 1.7; padding-left: 20px; position: relative; margin-bottom: 6px; }
+        .modal-content ul li::before { content: '—'; position: absolute; left: 0; color: var(--red); }
+        .modal-content strong { color: #fff; font-weight: 600; }
 
-        .lightbox-img {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 16px;
-            box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
-            transform: scale(0.92);
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid rgba(227, 6, 19, 0.2);
-        }
+        /* ===== КУКИ-БАННЕР ===== */
+        .cookie-banner { position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 900px; margin: 0 auto; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(227, 6, 19, 0.3); border-radius: 20px; padding: 24px 28px; z-index: 2500; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7); display: flex; align-items: center; gap: 24px; flex-wrap: wrap; transform: translateY(150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .cookie-banner.visible { transform: translateY(0); }
+        .cookie-banner-text { flex: 1; min-width: 250px; font-size: 13px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+        .cookie-banner-text a { color: var(--red); text-decoration: underline; cursor: pointer; }
+        .cookie-banner-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .cookie-btn { padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.3s; white-space: nowrap; border: none; }
+        .cookie-btn-accept { background: linear-gradient(135deg, var(--red), var(--dark-red)); color: #fff; box-shadow: 0 0 20px rgba(227, 6, 19, 0.3); }
+        .cookie-btn-accept:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(227, 6, 19, 0.5); }
+        .cookie-btn-reject { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.15); }
+        .cookie-btn-reject:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.3); }
+        .cookie-btn-settings { background: transparent; color: rgba(255, 255, 255, 0.6); border: none; text-decoration: underline; padding: 10px 12px; }
+        .cookie-btn-settings:hover { color: #fff; }
 
-        .lightbox-overlay.active .lightbox-img {
-            transform: scale(1);
-        }
-
-        /* ===== МОДАЛЬНОЕ ОКНО ПОЛИТИКИ ===== */
-        .policy-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(14px);
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.4s ease;
-            padding: 20px;
-        }
-
-        .policy-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .policy-modal-content {
-            background: rgba(20, 20, 20, 0.98);
-            border: 1px solid rgba(227, 6, 19, 0.3);
-            border-radius: 24px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 40px;
-            position: relative;
-            box-shadow: 0 0 80px rgba(227, 6, 19, 0.15);
-        }
-
-        .policy-modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-        .policy-modal-content::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.03);
-            border-radius: 10px;
-        }
-        .policy-modal-content::-webkit-scrollbar-thumb {
-            background: rgba(227, 6, 19, 0.4);
-            border-radius: 10px;
-        }
-
-        .policy-modal-close {
-            position: sticky;
-            top: 0;
-            float: right;
-            background: rgba(227, 6, 19, 0.15);
-            border: 1px solid rgba(227, 6, 19, 0.3);
-            color: #fff;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-            z-index: 10;
-        }
-        .policy-modal-close:hover {
-            background: var(--red);
-            transform: rotate(90deg);
-        }
-
-        .policy-modal-content h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--red);
-            margin-bottom: 20px;
-            line-height: 1.3;
-            text-align: center;
-        }
-
-        .policy-modal-content h3 {
-            font-family: 'Orbitron', monospace;
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            margin: 24px 0 12px;
-            line-height: 1.4;
-        }
-
-        .policy-modal-content p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 12px;
-        }
-
-        .policy-modal-content ul {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 12px;
-        }
-
-        .policy-modal-content ul li {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            line-height: 1.7;
-            padding-left: 20px;
-            position: relative;
-            margin-bottom: 6px;
-        }
-
-        .policy-modal-content ul li::before {
-            content: '—';
-            position: absolute;
-            left: 0;
-            color: var(--red);
-        }
-
-        .policy-modal-content strong {
-            color: #fff;
-            font-weight: 600;
-        }
-
-        /* ===== КОНТАКТЫ ===== */
-        .contacts-section {
-            padding: 50px 0;
-        }
-        .contacts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: stretch;
-        }
-        .contacts-info {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            justify-content: center;
-        }
-        .contacts-info .contact-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .contacts-info .contact-item .label {
-            font-size: 12px;
-            color: rgba(255,255,255,0.4);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-        .contacts-info .contact-item .value {
-            font-size: 20px;
-            font-weight: 600;
-            color: #fff;
-            line-height: 1.4;
-        }
-        .contacts-info .contact-item .value a {
-            color: #fff;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .contacts-info .contact-item .value a:hover {
-            color: var(--red);
-        }
-        .contacts-info .contact-item .phone-large {
-            font-size: 28px;
-            font-weight: 700;
-            text-align: center;
-        }
-        .contacts-map {
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.08);
-            min-height: 320px;
-            background: #111;
-        }
-        .contacts-map iframe {
-            width: 100%;
-            height: 100%;
-            min-height: 320px;
-            border: none;
-            display: block;
-        }
-
-        /* ===== ФОРМА ===== */
-        .form-premium {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .form-premium h2 {
-            font-family: 'Orbitron', monospace;
-            text-align: center;
-            font-size: 26px;
-            letter-spacing: 1px;
-            line-height: 1.2;
-        }
-
-        .form-premium .sub {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            margin: 6px 0 24px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            color: #fff;
-            font-size: 15px;
-            transition: 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--red);
-            box-shadow: 0 0 30px rgba(227, 6, 19, 0.08);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            min-width: 20px;
-            margin-top: 2px;
-            accent-color: var(--red);
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .checkbox-group label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.5;
-            cursor: pointer;
-            text-transform: none;
-            letter-spacing: 0;
-            font-weight: 400;
-            margin-bottom: 0;
-        }
-        .checkbox-group label a {
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: underline;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .checkbox-group label a:hover {
-            color: var(--red);
-        }
-
-        .form-premium .btn-primary {
-            width: 100%;
-            padding: 16px;
-            font-size: 15px;
-            margin-top: 8px;
-        }
-
-        #formStatus {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        /* ===== ФУТЕР ===== */
-        footer {
-            padding: 30px 0;
-            border-top: 1px solid rgba(227, 6, 19, 0.08);
-            text-align: center;
-            color: #000;
-            font-size: 13px;
-            background: #f5f5f5;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 28px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #000;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.3s;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-links a:hover {
-            color: var(--red);
-            text-shadow: 0 0 20px rgba(227, 6, 19, 0.2);
-        }
-
-        footer p {
-            color: #333;
-            font-size: 12px;
-        }
+        /* ===== ФУТЕР (РЕКВИЗИТЫ) ===== */
+        footer { padding: 40px 0; border-top: 1px solid rgba(227, 6, 19, 0.08); text-align: center; color: #ccc; font-size: 13px; background: #0d0d0d; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
+        .footer-links a { color: #fff; text-decoration: none; font-size: 14px; transition: 0.3s; font-weight: 600; }
+        .footer-links a:hover { color: var(--red); }
+        .footer-legal { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 24px; max-width: 800px; margin: 0 auto 24px; font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.5); text-align: left; }
+        .footer-legal strong { color: #fff; }
+        .footer-legal a { color: #fff; text-decoration: underline; cursor: pointer; transition: 0.3s; }
+        .footer-legal a:hover { color: var(--red); }
 
         /* ===== АНИМАЦИИ ===== */
-        @keyframes fadeSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        @keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
+        .animate-on-scroll { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
         /* ===== АДАПТИВ ===== */
         @media (max-width: 1024px) {
-            .hero-wrapper {
-                flex-direction: column;
-                gap: 40px;
-            }
-            .hero-content {
-                max-width: 100%;
-            }
-            .hero-video-text {
-                min-width: 0;
-                width: 100%;
-                max-width: 700px;
-                height: 400px;
-            }
-            .hero-video-text .text-overlay {
-                font-size: clamp(60px, 10vw, 100px);
-                letter-spacing: 8px;
-            }
-            .contacts-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .contacts-info .contact-item .value {
-                font-size: 18px;
-            }
-            .contacts-info .contact-item .phone-large {
-                font-size: 24px;
-            }
-            .media-online-wrapper iframe {
-                height: 400px;
-            }
+            .hero-wrapper { flex-direction: column; gap: 40px; }
+            .hero-content { max-width: 100%; }
+            .hero-video-text { min-width: 0; width: 100%; max-width: 700px; height: 400px; }
+            .hero-video-text .text-overlay { font-size: clamp(60px, 10vw, 100px); letter-spacing: 8px; }
+            .contacts-grid { grid-template-columns: 1fr; gap: 30px; }
+            .media-online-wrapper iframe { height: 400px; }
         }
 
         @media (max-width: 900px) {
-            header {
-                position: sticky;
-                padding: 10px 0;
-            }
-            .header-inner {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-            nav {
-                gap: 12px;
-                justify-content: center;
-            }
-            nav a {
-                font-size: 13px;
-            }
-            .btn-primary {
-                padding: 6px 16px;
-                font-size: 11px;
-            }
-            .logo img {
-                height: 48px;
-                width: 48px;
-            }
-            .logo-text {
-                font-size: 19px;
-            }
-            .section {
-                scroll-margin-top: 180px;
-            }
-            .hero-video-text {
-                height: 340px;
-                max-width: 600px;
-                width: 100%;
-            }
-            .hero-video-text .text-overlay {
-                font-size: clamp(50px, 8vw, 80px);
-                letter-spacing: 6px;
-            }
-            .policy-modal-content {
-                padding: 30px 20px;
-            }
-            .policy-modal-content h2 {
-                font-size: 20px;
-            }
-            .media-online-wrapper iframe {
-                height: 320px;
-            }
+            header { position: sticky; padding: 10px 0; }
+            .header-inner { flex-direction: column; gap: 10px; text-align: center; }
+            nav { gap: 12px; justify-content: center; }
+            nav a { font-size: 13px; }
+            .btn-primary { padding: 6px 16px; font-size: 11px; }
+            .logo img { height: 48px; width: 48px; }
+            .logo-text { font-size: 19px; }
+            .section { scroll-margin-top: 180px; }
+            .hero-video-text { height: 340px; max-width: 600px; width: 100%; }
+            .hero-video-text .text-overlay { font-size: clamp(50px, 8vw, 80px); letter-spacing: 6px; }
+            .modal-content { padding: 30px 20px; }
+            .modal-content h2 { font-size: 20px; }
+            .media-online-wrapper iframe { height: 320px; }
+            .cookie-banner { flex-direction: column; text-align: center; gap: 16px; padding: 20px; bottom: 10px; left: 10px; right: 10px; }
+            .cookie-banner-actions { justify-content: center; width: 100%; }
+            .cookie-btn { width: 100%; text-align: center; }
         }
 
         @media (max-width: 600px) {
-            header {
-                padding: 8px 0;
-                position: sticky;
-                top: 0;
-                z-index: 100;
-            }
-            .logo img {
-                height: 48px;
-                width: 48px;
-            }
-            .logo-text {
-                font-size: 18px;
-                letter-spacing: 0.5px;
-            }
-            .logo {
-                gap: 8px;
-            }
-            nav {
-                gap: 8px;
-            }
-            nav a {
-                font-size: 11px;
-                letter-spacing: 0.3px;
-            }
-            .btn-primary {
-                padding: 4px 12px;
-                font-size: 10px;
-                box-shadow: 0 0 12px rgba(227, 6, 19, 0.2);
-            }
-            .header-inner {
-                gap: 8px;
-            }
-
-            .hero {
-                padding: 0;
-                min-height: auto;
-            }
-            .hero-wrapper {
-                gap: 0;
-                flex-direction: column;
-            }
-
-            .hero-video-text {
-                position: sticky;
-                top: 72px;
-                z-index: 50;
-                height: 360px;
-                width: 100%;
-                max-width: 100%;
-                min-width: 0;
-                border-radius: 0;
-                margin: 0;
-                border-left: none;
-                border-right: none;
-                border-top: none;
-                border-radius: 0;
-                animation: none;
-                flex-shrink: 0;
-            }
-            .hero-video-text .text-overlay {
-                font-size: clamp(55px, 16vw, 90px);
-                letter-spacing: 8px;
-            }
-            .hero-video-text .play-hint {
-                font-size: 11px;
-                padding: 5px 18px;
-                bottom: 16px;
-            }
-            .hero-video-text video {
-                opacity: 0.6;
-            }
-
-            .hero-content {
-                padding: 24px 16px;
-                margin: 0;
-                max-width: 100%;
-                border-radius: 0;
-                background: rgba(10, 10, 10, 0.6);
-                border: none;
-                border-top: 1px solid rgba(227, 6, 19, 0.08);
-                animation: none;
-            }
-            .hero-content h1 {
-                font-size: clamp(28px, 6vw, 36px);
-            }
-            .hero-content .subtitle {
-                font-size: 18px;
-            }
-            .hero-content p {
-                font-size: 16px;
-                margin-bottom: 24px;
-                text-align: center;
-            }
-
-            .hero-actions {
-                justify-content: center;
-                gap: 12px;
-                display: flex;
-                flex-wrap: wrap;
-                width: 100%;
-            }
-            .hero-actions .btn-primary,
-            .hero-actions .btn-secondary {
-                display: inline-block;
-                text-align: center;
-                flex: 0 1 auto;
-                min-width: 160px;
-                font-size: 14px;
-                padding: 12px 24px;
-            }
-            .btn-secondary {
-                font-size: 14px;
-                padding: 12px 24px;
-            }
-
-            .section {
-                padding: 30px 0;
-                scroll-margin-top: 140px;
-            }
-            .section-glass {
-                padding: 24px 16px;
-                border-radius: 20px;
-            }
-            .section-title {
-                font-size: 24px;
-            }
-            .section-sub {
-                font-size: 14px;
-            }
-            .section-header {
-                margin-bottom: 24px;
-            }
-            .photo-collage {
-                grid-template-columns: 1fr 1fr;
-            }
-            .info-card {
-                padding: 18px;
-                text-align: center;
-            }
-            .info-card h3 {
-                font-size: 18px;
-            }
-            .info-card p {
-                font-size: 14px;
-            }
-
-            .media-online-wrapper iframe {
-                height: 220px;
-            }
-            .live-badge {
-                font-size: 10px;
-                padding: 6px 12px;
-                top: 10px;
-                left: 10px;
-            }
-            .live-dot {
-                width: 7px;
-                height: 7px;
-            }
-            .online-counter {
-                font-size: 10px;
-                padding: 6px 12px;
-                top: 10px;
-                right: 10px;
-            }
-            .online-counter .dot {
-                width: 7px;
-                height: 7px;
-            }
-
-            .stream-btn {
-                padding: 16px 18px;
-                gap: 12px;
-            }
-            .stream-btn-dot {
-                width: 12px;
-                height: 12px;
-            }
-            .stream-btn-content .title {
-                font-size: 13px;
-            }
-            .stream-btn-content .desc {
-                font-size: 12px;
-            }
-            .stream-btn-arrow {
-                font-size: 18px;
-            }
-
-            .accordion-header {
-                padding: 18px 16px;
-                gap: 12px;
-            }
-            .accordion-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
-                border-radius: 12px;
-            }
-            .accordion-title {
-                font-size: 15px;
-            }
-            .accordion-subtitle {
-                font-size: 12px;
-            }
-            .accordion-arrow {
-                font-size: 20px;
-            }
-            .accordion-body-inner {
-                padding: 0 16px 18px;
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            .accordion-link {
-                padding: 12px 14px;
-                font-size: 13px;
-            }
-
-            .article-card {
-                flex: 0 0 260px;
-                padding: 20px;
-            }
-            .article-title {
-                font-size: 15px;
-            }
-            .article-excerpt {
-                font-size: 12px;
-            }
-
-            .scroll-top-btn {
-                bottom: 20px;
-                left: 20px;
-                width: 48px;
-                height: 48px;
-                font-size: 20px;
-            }
-
-            .contacts-section {
-                padding: 30px 0;
-            }
-            .contacts-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .contacts-info .contact-item .value {
-                font-size: 16px;
-            }
-            .contacts-info .contact-item .phone-large {
-                font-size: 22px;
-            }
-            .contacts-map {
-                min-height: 220px;
-            }
-            .contacts-map iframe {
-                min-height: 220px;
-            }
-
-            .form-premium h2 {
-                font-size: 24px;
-            }
-            .form-premium .sub {
-                font-size: 14px;
-            }
-            .form-group input {
-                font-size: 15px;
-                padding: 14px 18px;
-            }
-            .form-premium .btn-primary {
-                font-size: 15px;
-                padding: 14px;
-            }
-
-            .checkbox-group label {
-                font-size: 11px;
-                line-height: 1.4;
-            }
-
-            .policy-modal {
-                padding: 10px;
-            }
-            .policy-modal-content {
-                padding: 25px 16px;
-                border-radius: 16px;
-            }
-            .policy-modal-content h2 {
-                font-size: 18px;
-                margin-top: 30px;
-            }
-            .policy-modal-content h3 {
-                font-size: 14px;
-            }
-            .policy-modal-content p,
-            .policy-modal-content ul li {
-                font-size: 13px;
-            }
-            .policy-modal-close {
-                width: 36px;
-                height: 36px;
-                font-size: 18px;
-            }
-
-            footer {
-                padding: 24px 16px;
-                background: #f5f5f5;
-            }
-            .footer-links {
-                gap: 18px;
-            }
-            .footer-links a {
-                font-size: 14px;
-                color: #000;
-            }
-            footer p {
-                font-size: 12px;
-                color: #333;
-            }
+            header { padding: 8px 0; position: sticky; top: 0; z-index: 100; }
+            .logo img { height: 48px; width: 48px; }
+            .logo-text { font-size: 18px; letter-spacing: 0.5px; }
+            .logo { gap: 8px; }
+            nav { gap: 8px; }
+            nav a { font-size: 11px; letter-spacing: 0.3px; }
+            .btn-primary { padding: 4px 12px; font-size: 10px; box-shadow: 0 0 12px rgba(227, 6, 19, 0.2); }
+            .header-inner { gap: 8px; }
+            .hero { padding: 0; min-height: auto; }
+            .hero-wrapper { gap: 0; flex-direction: column; }
+            .hero-video-text { position: sticky; top: 72px; z-index: 50; height: 360px; width: 100%; max-width: 100%; min-width: 0; border-radius: 0; margin: 0; border-left: none; border-right: none; border-top: none; border-radius: 0; animation: none; flex-shrink: 0; }
+            .hero-video-text .text-overlay { font-size: clamp(55px, 16vw, 90px); letter-spacing: 8px; }
+            .hero-video-text .play-hint { font-size: 11px; padding: 5px 18px; bottom: 16px; }
+            .hero-video-text video { opacity: 0.6; }
+            .hero-content { padding: 24px 16px; margin: 0; max-width: 100%; border-radius: 0; background: rgba(10, 10, 10, 0.6); border: none; border-top: 1px solid rgba(227, 6, 19, 0.08); animation: none; }
+            .hero-content h1 { font-size: clamp(28px, 6vw, 36px); }
+            .hero-content .subtitle { font-size: 18px; }
+            .hero-content p { font-size: 16px; margin-bottom: 24px; text-align: center; }
+            .hero-actions { justify-content: center; gap: 12px; display: flex; flex-wrap: wrap; width: 100%; }
+            .hero-actions .btn-primary, .hero-actions .btn-secondary { display: inline-block; text-align: center; flex: 0 1 auto; min-width: 160px; font-size: 14px; padding: 12px 24px; }
+            .section { padding: 30px 0; scroll-margin-top: 140px; }
+            .section-glass { padding: 24px 16px; border-radius: 20px; }
+            .section-title { font-size: 24px; }
+            .section-sub { font-size: 14px; }
+            .section-header { margin-bottom: 24px; }
+            .photo-collage { grid-template-columns: 1fr 1fr; }
+            .info-card { padding: 18px; text-align: center; }
+            .info-card h3 { font-size: 18px; }
+            .info-card p { font-size: 14px; }
+            .media-online-wrapper iframe { height: 220px; }
+            .live-badge { font-size: 10px; padding: 6px 12px; top: 10px; left: 10px; }
+            .live-dot { width: 7px; height: 7px; }
+            .online-counter { font-size: 10px; padding: 6px 12px; top: 10px; right: 10px; }
+            .online-counter .dot { width: 7px; height: 7px; }
+            .stream-btn { padding: 16px 18px; gap: 12px; }
+            .stream-btn-dot { width: 12px; height: 12px; }
+            .stream-btn-content .title { font-size: 13px; }
+            .stream-btn-content .desc { font-size: 12px; }
+            .stream-btn-arrow { font-size: 18px; }
+            .accordion-header { padding: 18px 16px; gap: 12px; }
+            .accordion-icon { width: 40px; height: 40px; font-size: 18px; border-radius: 12px; }
+            .accordion-title { font-size: 15px; }
+            .accordion-subtitle { font-size: 12px; }
+            .accordion-arrow { font-size: 20px; }
+            .accordion-body-inner { padding: 0 16px 18px; grid-template-columns: 1fr; gap: 10px; }
+            .accordion-link { padding: 12px 14px; font-size: 13px; }
+            .article-card { flex: 0 0 260px; padding: 20px; }
+            .article-title { font-size: 15px; }
+            .article-excerpt { font-size: 12px; }
+            .scroll-top-btn { bottom: 20px; left: 20px; width: 48px; height: 48px; font-size: 20px; }
+            .contacts-section { padding: 30px 0; }
+            .contacts-grid { grid-template-columns: 1fr; gap: 20px; }
+            .contacts-info .contact-item .value { font-size: 16px; }
+            .contacts-info .contact-item .phone-large { font-size: 22px; }
+            .contacts-map { min-height: 220px; }
+            .contacts-map iframe { min-height: 220px; }
+            .form-premium h2 { font-size: 24px; }
+            .form-premium .sub { font-size: 14px; }
+            .form-group input { font-size: 15px; padding: 14px 18px; }
+            .form-premium .btn-primary { font-size: 15px; padding: 14px; }
+            .checkbox-group label { font-size: 11px; line-height: 1.4; }
+            .modal-overlay { padding: 10px; }
+            .modal-content { padding: 25px 16px; border-radius: 16px; }
+            .modal-content h2 { font-size: 18px; margin-top: 30px; }
+            .modal-content h3 { font-size: 14px; }
+            .modal-content p, .modal-content ul li { font-size: 13px; }
+            .modal-close { width: 36px; height: 36px; font-size: 18px; }
+            footer { padding: 24px 16px; background: #0d0d0d; }
+            .footer-links { gap: 18px; }
+            .footer-links a { font-size: 13px; }
+            .footer-legal { font-size: 11px; padding: 16px; }
         }
 
         @media (max-width: 400px) {
-            .hero-video-text {
-                height: 300px;
-                top: 66px;
-            }
-            .hero-video-text .text-overlay {
-                font-size: clamp(40px, 14vw, 55px);
-                letter-spacing: 5px;
-            }
-            nav a {
-                font-size: 9px;
-            }
-            .btn-primary {
-                font-size: 9px;
-                padding: 3px 10px;
-            }
-            .logo-text {
-                font-size: 15px;
-            }
-            .logo img {
-                height: 40px;
-                width: 40px;
-            }
-            .hero-content h1 {
-                font-size: clamp(24px, 5vw, 30px);
-            }
-            .hero-content .subtitle {
-                font-size: 16px;
-            }
-            .hero-content p {
-                font-size: 14px;
-            }
-            .hero-actions .btn-primary,
-            .hero-actions .btn-secondary {
-                min-width: 140px;
-                font-size: 13px;
-                padding: 10px 18px;
-            }
-            .contacts-info .contact-item .value {
-                font-size: 14px;
-            }
-            .contacts-info .contact-item .phone-large {
-                font-size: 18px;
-            }
-            .contacts-map {
-                min-height: 180px;
-            }
-            .contacts-map iframe {
-                min-height: 180px;
-            }
-            .article-card {
-                flex: 0 0 240px;
-            }
+            .hero-video-text { height: 300px; top: 66px; }
+            .hero-video-text .text-overlay { font-size: clamp(40px, 14vw, 55px); letter-spacing: 5px; }
+            nav a { font-size: 9px; }
+            .btn-primary { font-size: 9px; padding: 3px 10px; }
+            .logo-text { font-size: 15px; }
+            .logo img { height: 40px; width: 40px; }
+            .hero-content h1 { font-size: clamp(24px, 5vw, 30px); }
+            .hero-content .subtitle { font-size: 16px; }
+            .hero-content p { font-size: 14px; }
+            .hero-actions .btn-primary, .hero-actions .btn-secondary { min-width: 140px; font-size: 13px; padding: 10px 18px; }
+            .contacts-info .contact-item .value { font-size: 14px; }
+            .contacts-info .contact-item .phone-large { font-size: 18px; }
+            .contacts-map { min-height: 180px; }
+            .contacts-map iframe { min-height: 180px; }
+            .article-card { flex: 0 0 240px; }
         }
     </style>
 </head>
@@ -1849,7 +369,6 @@
             </div>
         </div>
     </section>
-
     <!-- ===== НАПРАВЛЕНИЯ ===== -->
     <section id="directions" class="container section">
         <div class="section-glass animate-on-scroll">
@@ -2054,7 +573,7 @@
                 <a href="https://vk.ru/wall-166732422_802" target="_blank" rel="noopener noreferrer" class="stream-btn">
                     <div class="stream-btn-dot"></div>
                     <div class="stream-btn-content">
-                        <div class="title">Эфир ОТС №2 — Как обстоят дела с Брейкингом в НСК и какие дальнейшие перспективы</div>
+                        <div class="title">Эфир ОТС №2 — Как обстоят дела с Брейкингом в НСК</div>
                         <div class="desc">Разговор о развитии брейкинга в Новосибирске</div>
                     </div>
                     <div class="stream-btn-arrow">→</div>
@@ -2118,89 +637,31 @@
                     </div>
                     <div class="accordion-body">
                         <div class="accordion-body-inner">
-                            <a href="https://sport.nso.ru/news/21612" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">01</span>
-                                <span>Новосибирские брейкеры на всероссийских соревнованиях</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/21327" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">02</span>
-                                <span>Брейкинг: о медалях суперфестиваля</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/20493" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">03</span>
-                                <span>Развитие брейкинга в Новосибирской области</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/20166" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">04</span>
-                                <span>Итоги года в брейкинге</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/19882" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">05</span>
-                                <span>Брейкинг на Играх БРИКС</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/19599" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">06</span>
-                                <span>На площадке дружбы и обмена опытом</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/19336" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">07</span>
-                                <span>Победы новосибирских брейкеров</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/18659" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">08</span>
-                                <span>Чемпионат области по брейкингу</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/18045" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">09</span>
-                                <span>А у нас – «Экзерсис»!</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/18040" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">10</span>
-                                <span>Брейкинг: новые горизонты</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/17886" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">11</span>
-                                <span>Восходящие звёзды брейкинга</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/17150" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">12</span>
-                                <span>Развитие уличной культуры и спорта</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/16712" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">13</span>
-                                <span>Брейкинг для детей</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/16078" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">14</span>
-                                <span>Первые шаги в брейкинге</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/15669" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">15</span>
-                                <span>Новосибирский брейкинг на карте России</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/12847" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">16</span>
-                                <span>Спортивные достижения юных новосибирцев</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/12328" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">17</span>
-                                <span>Брейкинг: путь к вершинам</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news/10225" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">18</span>
-                                <span>История новосибирского брейкинга</span>
-                            </a>
-                            <a href="https://sport.nso.ru/news?field_tags_tid%5B%5D=239" target="_blank" rel="noopener noreferrer" class="accordion-link">
-                                <span class="accordion-link-num">19</span>
-                                <span>Все новости Минспорта НСО о брейкинге</span>
-                            </a>
+                            <a href="https://sport.nso.ru/news/21612" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">01</span><span>Новосибирские брейкеры на всероссийских соревнованиях</span></a>
+                            <a href="https://sport.nso.ru/news/21327" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">02</span><span>Брейкинг: о медалях суперфестиваля</span></a>
+                            <a href="https://sport.nso.ru/news/20493" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">03</span><span>Развитие брейкинга в Новосибирской области</span></a>
+                            <a href="https://sport.nso.ru/news/20166" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">04</span><span>Итоги года в брейкинге</span></a>
+                            <a href="https://sport.nso.ru/news/19882" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">05</span><span>Брейкинг на Играх БРИКС</span></a>
+                            <a href="https://sport.nso.ru/news/19599" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">06</span><span>На площадке дружбы и обмена опытом</span></a>
+                            <a href="https://sport.nso.ru/news/19336" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">07</span><span>Победы новосибирских брейкеров</span></a>
+                            <a href="https://sport.nso.ru/news/18659" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">08</span><span>Чемпионат области по брейкингу</span></a>
+                            <a href="https://sport.nso.ru/news/18045" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">09</span><span>А у нас – «Экзерсис»!</span></a>
+                            <a href="https://sport.nso.ru/news/18040" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">10</span><span>Брейкинг: новые горизонты</span></a>
+                            <a href="https://sport.nso.ru/news/17886" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">11</span><span>Восходящие звёзды брейкинга</span></a>
+                            <a href="https://sport.nso.ru/news/17150" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">12</span><span>Развитие уличной культуры и спорта</span></a>
+                            <a href="https://sport.nso.ru/news/16712" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">13</span><span>Брейкинг для детей</span></a>
+                            <a href="https://sport.nso.ru/news/16078" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">14</span><span>Первые шаги в брейкинге</span></a>
+                            <a href="https://sport.nso.ru/news/15669" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">15</span><span>Новосибирский брейкинг на карте России</span></a>
+                            <a href="https://sport.nso.ru/news/12847" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">16</span><span>Спортивные достижения юных новосибирцев</span></a>
+                            <a href="https://sport.nso.ru/news/12328" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">17</span><span>Брейкинг: путь к вершинам</span></a>
+                            <a href="https://sport.nso.ru/news/10225" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">18</span><span>История новосибирского брейкинга</span></a>
+                            <a href="https://sport.nso.ru/news?field_tags_tid%5B%5D=239" target="_blank" rel="noopener noreferrer" class="accordion-link"><span class="accordion-link-num">19</span><span>Все новости Минспорта НСО о брейкинге</span></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
     <!-- ===== ОТЗЫВЫ 2ГИС ===== -->
     <section class="container section">
         <div class="section-glass animate-on-scroll">
@@ -2268,10 +729,21 @@
                         <label for="phone">Контактный телефон</label>
                         <input type="text" id="phone" placeholder="+7 999 123-45-67" required />
                     </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="consent" />
-                        <label for="consent">Ознакомьтесь и установите галочку — <a onclick="openPolicy(); return false;">политика обработки данных</a></label>
+                    
+                    <!-- ЧЕК-БОКСЫ СОГЛАСИЙ -->
+                    <div class="checkbox-group" style="margin-bottom: 12px;">
+                        <input type="checkbox" id="consent-rules" />
+                        <label for="consent-rules">Я ознакомлен(-а) и согласен(-на) с <a onclick="openRules(); return false;">Едиными правилами посещения (ТБ и ПБ)</a></label>
                     </div>
+                    <div class="checkbox-group" style="margin-bottom: 12px;">
+                        <input type="checkbox" id="consent-offer" />
+                        <label for="consent-offer">Я ознакомлен(-а) и согласен(-на) с <a onclick="openOffer(); return false;">Публичной офертой</a></label>
+                    </div>
+                    <div class="checkbox-group" style="margin-bottom: 16px;">
+                        <input type="checkbox" id="consent-pd" />
+                        <label for="consent-pd">Я ознакомлен(-а) и согласен(-на) с <a onclick="openPolicy(); return false;">Политикой обработки персональных данных</a> и даю своё согласие на обработку.</label>
+                    </div>
+                    
                     <button type="submit" class="btn-primary">Отправить заявку</button>
                 </form>
                 <div id="formStatus"></div>
@@ -2328,209 +800,179 @@
         <img src="" alt="Просмотр фото" class="lightbox-img" id="lightboxImg">
     </div>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ПОЛИТИКИ ===== -->
-    <div class="policy-modal" id="policyModal">
-        <div class="policy-modal-content">
-            <button class="policy-modal-close" onclick="closePolicy()" aria-label="Закрыть">✕</button>
+    <!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
+    <!-- Политика ПДн -->
+    <div class="modal-overlay" id="policyModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePolicy()" aria-label="Закрыть">✕</button>
             <h2>ПОЛИТИКА В ОТНОШЕНИИ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
-
-            <h3>1. Общие положения</h3>
-            <p>1.1. Настоящая политика в отношении обработки персональных данных (далее — Политика) разработана Индивидуальным предпринимателем <strong>Чжан Степан Дмитриевич</strong> (далее — Оператор) в целях исполнения требований Федерального закона от 27.07.2006 г. №152-ФЗ «О персональных данных», обеспечения защиты прав и свобод субъекта персональных данных при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.</p>
-            <p>1.2. Политика определяет общий порядок, принципы и условия обработки персональных данных Оператора и обеспечивает защиту прав субъектов персональных данных при обработке их персональных данных.</p>
-            <p>1.3. Положениями настоящей Политики руководствуются все работники Компании.</p>
-            <p>1.4. Настоящая Политика действует в отношении всей информации, содержащей персональные данные субъектов персональных данных, которую Оператор может получить о субъекте персональных данных при осуществлении основной деятельности. Настоящая Политика является общедоступной и размещается на сайте Компании в сети Интернет по адресу <strong>https://sbs54.ru</strong>.</p>
-
-            <h3>1.5. Основные понятия, используемые в Политике</h3>
+            <p>1.1. Настоящая политика в отношении обработки персональных данных (далее — Политика) разработана Индивидуальным предпринимателем <strong>Чжан Степан Дмитриевич</strong> (ИНН 382306383459, ОГРНИП 322547600164369) в целях исполнения требований Федерального закона от 27.07.2006 г. №152-ФЗ «О персональных данных».</p>
+            <p>1.2. Политика определяет общий порядок, принципы и условия обработки персональных данных Оператора и обеспечивает защиту прав субъектов персональных данных.</p>
+            <p>1.3. Настоящая Политика действует в отношении всей информации, содержащей персональные данные, которую Оператор может получить о субъекте персональных данных при осуществлении основной деятельности. Настоящая Политика является общедоступной и размещается на сайте по адресу <strong>https://sbs54.ru</strong>.</p>
+            <h3>2. Основные понятия</h3>
             <ul>
-                <li><strong>Персональные данные</strong> — любая информация, относящаяся к прямо или косвенно определённому или определяемому физическому лицу (субъекту персональных данных).</li>
-                <li><strong>Оператор персональных данных</strong> — организация, самостоятельно или совместно с другими лицами организующая и (или) осуществляющая обработку персональных данных, а также определяющая цели обработки персональных данных, состав персональных данных, подлежащих обработке, действия (операции), совершаемые с персональными данными.</li>
-                <li><strong>Обработка персональных данных</strong> — любое действие (операция) или совокупность действий (операций) с персональными данными, совершаемых с использованием средств автоматизации или без их использования. Обработка включает: сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение.</li>
-                <li><strong>Автоматизированная обработка персональных данных</strong> — обработка персональных данных с помощью средств вычислительной техники.</li>
-                <li><strong>Распространение персональных данных</strong> — действия, направленные на раскрытие персональных данных неопределённому кругу лиц.</li>
-                <li><strong>Предоставление персональных данных</strong> — действия, направленные на раскрытие персональных данных определённому лицу или определённому кругу лиц.</li>
-                <li><strong>Блокирование персональных данных</strong> — временное прекращение обработки персональных данных (за исключением случаев, если обработка необходима для уточнения персональных данных).</li>
-                <li><strong>Уничтожение персональных данных</strong> — действия, в результате которых становится невозможным восстановить содержание персональных данных в информационной системе персональных данных и (или) в результате которых уничтожаются материальные носители персональных данных.</li>
-                <li><strong>Обезличивание персональных данных</strong> — действия, в результате которых становится невозможным без использования дополнительной информации определить принадлежность персональных данных конкретному субъекту персональных данных.</li>
-                <li><strong>Информационная система персональных данных</strong> — совокупность содержащихся в базах данных персональных данных и обеспечивающих их обработку информационных технологий и технических средств.</li>
-                <li><strong>Трансграничная передача персональных данных</strong> — передача персональных данных на территорию иностранного государства органу власти иностранного государства, иностранному физическому лицу или иностранному юридическому лицу.</li>
-                <li><strong>Субъект персональных данных</strong> — физическое лицо, персональные данные которого обрабатываются.</li>
-                <li><strong>Конфиденциальность персональных данных</strong> — обязательное для Оператора и иных лиц, получивших доступ к персональным данным, требование не раскрывать третьим лицам и не распространять персональные данные.</li>
-                <li><strong>Биометрические персональные данные</strong> — сведения, которые характеризуют физиологические и биологические особенности человека, на основании которых можно установить его личность.</li>
+                <li><strong>Персональные данные</strong> — любая информация, относящаяся к прямо или косвенно определённому физическому лицу.</li>
+                <li><strong>Обработка персональных данных</strong> — любое действие с персональными данными (сбор, запись, систематизация, накопление, хранение, уточнение, извлечение, использование, передача, обезличивание, блокирование, удаление, уничтожение).</li>
+                <li><strong>Конфиденциальность персональных данных</strong> — обязательное требование не раскрывать третьим лицам персональные данные без согласия субъекта.</li>
             </ul>
-
-            <h3>2. Основные права и обязанности Оператора</h3>
-            <p>2.1. До начала обработки персональных данных уведомить уполномоченный орган по защите прав субъектов персональных данных о своём намерении осуществлять обработку персональных данных.</p>
-            <p>2.2. Оператор, получивший доступ к персональным данным, обязан соблюдать конфиденциальность персональных данных — не раскрывать третьим лицам и не распространять персональные данные без согласия субъекта персональных данных, если иное не предусмотрено федеральным законом.</p>
-            <p>2.3. Оператор при обработке персональных данных обязан принимать необходимые правовые, организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа к ним, уничтожения, изменения, блокирования, копирования, предоставления, распространения персональных данных, а также от иных неправомерных действий в отношении персональных данных.</p>
-            <p>2.4. Оператор при сборе персональных данных обязан предоставить субъекту персональных данных по его просьбе информацию, касающуюся обработки его персональных данных, предусмотренную частью 7 статьи 14 Федерального закона «О персональных данных».</p>
-            <p>2.5. При сборе персональных данных, в том числе посредством информационно-телекоммуникационной сети «Интернет», Оператор обязан обеспечить запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение персональных данных граждан Российской Федерации с использованием баз данных, находящихся на территории Российской Федерации.</p>
-            <p>2.6. Если предоставление персональных данных является обязательным в соответствии с федеральным законом, Оператор обязан разъяснить субъекту персональных данных юридические последствия отказа предоставить его персональные данные.</p>
-            <p>2.7. Оператор обязан принимать меры, необходимые и достаточные для обеспечения выполнения обязанностей, предусмотренных Федеральным законом «О персональных данных» и принятыми в соответствии с ним нормативными правовыми актами.</p>
-            <p>2.8. Оператор обязан опубликовать или иным образом обеспечить неограниченный доступ к настоящей Политике и к сведениям о реализуемых требованиях к защите персональных данных.</p>
-            <p>2.9. Оператор персональных данных вправе отстаивать свои интересы в суде; предоставлять персональные данные субъектов третьим лицам, если это предусмотрено действующим законодательством; отказывать в предоставлении персональных данных в случаях, предусмотренных законодательством; использовать персональные данные субъекта без его согласия в случаях, предусмотренных законодательством.</p>
-
-            <h3>3. Основные права и обязанности субъекта персональных данных</h3>
-            <p>3.1. Субъект персональных данных имеет право на получение информации, касающейся обработки его персональных данных, в том числе содержащей:</p>
-            <ul>
-                <li>подтверждение факта обработки персональных данных Оператором;</li>
-                <li>правовые основания и цели обработки персональных данных;</li>
-                <li>цели и применяемые Оператором способы обработки персональных данных;</li>
-                <li>наименование и место нахождения Оператора, сведения о лицах, которые имеют доступ к персональным данным или которым могут быть раскрыты персональные данные;</li>
-                <li>обрабатываемые персональные данные, относящиеся к соответствующему субъекту персональных данных, источник их получения;</li>
-                <li>сроки обработки персональных данных, в том числе сроки их хранения;</li>
-                <li>порядок осуществления субъектом персональных данных прав, предусмотренных Федеральным законом;</li>
-                <li>информацию об осуществлённой или о предполагаемой трансграничной передаче данных;</li>
-                <li>иные сведения, предусмотренные Федеральным законом «О персональных данных».</li>
-            </ul>
-            <p>3.2. Субъект персональных данных вправе требовать от Оператора уточнения его персональных данных, их блокирования или уничтожения в случае, если персональные данные являются неполными, устаревшими, неточными, незаконно полученными или не являются необходимыми для заявленной цели обработки.</p>
-            <p>3.3. Субъект персональных данных имеет право на отзыв согласия на обработку персональных данных.</p>
-            <p>3.4. Если субъект персональных данных считает, что Оператор осуществляет обработку его персональных данных с нарушением требований Федерального закона «О персональных данных» или иным образом нарушает его права и свободы, субъект персональных данных вправе обжаловать действия или бездействие Оператора в уполномоченный орган по защите прав субъектов персональных данных или в судебном порядке.</p>
-            <p>3.5. Субъект персональных данных имеет право на защиту своих прав и законных интересов, в том числе на возмещение убытков и (или) компенсацию морального вреда в судебном порядке.</p>
-            <p>3.6. Субъект персональных данных обязан предоставлять Оператору достоверные персональные данные.</p>
-
-            <h3>4. Цели обработки персональных данных</h3>
-            <p>4.1. Обработка персональных данных ограничивается достижением конкретных, заранее определённых и законных целей. Не допускается обработка персональных данных, несовместимая с целями сбора персональных данных.</p>
-            <p>4.2. К целям обработки персональных данных Оператора относятся:</p>
-            <ul>
-                <li>Обработка заявок на обучение в школе брейкинга «Step by Step 54» и связи с субъектом персональных данных для организации тренировочного процесса;</li>
-                <li>Обработка персональных данных учеников и их законных представителей (родителей) для заключения и исполнения договора на оказание услуг;</li>
-                <li>Обработка персональных данных работников Компании в целях исполнения трудовых отношений;</li>
-                <li>Информирование субъектов персональных данных о мероприятиях, акциях, изменениях в расписании школы;</li>
-                <li>Соблюдение требований законодательства Российской Федерации.</li>
-            </ul>
-            <p>4.3. Обработка персональных данных должна осуществляться на законной и справедливой основе.</p>
-            <p>4.4. Обработке подлежат только персональные данные, которые отвечают целям их обработки.</p>
-
-            <h3>5. Правовые основания обработки персональных данных</h3>
-            <p>5.1. Обработка персональных данных осуществляется на основании:</p>
-            <ul>
-                <li>Конституции Российской Федерации;</li>
-                <li>Гражданского кодекса Российской Федерации;</li>
-                <li>Трудового кодекса Российской Федерации;</li>
-                <li>Налогового кодекса Российской Федерации;</li>
-                <li>Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных»;</li>
-                <li>Согласия субъекта персональных данных на обработку персональных данных;</li>
-                <li>Договоров, заключаемых между Оператором и субъектами персональных данных.</li>
-            </ul>
-
-            <h3>6. Категории обрабатываемых персональных данных, категории субъектов персональных данных</h3>
-            <p>6.1. Для реализации целей обработки, указанных в настоящей Политике, Оператор осуществляет обработку персональных данных следующих категорий субъектов:</p>
-            <ul>
-                <li>Ученики школы и их законные представители (родители);</li>
-                <li>Работники Оператора и соискатели на трудоустройство;</li>
-                <li>Контрагенты и их представители;</li>
-                <li>Посетители сайта, оставившие заявку через форму обратной связи.</li>
-            </ul>
-            <p>6.2. Перечень персональных данных, обрабатываемых Оператором, определяется в соответствии с законодательством Российской Федерации и целями обработки персональных данных, указанными в настоящей Политике. К таким данным могут относиться: фамилия, имя, отчество, контактный телефон, адрес электронной почты, дата рождения, сведения о родителях (законных представителях).</p>
-            <p>6.3. Оператор не имеет права получать и обрабатывать персональные данные, касающиеся расовой и национальной принадлежности, политических, религиозных и философских убеждений, интимной жизни, состояния здоровья, за исключением случаев, предусмотренных федеральными законами.</p>
-
-            <h3>7. Порядок и условия обработки персональных данных</h3>
-            <p>7.1. Оператор осуществляет сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление и уничтожение персональных данных.</p>
-            <p>7.2. Обработка персональных данных осуществляется следующими способами: неавтоматизированная обработка персональных данных; автоматизированная обработка персональных данных с передачей информации по информационно-телекоммуникационным сетям или без таковой; смешанная обработка персональных данных.</p>
-            <p>7.3. Обработка персональных данных Оператором осуществляется с согласия субъекта персональных данных на обработку его персональных данных, если иное не предусмотрено законодательством Российской Федерации.</p>
-            <p>7.4. Хранение персональных данных субъектов персональных данных осуществляется в форме, позволяющей определить субъекта персональных данных, не дольше, чем этого требуют цели их обработки. Обрабатываемые персональные данные подлежат уничтожению либо обезличиванию по достижении целей обработки или в случае утраты необходимости в достижении этих целей, если иное не предусмотрено федеральным законом.</p>
-            <p>7.5. Условиями прекращения обработки персональных данных могут являться: достижение целей обработки персональных данных; истечение срока действия согласия или отзыв согласия субъекта персональных данных на обработку его персональных данных; прекращение деятельности Оператора; выявление неправомерной обработки персональных данных.</p>
-            <p>7.6. Оператор вправе поручить обработку персональных данных другому лицу на основании заключаемого с этим лицом договора. Лицо, осуществляющее обработку персональных данных по поручению Оператора, обязано соблюдать принципы и правила обработки персональных данных, предусмотренные Федеральным законом «О персональных данных».</p>
-            <p>7.7. Оператор принимает необходимые и достаточные правовые, организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа к ним, уничтожения, изменения, блокирования, копирования, предоставления, распространения персональных данных, а также от иных неправомерных действий в отношении персональных данных.</p>
-
-            <h3>8. Порядок и условия обработки биометрических персональных данных</h3>
-            <p>8.1. К биометрическим персональным данным относятся сведения, которые характеризуют физиологические и биологические особенности человека, на основании которых можно установить его личность.</p>
-            <p>8.2. Обработка биометрических персональных данных может осуществляться только при наличии согласия в письменной форме субъекта персональных данных, за исключением случаев, предусмотренных законодательством Российской Федерации.</p>
-
-            <h3>9. Уточнение, исправление, удаление и уничтожение персональных данных</h3>
-            <p>9.1. Оператор обязан сообщить субъекту персональных данных или его представителю информацию о наличии персональных данных, относящихся к соответствующему субъекту, а также предоставить возможность ознакомления с этими персональными данными при обращении субъекта или его представителя либо в течение тридцати дней с даты получения запроса.</p>
-            <p>9.2. Оператор обязан предоставить безвозмездно субъекту персональных данных или его представителю возможность ознакомления с персональными данными, относящимися к этому субъекту. В срок, не превышающий семи рабочих дней со дня предоставления сведений, подтверждающих, что персональные данные являются неполными, неточными или неактуальными, Оператор обязан внести в них необходимые изменения.</p>
-            <p>9.3. В случае выявления неправомерной обработки персональных данных Оператор обязан прекратить обработку персональных данных в срок, не превышающий трёх рабочих дней с даты этого выявления.</p>
-
-            <h3>10. Заключительные положения</h3>
-            <p>10.1. Настоящая Политика вступает в силу с момента её утверждения Индивидуальным предпринимателем.</p>
-            <p>10.2. Политика является общедоступным документом.</p>
-            <p>10.3. Изменения и дополнения в настоящую Политику могут быть внесены на основании решения Индивидуального предпринимателя.</p>
-            <p>10.4. Настоящая Политика разработана в соответствии с законодательством Российской Федерации. В случае изменения норм законодательства Российской Федерации о защите персональных данных настоящая Политика должна быть приведена в соответствие с действующим законодательством.</p>
-
+            <h3>3. Цели обработки</h3>
+            <p>Обработка персональных данных Оператора осуществляется в целях: обработки заявок на обучение в школе брейкинга, связи с субъектом для организации тренировочного процесса, заключения и исполнения договора на оказание услуг, информирования о мероприятиях и изменениях в расписании.</p>
+            <h3>4. Права субъекта</h3>
+            <p>Субъект имеет право на получение информации об обработке его данных, их уточнение, блокирование или уничтожение, а также на отзыв согласия на обработку персональных данных.</p>
+            <h3>5. Заключительные положения</h3>
+            <p>Политика является общедоступным документом. Изменения и дополнения вносятся на основании решения Индивидуального предпринимателя.</p>
             <p style="margin-top: 30px; text-align: center; color: rgba(255,255,255,0.5); font-size: 13px;">
                 <strong>Оператор:</strong> ИП Чжан Степан Дмитриевич<br>
-                Сайт: https://sbs54.ru<br>
-                Контактный телефон: 8 (960) 790-06-00
+                ИНН: 382306383459 | ОГРНИП: 322547600164369<br>
+                Адрес: 630068, г. Новосибирск, ул. Шукшина, 7/1<br>
+                Сайт: https://sbs54.ru | Тел: 8 (960) 790-06-00
             </p>
+        </div>
+    </div>
+
+    <!-- Публичная оферта -->
+    <div class="modal-overlay" id="offerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeOffer()" aria-label="Закрыть">✕</button>
+            <h2>ПУБЛИЧНАЯ ОФЕРТА (ДОГОВОР ВОЗМЕЗДНОГО ОКАЗАНИЯ УСЛУГ)</h2>
+            <p>1.1. Настоящий документ является официальным предложением (публичной офертой) Индивидуального предпринимателя <strong>Чжан Степан Дмитриевич</strong> (ИНН 382306383459, ОГРНИП 322547600164369) (далее — Исполнитель) заключить договор возмездного оказания услуг на изложенных ниже условиях с любым физическим лицом (далее — Заказчик).</p>
+            <p>1.2. Акцептом настоящей оферты является заполнение формы записи на сайте и/или внесение оплаты за услуги. С момента акцепта настоящая оферта считается заключённым договором.</p>
+            <h3>2. Предмет договора</h3>
+            <p>2.1. Исполнитель обязуется оказать услуги по обучению брейкингу (далее — Услуги), а Заказчик обязуется принять и оплатить эти Услуги.</p>
+            <p>2.2. Стоимость Услуг определяется в соответствии с действующим прейскурантом Исполнителя, размещённым на сайте или предоставляемым по запросу.</p>
+            <h3>3. Права и обязанности сторон</h3>
+            <p>3.1. Исполнитель обязуется обеспечить качественное оказание Услуг, безопасность во время занятий, соблюдение лицензионных и иных требований.</p>
+            <p>3.2. Заказчик обязуется соблюдать Единые правила посещения (ТБ и ПБ), своевременно оплачивать Услуги, предоставлять медицинские документы и страховку при необходимости.</p>
+            <h3>4. Ответственность сторон</h3>
+            <p>4.1. Ответственность сторон регулируется действующим законодательством РФ.</p>
+            <p>4.2. Исполнитель не несёт ответственности за вред здоровью, если он наступил в результате сокрытия Заказчиком информации о здоровье или нарушения ребёнком правил безопасности.</p>
+            <h3>5. Заключительные положения</h3>
+            <p>5.1. Оферта вступает в силу с момента её размещения на сайте и действует бессрочно до её отзыва Исполнителем.</p>
+            <p style="margin-top: 30px; text-align: center; color: rgba(255,255,255,0.5); font-size: 13px;">
+                <strong>Исполнитель:</strong> ИП Чжан Степан Дмитриевич<br>
+                ИНН: 382306383459 | ОГРНИП: 322547600164369<br>
+                Адрес: 630068, г. Новосибирск, ул. Шукшина, 7/1
+            </p>
+        </div>
+    </div>
+
+    <!-- Уведомление об использовании Cookies -->
+    <div class="modal-overlay" id="cookiesModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCookiesPolicy()" aria-label="Закрыть">✕</button>
+            <h2>УВЕДОМЛЕНИЕ ОБ ИСПОЛЬЗОВАНИИ COOKIES</h2>
+            <p>Настоящее уведомление определяет отношения Индивидуального предпринимателя <strong>Чжан Степан Дмитриевич</strong> (далее — Оператор), расположенного по адресу: 630068, г. Новосибирск, ул. Шукшина, 7/1, и любого физического лица (далее — Пользователь), использующего Сайт <strong>sbs54.ru</strong>.</p>
+            <p>Сайт применяет файлы Cookies и иные аналогичные технологии для обеспечения комфортного взаимодействия пользователей с Сайтом, повышения эффективности его работы, а также для получения аналитической информации.</p>
+            <h3>Определение и виды Cookies</h3>
+            <p><strong>Файл cookies</strong> — техническая информация, автоматически собираемая программным обеспечением Сайта при его посещении. Информация в cookies полностью анонимна и не содержит персональных данных.</p>
+            <ul>
+                <li><strong>Сессионные</strong> — существуют временно в течение сессии, удаляются после закрытия браузера.</li>
+                <li><strong>Постоянные</strong> — хранятся на устройстве пользователя и не удаляются при закрытии браузера.</li>
+                <li><strong>Аналитические/маркетинговые</strong> — собирают информацию о том, как вы используете сайт, для улучшения пользовательского опыта.</li>
+                <li><strong>Обязательные</strong> — минимальный набор, необходимый для правильной работы Сайта.</li>
+            </ul>
+            <h3>Управление Cookies</h3>
+            <p>Большинство браузеров автоматически принимают cookies. Пользователь может изменить настройки, чтобы блокировать cookies или получать предупреждения об их отправке. Если Пользователь не хочет, чтобы Оператор собирал данные с помощью cookie-файлов, он может отключить их сбор в настройках своего браузера.</p>
         </div>
     </div>
 
     <!-- ===== ФУТЕР ===== -->
     <footer>
         <div class="container">
-            <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
-                <a href="https://vk.ru/sbstepcrew" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 20px; background: #2787F5; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; box-shadow: 0 2px 10px rgba(39, 135, 245, 0.25);">VK Команда</a>
-                <a href="https://t.me/sbs54nsk" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 20px; background: #26A5E4; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; box-shadow: 0 2px 10px rgba(38, 165, 228, 0.25);">Telegram Канал</a>
-                <a href="https://www.instagram.com/step_by_step54?igsi=cGJlYzZxaGtucHdv" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 20px; background: radial-gradient(circle at 30% 110%, #feda75, #d62976, #962fbf, #4f5bd5); border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; box-shadow: 0 2px 10px rgba(214, 41, 118, 0.25);">Instagram</a>
-                <a href="https://max.ru/join/KQO2l0jI8nfcOypk1xgoTmAdJa7RiOCM6w07qqD-6gw" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 20px; background: #e30613; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; box-shadow: 0 2px 10px rgba(227, 6, 19, 0.25);">MAX Чат</a>
+            <div class="footer-links">
+                <a href="https://vk.ru/sbstepcrew" target="_blank" rel="noopener noreferrer">VK Команда</a>
+                <a href="https://t.me/sbs54nsk" target="_blank" rel="noopener noreferrer">Telegram Канал</a>
+                <a href="https://www.instagram.com/step_by_step54" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://max.ru/join/KQO2l0jI8nfcOypk1xgoTmAdJa7RiOCM6w07qqD-6gw" target="_blank" rel="noopener noreferrer">MAX Чат</a>
             </div>
-            <p style="color: #333; font-size: 12px;">&copy; 2026 Step by Step 54. Профессиональная школа брейкинга. Лицензия № ЛО35-01199-54/04491081</p>
+            
+            <div class="footer-legal">
+                <strong>ИП Чжан Степан Дмитриевич</strong><br>
+                ИНН: 382306383459 | ОГРНИП: 322547600164369<br>
+                Адрес: 630068, г. Новосибирск, ул. Шукшина, 7/1<br>
+                Email: <a href="mailto:chzhan_1994@mail.ru">chzhan_1994@mail.ru</a> | Тел: <a href="tel:+89607900600">8 (960) 790-06-00</a><br>
+                <a onclick="openOffer(); return false;">Публичная оферта</a> | 
+                <a onclick="openPolicy(); return false;">Политика обработки ПДн</a> | 
+                <a onclick="openCookiesPolicy(); return false;">Уведомление о Cookies</a> | 
+                <a href="rules.html">Единые правила посещения (ТБ и ПБ)</a>
+            </div>
+            
+            <p style="color: #555; font-size: 12px;">&copy; 2026 Step by Step 54. Профессиональная школа брейкинга. Лицензия № ЛО35-01199-54/04491081</p>
         </div>
     </footer>
 
+    <!-- ===== КУКИ-БАННЕР ===== -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-text">
+            Мы используем файлы cookie для улучшения работы сайта и анализа трафика. Технические cookie необходимы для работы сайта. Вы можете принять все, отклонить дополнительные или настроить их. Подробнее в <a onclick="openCookiesPolicy(); return false;">Уведомлении о Cookies</a>.
+        </div>
+        <div class="cookie-banner-actions">
+            <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies('all')">Принять всё</button>
+            <button class="cookie-btn cookie-btn-reject" onclick="acceptCookies('necessary')">Только необходимые</button>
+        </div>
+    </div>
+
+    <!-- ===== СКРИПТЫ ===== -->
     <script>
+        // ===== УПРАВЛЕНИЕ МОДАЛЬНЫМИ ОКНАМИ =====
+        function openPolicy() { document.getElementById('policyModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closePolicy() { document.getElementById('policyModal').classList.remove('active'); document.body.style.overflow = ''; }
+        
+        function openOffer() { document.getElementById('offerModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeOffer() { document.getElementById('offerModal').classList.remove('active'); document.body.style.overflow = ''; }
+        
+        function openCookiesPolicy() { document.getElementById('cookiesModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeCookiesPolicy() { document.getElementById('cookiesModal').classList.remove('active'); document.body.style.overflow = ''; }
+        
+        function openRules() { window.open('rules.html', '_blank'); }
+
+        // Закрытие по клику на фон
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+                document.body.style.overflow = '';
+            }
+        });
+
         // ===== ЛАЙТБОКС =====
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
-
         document.querySelectorAll('.card-img, .collage-img, .avatar-img').forEach(img => {
-            img.addEventListener('click', () => {
-                lightboxImg.src = img.src;
-                lightbox.classList.add('active');
-            });
+            img.addEventListener('click', () => { lightboxImg.src = img.src; lightbox.classList.add('active'); });
         });
+        lightbox.addEventListener('click', () => { lightbox.classList.remove('active'); });
 
-        lightbox.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
-
-        // ===== МОДАЛЬНОЕ ОКНО ПОЛИТИКИ =====
-        function openPolicy() {
-            document.getElementById('policyModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePolicy() {
-            document.getElementById('policyModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        document.getElementById('policyModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePolicy();
+        // ===== КУКИ-БАННЕР =====
+        function checkCookies() {
+            const cookieAccepted = localStorage.getItem('cookieConsent');
+            if (!cookieAccepted) {
+                setTimeout(() => { document.getElementById('cookieBanner').classList.add('visible'); }, 1500);
             }
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closePolicy();
-            }
-        });
+        }
+        function acceptCookies(type) {
+            localStorage.setItem('cookieConsent', type);
+            document.getElementById('cookieBanner').classList.remove('visible');
+        }
+        checkCookies();
 
         // ===== АККОРДЕОН МИНСПОРТА =====
-        function toggleMinsport() {
-            const item = document.getElementById('minsportAccordion');
-            item.classList.toggle('open');
-        }
+        function toggleMinsport() { document.getElementById('minsportAccordion').classList.toggle('open'); }
 
         // ===== КНОПКА ВВЕРХ =====
         const scrollTopBtn = document.getElementById('scrollTopBtn');
-
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 500) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
+            if (window.scrollY > 500) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); }
         });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
         // ===== СЧЁТЧИК ОНЛАЙН-ЗРИТЕЛЕЙ =====
         const onlineCount = document.getElementById('onlineCount');
@@ -2542,18 +984,12 @@
         function startCounter() {
             if (counterInterval) clearInterval(counterInterval);
             if (animateInterval) clearInterval(animateInterval);
-
             counterInterval = setInterval(() => {
                 const change = Math.floor(Math.random() * 21) - 10;
                 currentCount += change;
-
                 if (currentCount < 700) currentCount = 700;
                 if (currentCount > 1420) currentCount = 1420;
-
-                animateCounter(currentCount);
             }, 2500);
-
-            // Плавная анимация перехода к целевому числу
             animateInterval = setInterval(() => {
                 if (displayCount === currentCount) return;
                 const step = currentCount > displayCount ? 1 : -1;
@@ -2563,176 +999,86 @@
                 onlineCount.textContent = displayCount;
             }, 40);
         }
-
-        function animateCounter(target) {
-            // Просто сохраняем цель — анимация работает в отдельном интервале
-        }
-
         function stopCounter() {
             if (counterInterval) clearInterval(counterInterval);
             if (animateInterval) clearInterval(animateInterval);
-            counterInterval = null;
-            animateInterval = null;
+            counterInterval = null; animateInterval = null;
         }
-
-        // Запускаем счётчик
         startCounter();
-
-        // Пауза счётчика когда вкладка неактивна
         document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                stopCounter();
-            } else {
-                // При возврате — сбрасываем до базового значения и запускаем заново
-                currentCount = 842;
-                displayCount = 842;
-                onlineCount.textContent = displayCount;
-                startCounter();
+            if (document.hidden) { stopCounter(); } else {
+                currentCount = 842; displayCount = 842; onlineCount.textContent = displayCount; startCounter();
             }
         });
 
         // ===== УПРАВЛЕНИЕ ЗВУКОМ ФОНОВОГО ВИДЕО =====
         const heroVideo = document.getElementById('heroVideoElement');
         const liveVideoWrapper = document.getElementById('liveVideoWrapper');
-
-        // Когда пользователь находится на блоке прямого эфира — глушим фоновое видео
         const liveObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Блок эфира виден — глушим фоновое видео
-                    heroVideo.muted = true;
-                } else {
-                    // Блок эфира не виден — включаем звук обратно (если пользователь его включил)
-                    if (!document.getElementById('playHint').classList.contains('hidden')) {
-                        heroVideo.muted = false;
-                    }
+                if (entry.isIntersecting) { heroVideo.muted = true; } else {
+                    if (!document.getElementById('playHint').classList.contains('hidden')) { heroVideo.muted = false; }
                 }
             });
         }, { threshold: 0.5 });
-
-        if (liveVideoWrapper) {
-            liveObserver.observe(liveVideoWrapper);
-        }
+        if (liveVideoWrapper) { liveObserver.observe(liveVideoWrapper); }
 
         // ===== ПОВТОР ВИДЕО ПРЯМОГО ЭФИРА С 05:03 =====
         const liveIframe = document.getElementById('liveIframe');
-        const VIDEO_DURATION = 303; // 05:03 в секундах
-        const VIDEO_START = 85; // 1:25 в секундах
+        const VIDEO_DURATION = 303; const VIDEO_START = 85;
         let liveTimer = null;
-
         function resetLiveVideo() {
-            // Перезагружаем iframe с началом с 1:25
-            if (liveIframe) {
-                liveIframe.src = 'https://vkvideo.ru/video_ext.php?oid=-28915774&id=456277888&hd=2&autoplay=1&t=1m25s';
-            }
+            if (liveIframe) { liveIframe.src = 'https://vkvideo.ru/video_ext.php?oid=-28915774&id=456277888&hd=2&autoplay=1&t=1m25s'; }
         }
-
         function startLiveVideoTimer() {
             if (liveTimer) clearTimeout(liveTimer);
-            // Запускаем таймер на (конец - начало) = 303 - 85 = 218 секунд
             const duration = VIDEO_DURATION - VIDEO_START;
-            liveTimer = setTimeout(() => {
-                resetLiveVideo();
-                startLiveVideoTimer();
-            }, duration * 1000);
+            liveTimer = setTimeout(() => { resetLiveVideo(); startLiveVideoTimer(); }, duration * 1000);
         }
-
-        // Запускаем циклический повтор
-        if (liveIframe) {
-            startLiveVideoTimer();
-        }
+        if (liveIframe) { startLiveVideoTimer(); }
 
         // ===== АНИМАЦИЯ ПРИ СКРОЛЛЕ =====
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
         }, { threshold: 0.15 });
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.animate-on-scroll').forEach(el => { observer.observe(el); });
 
         // ===== ФОРМА =====
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            const consent = document.getElementById('consent').checked;
+            const consentRules = document.getElementById('consent-rules').checked;
+            const consentOffer = document.getElementById('consent-offer').checked;
+            const consentPd = document.getElementById('consent-pd').checked;
             const status = document.getElementById('formStatus');
 
-            if (!name || !phone) {
-                status.innerHTML = '⚠️ Пожалуйста, заполните все поля.';
-                status.style.color = '#ff4444';
-                return;
-            }
-
-            if (!consent) {
-                status.innerHTML = '⚠️ Ознакомьтесь и установите галочку согласия.';
-                status.style.color = '#ff4444';
-                return;
-            }
+            if (!name || !phone) { status.innerHTML = '⚠️ Пожалуйста, заполните имя и телефон.'; status.style.color = '#ff4444'; return; }
+            if (!consentRules || !consentOffer || !consentPd) { status.innerHTML = '⚠️ Необходимо согласиться со всеми документами.'; status.style.color = '#ff4444'; return; }
 
             const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправка...';
+            submitBtn.disabled = true; submitBtn.textContent = 'Отправка...';
 
             const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
             const CHAT_IDS = ['8157246500', '1265008981'];
             const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
-            const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}`;
+            const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n\n✅ Согласия: Правила, Оферта, ПДн получены.`;
 
             CHAT_IDS.forEach(id => {
-                fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: id, text: message })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        console.log(`✅ Telegram: заявка отправлена для chat_id ${id}`);
-                    } else {
-                        console.error(`❌ Telegram ошибка для chat_id ${id}:`, data);
-                    }
-                })
+                fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: id, text: message }) })
                 .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
             });
 
             fetch('https://formspree.io/f/xkjwdjoz', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ 
-                    name: name, 
-                    phone: phone,
-                    _subject: 'Новая заявка с сайта SBS 54!' 
-                })
+                method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({ name: name, phone: phone, _subject: 'Новая заявка с сайта SBS 54!' })
             })
             .then(response => {
-                if (response.ok) {
-                    status.innerHTML = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
-                    status.style.color = '#00d4ff';
-                    this.reset();
-                } else {
-                    return response.json().then(data => {
-                        throw new Error(data.error || 'Ошибка сервера');
-                    });
-                }
+                if (response.ok) { status.innerHTML = '✅ Заявка отправлена! Мы свяжемся с вами.'; status.style.color = '#00d4ff'; this.reset(); }
+                else { return response.json().then(data => { throw new Error(data.error || 'Ошибка'); }); }
             })
-            .catch(error => {
-                console.error('❌ Formspree ошибка:', error);
-                status.innerHTML = '❌ Ошибка отправки. Попробуйте позже или позвоните нам.';
-                status.style.color = '#ff4444';
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить заявку';
-            });
+            .catch(error => { status.innerHTML = '❌ Ошибка отправки. Позвоните нам.'; status.style.color = '#ff4444'; })
+            .finally(() => { submitBtn.disabled = false; submitBtn.textContent = 'Отправить заявку'; });
         });
 
         // ===== ВИДЕО СО ЗВУКОМ =====
@@ -2741,29 +1087,10 @@
         const playHint = document.getElementById('playHint');
 
         video.muted = false;
-        video.play().then(() => {
-            if (playHint) playHint.style.display = 'none';
-        }).catch(() => {
-            if (playHint) playHint.style.display = 'block';
-        });
-
-        videoBlock.addEventListener('click', function() {
-            video.muted = false;
-            video.play().catch(() => {});
-            if (playHint) playHint.style.display = 'none';
-        });
-
-        document.addEventListener('click', function enableSoundOnce() {
-            video.muted = false;
-            video.play().catch(() => {});
-            if (playHint) playHint.style.display = 'none';
-            document.removeEventListener('click', enableSoundOnce);
-        });
-
-        window.addEventListener('load', function() {
-            video.muted = false;
-            video.play().catch(() => {});
-        });
+        video.play().then(() => { if (playHint) playHint.style.display = 'none'; }).catch(() => { if (playHint) playHint.style.display = 'block'; });
+        videoBlock.addEventListener('click', function() { video.muted = false; video.play().catch(() => {}); if (playHint) playHint.style.display = 'none'; });
+        document.addEventListener('click', function enableSoundOnce() { video.muted = false; video.play().catch(() => {}); if (playHint) playHint.style.display = 'none'; document.removeEventListener('click', enableSoundOnce); });
+        window.addEventListener('load', function() { video.muted = false; video.play().catch(() => {}); });
     </script>
 </body>
 </html>
