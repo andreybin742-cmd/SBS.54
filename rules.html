@@ -47,6 +47,11 @@
         .signature { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.8); }
         .signature strong { display: block; margin-bottom: 10px; font-size: 16px; }
 
+        /* Стили для кнопки скачивания PDF */
+        .pdf-download-wrapper { text-align: center; margin-top: 50px; margin-bottom: 20px; }
+        .btn-pdf { display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, var(--red), var(--dark-red)); border-radius: 100px; color: #fff; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 0 30px rgba(227,6,19,0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .btn-pdf:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(227,6,19,0.6); }
+
         /* АДАПТИВ */
         @media (max-width: 768px) {
             .document-wrapper { padding: 30px 20px; }
@@ -88,6 +93,7 @@
                 <strong>УТВЕРЖДАЮ:</strong><br>
                 ИП Чжан Степан Дмитриевич<br>
                 Приказ от 01.09.2026 г.<br>
+                <!-- Сюда можно вставить картинку подписи, если нужно -->
                 Подпись _________________
             </div>
 
@@ -145,6 +151,7 @@
                 <li>лица, получившие травмы;</li>
                 <li>лица, создающие своим поведением угрозу жизни и здоровью других занимающихся.</li>
             </ul>
+
             <h2>4. Пожарная безопасность</h2>
             
             <p><strong>4.1.</strong> Несовершеннолетним детям категорически запрещается прикасаться к электрическим розеткам, кабелям, осветительным приборам и музыкальной аппаратуре на территории проведения занятий.</p>
@@ -166,13 +173,12 @@
             <div class="attention-box">
                 <p>Родитель (законный представитель) обязуется разъяснить вышеуказанные правила посещения, техники безопасности и пожарной безопасности ребенку и осведомлен, что несет ответственность за то, что ребенок ознакомлен и полностью понимает их.</p>
             </div>
-
-            <!-- ПОДПИСЬ -->
+            <!-- ПОДПИСЬ И ПРИКАЗ -->
             <div class="signature">
                 <strong>Индивидуальный предприниматель Чжан Степан Дмитриевич</strong>
                 ОГРНИП 322547600164369, ИНН 382306383459<br><br>
                 
-                <strong>ПРИКАЗ</strong><br>
+                <strong style="font-family: 'Orbitron', monospace; font-size: 18px; color: var(--red); margin-top: 30px;">ПРИКАЗ</strong><br>
                 г. Новосибирск 01.09.2026 г.<br><br>
                 
                 <strong>Об утверждении единых правил посещения, техники безопасности и пожарной безопасности на занятиях по брейкингу</strong><br><br>
@@ -189,7 +195,17 @@
                 
                 ИП Чжан С.Д.<br>
                 Дата _________________<br>
+                <!-- Если хочешь, чтобы на сайте сразу отображалась подпись, раскомментируй код ниже и закинь картинку signature.png в папку с сайтом -->
+                <!-- <img src="signature.png" alt="Подпись ИП Чжан" style="height: 60px; margin-top: 10px; display: block;"> -->
                 Подпись _________________
+            </div>
+
+            <!-- КНОПКА СКАЧИВАНИЯ PDF -->
+            <div class="pdf-download-wrapper">
+                <a href="rules.pdf" download target="_blank" class="btn-pdf">
+                    📄 Скачать подписанный приказ (PDF)
+                </a>
+                <p style="font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 12px;">Нажмите, чтобы открыть или скачать оригинальный документ с печатью и подписью</p>
             </div>
 
         </div> <!-- Закрытие document-wrapper -->
