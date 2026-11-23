@@ -1,25 +1,17 @@
 /**
  * Cloudflare Worker for SBS54 Telegram form notifications.
+ * Cloudflare Secret required: BOT_TOKEN (current Telegram token).
+ * Optional Rate Limiting binding: RATE_LIMITER (recommended: 5 requests / 10 minutes).
  *
- * Required Worker secret:
- *   BOT_TOKEN = the current Telegram bot token (Cloudflare Secret, never a plain variable)
- *
- * Optional binding for durable edge rate limiting:
- *   RATE_LIMITER = Cloudflare Rate Limiting binding (limit 5 requests / 10 minutes)
- *
- * Frontend contract:
- *   POST /send
- *   Content-Type: application/json
- *   { "name": "...", "phone": "..." }
+ * Frontend: POST /send with JSON { "name": "...", "phone": "..." }.
  */
 
-const ALLOWED_ORIGINS = new Set([
-  "https://sbs54.ru",
-  "https://www.sbs54.ru",
-]);
-
+const ALLOWED_ORIGINS = new Set(["https://sbs54.ru", "https://www.sbs54.ru"]);
 const ALLOWED_CHAT_IDS = ["8157246500", "1265008981"];
 const MAX_BODY_BYTES = 4096;
+const LOCAL_LIMITS = new Map();
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_MAX = 5;
 
 function json(data, status = 200, origin = "") {
   const headers = {
@@ -38,8 +30,28 @@ function json(data, status = 200, origin = "") {
 
 function cleanText(value, maxLength) {
   return typeof value === "string"
-    ? value.replace(/[\\u0000-\\u001F\\u007F]/g, " ").trim().slice(0, maxLength)
+    ? value.replace(/[\u0000-\u001F\u007F]/g, " ").trim().slice(0, maxLength)
     : "";
+}
+
+async function isRateLimited(request, env) {
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+
+  // Preferred: Cloudflare Rate Limiting binding (shared across Worker instances).
+  if (env.RATE_LIMITER) {
+    const { success } = await env.RATE_LIMITER.limit({ key: ip });
+    return !success;
+  }
+
+  // Best-effort fallback only: isolate-local memory can reset or differ between instances.
+  const now = Date.now();
+  const entry = LOCAL_LIMITS.get(ip);
+  if (!entry || now - entry.startedAt >= RATE_WINDOW_MS) {
+    LOCAL_LIMITS.set(ip, { startedAt: now, count: 1 });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > RATE_MAX;
 }
 
 export default {
@@ -65,9 +77,7 @@ export default {
     if (request.method !== "POST") {
       return json({ ok: false, error: "Method not allowed" }, 405, origin);
     }
-    if (!ALLOWED_ORIGINS.has(origin)) {
-      return json({ ok: false, error: "Forbidden origin" }, 403);
-    }
+    if (!ALLOWED_ORIGINS.has(origin)) return json({ ok: false, error: "Forbidden origin" }, 403);
     if (!env.BOT_TOKEN || typeof env.BOT_TOKEN !== "string") {
       return json({ ok: false, error: "Service is not configured" }, 503, origin);
     }
@@ -77,12 +87,12 @@ export default {
       return json({ ok: false, error: "Request too large" }, 413, origin);
     }
 
-    // Durable Cloudflare rate-limit binding, if configured.
-    // Configure a binding named RATE_LIMITER with 5 requests per 10 minutes.
-    if (env.RATE_LIMITER) {
-      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-      const { success } = await env.RATE_LIMITER.limit({ key: ip });
-      if (!success) return json({ ok: false, error: "Too many requests" }, 429, origin);
+    try {
+      if (await isRateLimited(request, env)) {
+        return json({ ok: false, error: "Too many requests" }, 429, origin);
+      }
+    } catch {
+      return json({ ok: false, error: "Rate limit check unavailable" }, 503, origin);
     }
 
     let data;
@@ -97,9 +107,7 @@ export default {
     }
 
     // Honeypot field: legitimate form submissions leave it empty.
-    if (cleanText(data.website, 200)) {
-      return json({ ok: true }, 200, origin);
-    }
+    if (cleanText(data.website, 200)) return json({ ok: true }, 200, origin);
 
     const name = cleanText(data.name, 80);
     const phone = cleanText(data.phone, 40);
@@ -107,7 +115,7 @@ export default {
       return json({ ok: false, error: "Please provide a valid name and phone" }, 400, origin);
     }
 
-    const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\\n\\n👤 Имя: ${name}\\n📞 Телефон: ${phone}\\n\\n✅ Согласия: Правила, Оферта, ПДн получены.`;
+    const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n\n✅ Согласия: Правила, Оферта, ПДн получены.`;
 
     try {
       for (const chatId of ALLOWED_CHAT_IDS) {
@@ -121,7 +129,6 @@ export default {
           }
         );
         if (!telegramResponse.ok) {
-          // Do not expose Telegram response details or the bot token to the browser.
           return json({ ok: false, error: "Notification delivery failed" }, 502, origin);
         }
         const result = await telegramResponse.json();
