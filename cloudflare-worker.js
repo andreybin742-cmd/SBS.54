@@ -1,8 +1,6 @@
 /**
  * Cloudflare Worker for SBS54 Telegram form notifications.
- * Cloudflare Secret required: BOT_TOKEN (current Telegram token).
- * Optional Rate Limiting binding: RATE_LIMITER (recommended: 5 requests / 10 minutes).
- *
+ * Required Cloudflare Secret: BOT_TOKEN.
  * Frontend: POST /send with JSON { "name": "...", "phone": "..." }.
  */
 
@@ -21,7 +19,7 @@ function json(data, status = 200, origin = "") {
   };
   if (origin && ALLOWED_ORIGINS.has(origin)) {
     headers["Access-Control-Allow-Origin"] = origin;
-    headers["Access-Control-Allow-Methods"] = "POST, OPTIONS";
+    headers["Access-Control-Allow-Methods"] = "POST, OPTIONS",
     headers["Access-Control-Allow-Headers"] = "Content-Type";
     headers["Access-Control-Max-Age"] = "86400";
   }
@@ -30,20 +28,16 @@ function json(data, status = 200, origin = "") {
 
 function cleanText(value, maxLength) {
   return typeof value === "string"
-    ? value.replace(/[\u0000-\u001F\u007F]/g, " ").trim().slice(0, maxLength)
+    ? value.replace(/[\\u0000-\\u001F\\u007F]/g, " ").trim().slice(0, maxLength)
     : "";
 }
 
 async function isRateLimited(request, env) {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-
-  // Preferred: Cloudflare Rate Limiting binding (shared across Worker instances).
   if (env.RATE_LIMITER) {
     const { success } = await env.RATE_LIMITER.limit({ key: ip });
     return !success;
   }
-
-  // Best-effort fallback only: isolate-local memory can reset or differ between instances.
   const now = Date.now();
   const entry = LOCAL_LIMITS.get(ip);
   if (!entry || now - entry.startedAt >= RATE_WINDOW_MS) {
@@ -59,6 +53,17 @@ export default {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin") || "";
 
+    // Simple health check: opening the Worker URL in a browser should not show 404.
+    if (request.method === "GET" && (url.pathname === "/" || url.pathname === "/health")) {
+      return json({
+        ok: true,
+        service: "SBS54 Telegram notifier",
+        sendEndpoint: "/send",
+        tokenConfigured: Boolean(env.BOT_TOKEN),
+        recipientsConfigured: ALLOWED_CHAT_IDS.length,
+      });
+    }
+
     if (request.method === "OPTIONS") {
       if (!ALLOWED_ORIGINS.has(origin)) return new Response(null, { status: 403 });
       return new Response(null, {
@@ -73,41 +78,33 @@ export default {
       });
     }
 
-    if (url.pathname !== "/send") return json({ ok: false, error: "Not found" }, 404, origin);
-    if (request.method !== "POST") {
-      return json({ ok: false, error: "Method not allowed" }, 405, origin);
-    }
+    if (url.pathname !== "/send") return json({ ok: false, error: "Not found", hint: "Use GET /health or POST /send" }, 404, origin);
+    if (request.method !== "POST") return json({ ok: false, error: "Method not allowed" }, 405, origin);
     if (!ALLOWED_ORIGINS.has(origin)) return json({ ok: false, error: "Forbidden origin" }, 403);
     if (!env.BOT_TOKEN || typeof env.BOT_TOKEN !== "string") {
-      return json({ ok: false, error: "Service is not configured" }, 503, origin);
+      return json({ ok: false, error: "Service is not configured", hint: "Cloudflare Secret BOT_TOKEN is missing" }, 503, origin);
     }
 
     const contentLength = Number(request.headers.get("Content-Length") || 0);
-    if (contentLength > MAX_BODY_BYTES) {
-      return json({ ok: false, error: "Request too large" }, 413, origin);
-    }
+    if (contentLength > MAX_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413, origin);
 
     try {
-      if (await isRateLimited(request, env)) {
-        return json({ ok: false, error: "Too many requests" }, 429, origin);
-      }
-    } catch {
+      if (await isRateLimited(request, env)) return json({ ok: false, error: "Too many requests" }, 429, origin);
+    } catch (error) {
+      console.error("Rate limit check failed:", error);
       return json({ ok: false, error: "Rate limit check unavailable" }, 503, origin);
     }
 
     let data;
     try {
       const raw = await request.text();
-      if (new TextEncoder().encode(raw).length > MAX_BODY_BYTES) {
-        return json({ ok: false, error: "Request too large" }, 413, origin);
-      }
+      if (new TextEncoder().encode(raw).length > MAX_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413, origin);
       data = JSON.parse(raw);
     } catch {
       return json({ ok: false, error: "Invalid JSON" }, 400, origin);
     }
 
-    // Honeypot field: legitimate form submissions leave it empty.
-    if (cleanText(data.website, 200)) return json({ ok: true }, 200, origin);
+    if (cleanText(data.website, 200)) return json({ ok: true, ignored: true }, 200, origin);
 
     const name = cleanText(data.name, 80);
     const phone = cleanText(data.phone, 40);
@@ -115,30 +112,44 @@ export default {
       return json({ ok: false, error: "Please provide a valid name and phone" }, 400, origin);
     }
 
-    const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n\n✅ Согласия: Правила, Оферта, ПДн получены.`;
+    const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\\n\\n👤 Имя: ${name}\\n📞 Телефон: ${phone}\\n\\n✅ Согласия: Правила, Оферта, ПДн получены.`;
 
-    try {
-      for (const chatId of ALLOWED_CHAT_IDS) {
+    const failures = [];
+    for (let i = 0; i < ALLOWED_CHAT_IDS.length; i++) {
+      try {
         const telegramResponse = await fetch(
           `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ chat_id: chatId, text: message }),
+            body: JSON.stringify({ chat_id: ALLOWED_CHAT_IDS[i], text: message }),
             signal: AbortSignal.timeout(8000),
           }
         );
-        if (!telegramResponse.ok) {
-          return json({ ok: false, error: "Notification delivery failed" }, 502, origin);
+        const result = await telegramResponse.json().catch(() => ({}));
+        if (!telegramResponse.ok || !result.ok) {
+          console.error("Telegram delivery failed", {
+            recipientIndex: i + 1,
+            httpStatus: telegramResponse.status,
+            telegramErrorCode: result.error_code || null,
+            telegramDescription: result.description || "No description returned",
+          });
+          failures.push({
+            recipient: i + 1,
+            httpStatus: telegramResponse.status,
+            telegramErrorCode: result.error_code || null,
+            reason: result.description || "Telegram rejected the message",
+          });
         }
-        const result = await telegramResponse.json();
-        if (!result.ok) {
-          return json({ ok: false, error: "Notification delivery failed" }, 502, origin);
-        }
+      } catch (error) {
+        console.error("Telegram request failed", { recipientIndex: i + 1, message: String(error) });
+        failures.push({ recipient: i + 1, reason: "Network error or timeout" });
       }
-      return json({ ok: true }, 200, origin);
-    } catch {
-      return json({ ok: false, error: "Notification service unavailable" }, 502, origin);
     }
+
+    if (failures.length) {
+      return json({ ok: false, error: "Telegram delivery failed", failures }, 502, origin);
+    }
+    return json({ ok: true, deliveredTo: ALLOWED_CHAT_IDS.length }, 200, origin);
   },
 };
