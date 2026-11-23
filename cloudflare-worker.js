@@ -19,7 +19,7 @@ function json(data, status = 200, origin = "") {
   };
   if (origin && ALLOWED_ORIGINS.has(origin)) {
     headers["Access-Control-Allow-Origin"] = origin;
-    headers["Access-Control-Allow-Methods"] = "POST, OPTIONS",
+    headers["Access-Control-Allow-Methods"] = "POST, OPTIONS";
     headers["Access-Control-Allow-Headers"] = "Content-Type";
     headers["Access-Control-Max-Age"] = "86400";
   }
@@ -100,16 +100,45 @@ export default {
       const raw = await request.text();
       if (new TextEncoder().encode(raw).length > MAX_BODY_BYTES) return json({ ok: false, error: "Request too large" }, 413, origin);
       data = JSON.parse(raw);
-    } catch {
-      return json({ ok: false, error: "Invalid JSON" }, 400, origin);
+    } catch (error) {
+      console.warn("SBS54 form rejected: invalid JSON", {
+        bodyBytes: request.headers.get("Content-Length") || "unknown",
+        parseError: String(error),
+      });
+      return json({ ok: false, error: "Invalid JSON", stage: "json_parse" }, 400, origin);
     }
 
-    if (cleanText(data.website, 200)) return json({ ok: true, ignored: true }, 200, origin);
+    if (!data || typeof data !== "object" || Array.isArray(data)) {
+      console.warn("SBS54 form rejected: invalid payload shape", {
+        payloadType: data === null ? "null" : typeof data,
+      });
+      return json({ ok: false, error: "Invalid request data", stage: "payload_shape" }, 400, origin);
+    }
+
+    if (cleanText(data.website, 200)) {
+      console.info("SBS54 form ignored: honeypot filled");
+      return json({ ok: true, ignored: true }, 200, origin);
+    }
 
     const name = cleanText(data.name, 80);
     const phone = cleanText(data.phone, 40);
     if (!name || !phone || name.length < 2 || phone.length < 5) {
-      return json({ ok: false, error: "Please provide a valid name and phone" }, 400, origin);
+      console.warn("SBS54 form rejected: validation failed", {
+        hasName: Boolean(name),
+        nameLength: name.length,
+        hasPhone: Boolean(phone),
+        phoneLength: phone.length,
+        receivedKeys: Object.keys(data).slice(0, 20),
+      });
+      return json({
+        ok: false,
+        error: "Please provide a valid name and phone",
+        stage: "field_validation",
+        fields: {
+          name: !name || name.length < 2 ? "missing_or_too_short" : "ok",
+          phone: !phone || phone.length < 5 ? "missing_or_too_short" : "ok",
+        },
+      }, 400, origin);
     }
 
     const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n\n✅ Согласия: Правила, Оферта, ПДн получены.`;
