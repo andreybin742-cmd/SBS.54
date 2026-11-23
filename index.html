@@ -1113,15 +1113,20 @@
             const submitBtn = this.querySelector('button[type="submit"]');
             submitBtn.disabled = true; submitBtn.textContent = 'Отправка...';
 
-            const BOT_TOKEN = '8645500457:AAHkaqf972o6ACHiOWS_Y7LJxqfWytjGKtU';
-            const CHAT_IDS = ['8157246500', '1265008981'];
             const WORKER_URL = 'https://sbs54-proxy.andreybin742.workers.dev';
-            const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n\n✅ Согласия: Правила, Оферта, ПДн получены.`;
 
-            CHAT_IDS.forEach(id => {
-                fetch(`${WORKER_URL}/bot${BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: id, text: message }) })
-                .catch(err => console.error(`❌ Telegram сеть для chat_id ${id}:`, err));
-            });
+            // The Telegram token stays in the Cloudflare Worker Secret, never in browser code.
+            fetch(`${WORKER_URL}/send`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, phone: phone })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Telegram notification failed');
+            })
+            .catch(err => console.error('❌ Telegram notification:', err));
+
+
 
             fetch('https://formspree.io/f/xkjwdjoz', {
                 method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
