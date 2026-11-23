@@ -28,7 +28,7 @@ function json(data, status = 200, origin = "") {
 
 function cleanText(value, maxLength) {
   return typeof value === "string"
-    ? value.replace(/[\\u0000-\\u001F\\u007F]/g, " ").trim().slice(0, maxLength)
+    ? value.replace(/[\u0000-\u001F\u007F]/g, " ").trim().slice(0, maxLength)
     : "";
 }
 
@@ -112,7 +112,7 @@ export default {
       return json({ ok: false, error: "Please provide a valid name and phone" }, 400, origin);
     }
 
-    const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\\n\\n👤 Имя: ${name}\\n📞 Телефон: ${phone}\\n\\n✅ Согласия: Правила, Оферта, ПДн получены.`;
+    const message = `🕺 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n\n✅ Согласия: Правила, Оферта, ПДн получены.`;
 
     const failures = [];
     for (let i = 0; i < ALLOWED_CHAT_IDS.length; i++) {
